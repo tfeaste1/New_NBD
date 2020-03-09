@@ -5,8 +5,14 @@ using System.Threading.Tasks;
 
 namespace NBD.Models
 {
-    public class ProjectInventory
+    public class MaterialRequirement
     {
+        public int ID { get; set; }
+        public DateTime? DeliveryDate { get; set; }
+        public DateTime? DeliveryTime { get; set; }
+        public DateTime? InstallDate { get; set; }
+        public int EstQuantity { get; set; }
+        public int Quantity { get; set; }
         public int ProjectID { get; set; }
         public Project Project { get; set; }
 

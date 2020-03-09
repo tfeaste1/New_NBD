@@ -12,10 +12,12 @@ namespace NBD.Models
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage ="Please enter a department name.")]
-        public string Name { get; set; }
+        public string Description { get; set; }
+        public float? Price { get; set; }
+        public float? Cost { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
+        public ICollection<LabourSummary> LabourSummaries { get; set; }
 
     }
 }

@@ -35,6 +35,7 @@ namespace NBD.Models
         [Required(ErrorMessage = "Company name is required.")]
         [StringLength(50, ErrorMessage = "Company name can be no longer than 50 characters.")]
         public string CompanyName { get; set; }
+        public string Position { get; set; }
 
         [Required(ErrorMessage = "Phone number is required.")]
         [RegularExpression("^\\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number (no spaces).")]
@@ -43,13 +44,13 @@ namespace NBD.Models
         public Int64 PhoneNumber { get; set; } 
 
        
-
+        
 
         [Required(ErrorMessage = "Address is required.")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "City is required.")]
-        public string City { get; set; }
+        public int CityID { get; set; }
 
         [Required(ErrorMessage = "Province is required.")]
         public string Province { get; set; }
@@ -63,6 +64,7 @@ namespace NBD.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        public virtual City City { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         
 

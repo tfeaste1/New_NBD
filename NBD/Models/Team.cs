@@ -9,13 +9,13 @@ namespace NBD.Models
     public class Team
     {
         public int ID { get; set; }
-        [Required(ErrorMessage = "A team name is required.")]
-        [Display (Name = "Team Name")]
+        public string Phase { get; set; }
         public string TeamName { get; set; }
         public int EmployeeID { get; set; }
         public Employee Employee { get; set; }
 
         public int ProjectID { get; set; }
         public Project Project { get; set;}
+        public ICollection<LabourRequirement> LabourRequirements { get; set; }
 }
 }
