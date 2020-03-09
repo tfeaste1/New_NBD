@@ -75,8 +75,9 @@ namespace NBD.Models
 
 
         public ICollection<Team> Teams { get; set; }
-        
+  
 
-         
+
+
     }
 }

@@ -254,6 +254,68 @@ namespace NBD.Data
                        });
                     context.SaveChanges();
                 }
+                if (!context.EmployeeLabours.Any())
+                {
+                    context.EmployeeLabours.AddRange(
+                        new EmployeeLabour
+                        {
+                            EmployeeReport = "N1",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Vaughn Mills").ID,
+                            EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Paul" && p.LastName == "Saunders").ID,
+                            Hour = 10,
+                            Cost = 140
+
+                        },
+                        new EmployeeLabour
+                        {
+                            EmployeeReport = "N2",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Bob" && p.LastName == "Reinhardt").ID,
+                            Hour = 10,
+                            Cost = 140
+
+                        },
+                        new EmployeeLabour
+                        {
+                            EmployeeReport = "N3",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Rosa" && p.LastName == "Bradley").ID,
+                            Hour = 10,
+                            Cost = 140
+
+                        },
+                                                new EmployeeLabour
+                                                {
+                                                    EmployeeReport = "N4",
+                                                    ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                                                    EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Tamara" && p.LastName == "Bakken").ID,
+                                                    Hour = 10,
+                                                    Cost = 140
+
+                                                },
+                        new EmployeeLabour
+                        {
+                            EmployeeReport = "N5",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Monica" && p.LastName == "Goce").ID,
+                            Hour = 10,
+                            Cost = 140
+
+                        },
+                        new EmployeeLabour
+                        {
+                            EmployeeReport = "N6",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Bert"
+                             && p.LastName == "Swenson").ID,
+                            Hour = 10,
+                            Cost = 140
+
+                        }
+
+                        );
+                    context.SaveChanges();
+                }
 
                 if (!context.Categories.Any())
                 {
@@ -431,72 +493,132 @@ namespace NBD.Data
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "DFDL").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "DFDL").ID,
+                                //quantity = 4,
+                                //exendprice = 2000
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "SNFL").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "SNFL").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
+
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "SHVL").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "SHVL").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
+                                
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "WHBR").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "WHBR").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
+
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "MLCH").ID
+                                //InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "MLCH").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "FRTZ").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "FRTZ").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
+
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Vaughn Mills").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "CHRS").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "CHRS").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
+
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Vaughn Mills").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "ROSE").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "ROSE").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
+
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Vaughn Mills").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "HOE").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "HOE").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Vaughn Mills").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "RAKE").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "RAKE").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
+
 
                             },
                             new ProjectInventory
                             {
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Vaughn Mills").ID,
-                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "CPST").ID
+                                InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "CPST").ID,
+                                //                                quantity = 4,
+                                //exendprice = 2000
 
                             }
                         );
                     context.SaveChanges();
                 }
+
+
+                //if (!context.Workreport.Any())
+                //{
+                //    context.Workreport.AddRange(
+
+                //            new Workreport
+                //            {
+                //                Name = "Work Report 1",
+                //                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                //                EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Paul" && p.LastName == "Saunders").ID,
+                //                EmployeeLabourID = context.EmployeeLabour.FirstOrDefault(p => p.ID == 1).ID,
+                //                ProjectInventoryID = context.ProjectInventories.FirstOrDefault(p => p.ID == 1).ID
+
+
+
+                //            },
+                //            new Workreport
+                //            {
+                //                Name = "Work Report 2",
+                //                EmployeeID = context.Employees.FirstOrDefault(p => p.FirstName == "Rosa" && p.LastName == "Bradley").ID,
+                //                EmployeeLabourID = context.EmployeeLabour.FirstOrDefault(p => p.ID == 3).ID,
+                //                ProjectInventoryID = context.ProjectInventories.FirstOrDefault(p => p.ID == 3).ID
+
+
+                //            }
+
+                //        );
+                //    context.SaveChanges();
+                //}
+
 
             }
 

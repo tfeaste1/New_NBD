@@ -125,6 +125,28 @@ namespace NBD.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("NBD.Models.EmployeeLabour", b =>
+                {
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.Property<int>("Cost");
+
+                    b.Property<string>("EmployeeReport")
+                        .IsRequired();
+
+                    b.Property<int>("Hour");
+
+                    b.Property<int>("ID");
+
+                    b.HasKey("ProjectID", "EmployeeID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.ToTable("EmployeeLabours");
+                });
+
             modelBuilder.Entity("NBD.Models.Inventory", b =>
                 {
                     b.Property<int>("ID")
@@ -242,6 +264,19 @@ namespace NBD.Migrations
                         .WithMany("Employees")
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("NBD.Models.EmployeeLabour", b =>
+                {
+                    b.HasOne("NBD.Models.Employee", "Employee")
+                        .WithMany("EmployeeLabour")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("NBD.Models.Inventory", b =>

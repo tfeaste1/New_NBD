@@ -41,8 +41,11 @@ namespace NBD.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectInventory> ProjectInventories { get; set; }
         public DbSet<Team> Teams { get; set; }
-        
-      
+        public DbSet<NBD.Models.EmployeeLabour> EmployeeLabours { get; set; }
+
+
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -94,6 +97,12 @@ namespace NBD.Data
             modelBuilder.Entity<Team>()
            .HasKey(t => new { t.ProjectID, t.EmployeeID });
 
+            modelBuilder.Entity<EmployeeLabour>()
+.HasKey(t => new { t.ProjectID, t.EmployeeID });
+
+
+
+
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -133,6 +142,10 @@ namespace NBD.Data
                 }
             }
         }
+
+      
+
+
 
     }
     } 

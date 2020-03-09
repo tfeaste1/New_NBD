@@ -46,5 +46,7 @@ namespace NBD.Models
 
         public virtual Department Department { get; set; }
         public ICollection<Team> Teams { get; set; }
+        public ICollection<EmployeeLabour> EmployeeLabour { get; set; }
+        
     }
 }

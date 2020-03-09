@@ -44,6 +44,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Report<b class="caret"></b>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                               
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="EmployeeLabours" asp-action="Index">Employee Work Report</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Activities" asp-action="Index">Project Inventory Report</a>
+
+
+                            </div>
+                        </li>
+
                     </ul>
                 </div>
             </div>

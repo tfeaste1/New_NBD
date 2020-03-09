@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Downloads\\NBD\\NBD.csproj": {}
+    "C:\\Users\\Administrator\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Downloads\\NBD\\NBD.csproj": {
+    "C:\\Users\\Administrator\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\NBD\\NBD.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
         "projectName": "NBD",
-        "projectPath": "C:\\Users\\Administrator\\Downloads\\NBD\\NBD.csproj",
+        "projectPath": "C:\\Users\\Administrator\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Downloads\\NBD\\obj\\",
+        "outputPath": "C:\\Users\\Administrator\\Documents\\GitHub\\New_NBD\\NBD\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -59,6 +59,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.4, )"
             }
           },
           "imports": [
