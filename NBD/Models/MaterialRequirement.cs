@@ -11,6 +11,7 @@ namespace NBD.Models
         public DateTime? DeliveryDate { get; set; }
         public DateTime? DeliveryTime { get; set; }
         public DateTime? InstallDate { get; set; }
+        public DateTime? InstallTime { get; set; }
         public int EstQuantity { get; set; }
         public int Quantity { get; set; }
         public int ProjectID { get; set; }

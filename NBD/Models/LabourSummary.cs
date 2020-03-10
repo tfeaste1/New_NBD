@@ -11,7 +11,7 @@ namespace NBD.Models
         public int ID { get; set; }
 
         [Display(Name = "Hours Worked")]
-        public int LSHours { get; set; }
+        public int Hours { get; set; }
 
         public int ProjectID {get;set;}
         public Project Project { get; set; }
