@@ -48,7 +48,8 @@ namespace NBD.Controllers
         // GET: Clients/Create
         public IActionResult Create()
         {
-            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "ID");
+            
+            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name");
             return View();
         }
 
@@ -82,7 +83,7 @@ namespace NBD.Controllers
             {
                 return NotFound();
             }
-            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "ID", client.CityID);
+            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             return View(client);
         }
 
@@ -118,7 +119,7 @@ namespace NBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "ID", client.CityID);
+            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             return View(client);
         }
 
@@ -150,6 +151,14 @@ namespace NBD.Controllers
             _context.Clients.Remove(client);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private void PopulateDropDownLists(Client client = null)
+        {
+            var cquery = from c in _context.Cities
+                         orderby c.Name
+                         select c;
+            ViewData["CityID"] = new SelectList(cquery, "ID", "Name", client?.CityID);
         }
 
         private bool ClientExists(int id)

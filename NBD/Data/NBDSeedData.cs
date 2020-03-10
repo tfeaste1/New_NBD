@@ -913,7 +913,7 @@ namespace NBD.Data
                                 Hours = 30
                             },
                              new LabourSummary
-                             {
+                             { 
                                  ProjectID = 1,
                                  DepartmentID = 2,
                                  Hours = 10
