@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,6 @@ using NBD.Models;
 
 namespace NBD.Controllers
 {
-    
     public class ClientsController : Controller
     {
         private readonly NBDContext _context;
@@ -24,7 +22,8 @@ namespace NBD.Controllers
         // GET: Clients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clients.ToListAsync());
+            var nBDContext = _context.Clients.Include(c => c.City);
+            return View(await nBDContext.ToListAsync());
         }
 
         // GET: Clients/Details/5
@@ -36,6 +35,7 @@ namespace NBD.Controllers
             }
 
             var client = await _context.Clients
+                .Include(c => c.City)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (client == null)
             {
@@ -46,9 +46,10 @@ namespace NBD.Controllers
         }
 
         // GET: Clients/Create
-        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
+            
+            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name");
             return View();
         }
 
@@ -57,22 +58,19 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles ="Admin,Manager")]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,CompanyName,PhoneNumber,Address,City,Province,PostalCode,Email")] Client client)
+        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,CompanyName,Position,PhoneNumber,Address,CityID,Province,PostalCode,Email")] Client client)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(client);
                 await _context.SaveChangesAsync();
-                int ID = client.ID;
-
-                return RedirectToAction("Details", new { ID});
+                return RedirectToAction(nameof(Index));
             }
+            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "ID", client.CityID);
             return View(client);
         }
 
         // GET: Clients/Edit/5
-        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,6 +83,7 @@ namespace NBD.Controllers
             {
                 return NotFound();
             }
+            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             return View(client);
         }
 
@@ -93,8 +92,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName,CompanyName,PhoneNumber,Address,City,Province,PostalCode,Email")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName,CompanyName,Position,PhoneNumber,Address,CityID,Province,PostalCode,Email")] Client client)
         {
             if (id != client.ID)
             {
@@ -121,10 +119,47 @@ namespace NBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             return View(client);
         }
 
-       
+        // GET: Clients/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _context.Clients
+                .Include(c => c.City)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            return View(client);
+        }
+
+        // POST: Clients/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var client = await _context.Clients.FindAsync(id);
+            _context.Clients.Remove(client);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private void PopulateDropDownLists(Client client = null)
+        {
+            var cquery = from c in _context.Cities
+                         orderby c.Name
+                         select c;
+            ViewData["CityID"] = new SelectList(cquery, "ID", "Name", client?.CityID);
+        }
 
         private bool ClientExists(int id)
         {

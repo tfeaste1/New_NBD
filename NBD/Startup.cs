@@ -14,6 +14,7 @@ using NBD.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Configuration;
 
 namespace NBD
 {
@@ -36,6 +37,9 @@ namespace NBD
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<NBDContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("NBDContext")));
+            services.AddMvc();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -81,6 +85,9 @@ namespace NBD
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddDbContext<NBDContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("NBDContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,4 +119,5 @@ namespace NBD
             });
         }
     }
+   
 }

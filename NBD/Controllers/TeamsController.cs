@@ -59,7 +59,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TeamName,EmployeeID,ProjectID")] Team team)
+        public async Task<IActionResult> Create([Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TeamName,EmployeeID,ProjectID")] Team team)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team)
         {
             if (id != team.ProjectID)
             {
