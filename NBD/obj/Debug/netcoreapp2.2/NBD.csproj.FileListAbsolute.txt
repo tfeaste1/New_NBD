@@ -189,3 +189,8 @@ C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Create.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Delete.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Details.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Edit.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Index.cshtml.g.cs
