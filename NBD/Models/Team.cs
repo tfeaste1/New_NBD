@@ -8,6 +8,11 @@ namespace NBD.Models
 {
     public class Team
     {
+        //public Team()
+        //{
+        //    this.Employees = new HashSet<Employee>();
+        //}
+
         public int ID { get; set; }
         public string Phase { get; set; }
 
@@ -23,5 +28,7 @@ namespace NBD.Models
         public int ProjectID { get; set; }
         public Project Project { get; set;}
         public ICollection<LabourRequirement> LabourRequirements { get; set; }
-}
+
+        //public virtual ICollection<Employee> Employees { get; set; }
+    }
 }

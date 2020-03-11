@@ -463,7 +463,7 @@ namespace NBD.Data
                     {
                         context.Teams.AddRange(
                              new Team
-                             {  ID = 1,
+                             {  
                                 TeamName = "NBD project",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 1,
@@ -471,7 +471,7 @@ namespace NBD.Data
                              },
                             new Team
                             {
-                                ID = 3,
+                                
                                 TeamName = "I am team 2",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 2,
@@ -479,7 +479,7 @@ namespace NBD.Data
                             },
                             new Team
                             {
-                                ID = 3,
+                                
                                 TeamName = "So I am team 3",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 3,
@@ -487,7 +487,7 @@ namespace NBD.Data
                             },
                             new Team
                             {
-                                ID = 4,
+                                
                                 TeamName = "I dont want be 4",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 4,
@@ -495,7 +495,7 @@ namespace NBD.Data
                             },
                             new Team
                             {
-                                ID = 2,
+                                
                                 TeamName = "5",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 5,
@@ -503,7 +503,7 @@ namespace NBD.Data
                             },
                             new Team
                             {
-                                ID = 2,
+                                
                                 TeamName = "why 5 is such short",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 6,
@@ -511,7 +511,7 @@ namespace NBD.Data
                             },
                             new Team
                             {
-                                ID = 2,
+                                
                                 TeamName = "is none of your problom",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 7,
@@ -519,7 +519,7 @@ namespace NBD.Data
                             },
                             new Team
                             {
-                                ID = 2,
+                               
                                 TeamName = "Finally",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 8,
