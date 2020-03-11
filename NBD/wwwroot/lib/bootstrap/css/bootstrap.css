@@ -43,6 +43,7 @@
 }
 
 html {
+    margin-top: 0;
     font-family: 'Montserrat', sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
@@ -84,7 +85,7 @@ h1, h2, h3, h4, h5, h6 {
 
 header
 {
-    margin-top:10%;
+   
     position:relative;
 }
 
@@ -4759,6 +4760,7 @@ input[type="button"].btn-block {
     border-radius: 0.25rem;
     padding: 2em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    align-items: center;
 }
     .card:hover {
         background-color: #006400;
