@@ -44,17 +44,16 @@
                 <dt>
                     @Html.DisplayNameFor(model => model.ProjCurrentPhase)
                 </dt>
-                <dd>
+                <dd class="font-italic">
                     @Html.DisplayFor(model => model.ProjCurrentPhase)
                 </dd>
 
             </dl>
-                <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-                <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
-</div>
+                
     </div>
 
     </div>
+</div>
     @*<dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
