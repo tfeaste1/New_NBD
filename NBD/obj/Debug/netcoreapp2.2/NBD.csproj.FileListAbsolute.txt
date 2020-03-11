@@ -187,3 +187,4 @@ C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.dll
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
