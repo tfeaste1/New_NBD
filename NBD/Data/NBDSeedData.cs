@@ -326,63 +326,83 @@ namespace NBD.Data
                     {
                         context.Employees.AddRange(
                             new Employee
-                            {
+                            {   
                                 FirstName = "Cheryl",
                                 LastName = "Poy",
+                                Email = "breinhardt@nbd.com",
+                                PhoneNumber = 4087753652,
                                 DepartmentID = 4
                             },
                             new Employee
                             {
                                 FirstName = "Keri",
                                 LastName = "Yamaguchi",
+                                Email = "rbradley@nbd.com",
+                                PhoneNumber = 4087753650,
                                 DepartmentID = 5
                             },
                             new Employee
                             {
                                 FirstName = "Tamara",
                                 LastName = "Bakken",
+                                Email = "tbakken@nbd.com",
+                                PhoneNumber = 4087753642,
                                 DepartmentID = 2
                             },
                             new Employee
                             {
                                 FirstName = "Bob",
                                 LastName = "Reinhardt",
+                                Email = "psaunders@nbd.com",
+                                PhoneNumber = 4087753640,
                                 DepartmentID = 7
                             },
                             new Employee
                             {
                                 FirstName = "Sue",
                                 LastName = "Kaufman",
+                                Email = "mgoce@nbd.com",
+                                PhoneNumber = 4087753692,
                                 DepartmentID = 6
                             },
                            new Employee
                            {
                                FirstName = "Monica",
                                LastName = "Goce",
+                               Email = "bswenson@nbd.com",
+                               PhoneNumber = 4087753689,
                                DepartmentID = 1
                            },
                            new Employee
                            {
                                FirstName = "Bert",
                                LastName = "Swenson",
+                               Email = "bertwenson@nbd.com",
+                               PhoneNumber = 4087753600,
                                DepartmentID = 1
                            },
                            new Employee
                            {
                                FirstName = "Stan",
                                LastName = "Fenton",
+                               Email = "stanwenson@nbd.com",
+                               PhoneNumber = 4087753601,
                                DepartmentID = 8
                            },
                            new Employee
                            {
                                FirstName = "Joe",
                                LastName = "Smith",
+                               Email = "Joeenson@nbd.com",
+                               PhoneNumber = 4087753622,
                                DepartmentID = 3
                            },
                            new Employee
                            {
                                FirstName = "Jerry",
                                LastName = "Jones",
+                               Email = "Jerryson@nbd.com",
+                               PhoneNumber = 4087753677,
                                DepartmentID = 1
                            });
                         context.SaveChanges();
@@ -443,51 +463,66 @@ namespace NBD.Data
                     {
                         context.Teams.AddRange(
                              new Team
-                             {
-                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 3,
-                                 Phase = "D"
+                             {  ID = 1,
+                                TeamName = "NBD project",
+                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                                EmployeeID = 1,
+                                Phase = "D"
                              },
                             new Team
                             {
+                                ID = 3,
+                                TeamName = "I am team 2",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 4,
+                                EmployeeID = 2,
                                 Phase = "D"
                             },
                             new Team
                             {
+                                ID = 3,
+                                TeamName = "So I am team 3",
+                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                                EmployeeID = 3,
+                                Phase = "P"
+                            },
+                            new Team
+                            {
+                                ID = 4,
+                                TeamName = "I dont want be 4",
+                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                                EmployeeID = 4,
+                                Phase = "P"
+                            },
+                            new Team
+                            {
+                                ID = 2,
+                                TeamName = "5",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 5,
                                 Phase = "P"
                             },
                             new Team
                             {
+                                ID = 2,
+                                TeamName = "why 5 is such short",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 6,
                                 Phase = "P"
                             },
                             new Team
                             {
+                                ID = 2,
+                                TeamName = "is none of your problom",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 7,
                                 Phase = "P"
                             },
                             new Team
                             {
+                                ID = 2,
+                                TeamName = "Finally",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 8,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 9,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 10,
                                 Phase = "P"
                             }
                             );
