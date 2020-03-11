@@ -7,9 +7,55 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="row">
+    <div class="card  align-content-center" style="width:400px">
+        <div class="card-body">
+            <h4 class="card-title">Project Details</h4>
+            <dl class="card-body">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.StartDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.EndDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProjSite)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ProjSite)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ActAmount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ActAmount)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProjCurrentPhase)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ProjCurrentPhase)
+                </dd>
+
+            </dl>
+                <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
+</div>
+    </div>
+
+    </div>
+    @*<dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -99,4 +145,4 @@
 <div>
     <a class="btn btn-light" asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
     <a class="btn btn-danger" asp-action="Index">Back to List</a>
-</div>
+</div>*@
