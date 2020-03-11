@@ -163,11 +163,11 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Comments");
 
+                    b.Property<int>("Cost");
+
                     b.Property<DateTime?>("Date");
 
-                    b.Property<DateTime?>("EstDate");
-
-                    b.Property<int>("EstHours");
+                    b.Property<int>("ExtPrice");
 
                     b.Property<int>("Hours");
 
@@ -349,7 +349,8 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Phase");
 
-                    b.Property<string>("TeamName");
+                    b.Property<string>("TeamName")
+                        .IsRequired();
 
                     b.HasKey("ProjectID", "EmployeeID");
 

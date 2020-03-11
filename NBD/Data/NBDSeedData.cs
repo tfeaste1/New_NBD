@@ -730,104 +730,78 @@ namespace NBD.Data
                         context.LabourRequirements.AddRange(
                             new LabourRequirement
                             {
-                                TeamID = 1,
-                                TaskID = 1,
-                                EstHours = 12,
+                                Date = DateTime.Parse("2020-06-10"),
+                                Cost = 15,
+                                Hours = 15,
+                                ExtPrice = 15*15,
+                                Comments = "In Progress",
+                                TeamID = 3,
+                                TaskID = 1
+                                
                             },
                             new LabourRequirement
                             {
+                                Date = DateTime.Parse("2020-06-10"),
+                                Cost = 15,
+                                Hours = 15,
+                                ExtPrice = 15 * 15,
+                                Comments = "In Progress",
                                 TeamID = 1,
-                                TaskID = 2,
-                                EstDate = DateTime.Parse("2020-06-10"),
-                                EstHours = 5,
+                                TaskID = 2
+                                
+                                
 
                             },
                              new LabourRequirement
                              {
-                                 TeamID = 1,
-                                 TaskID = 3,
-                                 EstDate = DateTime.Parse("2020-06-15"),
-                                 EstHours = 3,
+                                 Date = DateTime.Parse("2020-06-10"),
+                                 Cost = 15,
+                                 Hours = 15,
+                                 ExtPrice = 15 * 15,
+                                 Comments = "In Progress",
+                                 TeamID = 2,
+                                 TaskID = 3
+                                 
+                                
 
                              },
                               new LabourRequirement
                               {
-                                  TeamID = 1,
-                                  TaskID = 4,
-                                  EstDate = DateTime.Parse("2020-06-16"),
-                                  EstHours = 1,
+                                  Date = DateTime.Parse("2020-06-10"),
+                                  Cost = 15,
+                                  Hours = 15,
+                                  ExtPrice = 15 * 15,
+                                  Comments = "In Progress",
+                                  TeamID = 4,
+                                  TaskID = 4
+                                  
+                                  
 
                               },
-                               new LabourRequirement
-                               {
-                                   TeamID = 1,
-                                   TaskID = 5,
-                                   EstDate = DateTime.Parse("2020-06-18"),
-                                   EstHours = 1,
-
-                               },
-                                new LabourRequirement
-                                {
-                                    TeamID = 4,
-                                    TaskID = 6,
-                                    EstDate = DateTime.Parse("2020-06-15"),
-                                    EstHours = 3,
-
-                                },
-                                 new LabourRequirement
-                                 {
-                                     TeamID = 4,
-                                     TaskID = 7,
-                                     EstDate = DateTime.Parse("2020-06-16"),
-                                     EstHours = 4,
-
-                                 },
+                               
                                   new LabourRequirement
                                   {
-                                      TeamID = 4,
-                                      TaskID = 8,
-                                      EstDate = DateTime.Parse("2020-06-17"),
-                                      EstHours = 8,
-
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 5,
-                                      TaskID = 6,
-                                      EstDate = DateTime.Parse("2020-06-15"),
-                                      EstHours = 3,
-
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 5,
-                                      TaskID = 7,
-                                      EstDate = DateTime.Parse("2020-06-16"),
-                                      EstHours = 4,
-
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 5,
-                                      TaskID = 8,
-                                      EstDate = DateTime.Parse("2020-06-17"),
-                                      EstHours = 8,
-
-                                  },
-                                  new LabourRequirement
-                                  {
+                                      Date = DateTime.Parse("2020-06-10"),
+                                      Cost = 15,
+                                      Hours = 15,
+                                      ExtPrice = 15 * 15,
+                                      Comments = "In Progress",
                                       TeamID = 6,
                                       TaskID = 10,
-                                      EstDate = DateTime.Parse("2020-06-15"),
-                                      EstHours = 4,
+
 
                                   },
                                   new LabourRequirement
                                   {
+                                      Date = DateTime.Parse("2020-06-10"),
+                                      Cost = 15,
+                                      Hours = 15,
+                                      ExtPrice = 15 * 15,
+                                      Comments = "In Progress",
                                       TeamID = 7,
                                       TaskID = 9,
-                                      EstDate = DateTime.Parse("2020-06-14"),
-                                      EstHours = 6,
+                                     
+                                     
 
                                   }
                             );
