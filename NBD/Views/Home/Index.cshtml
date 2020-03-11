@@ -48,15 +48,17 @@
     <a class="carousel-control-next" href="#demo" data-slide="next">
         <span class="carousel-control-next-icon"></span>
     </a>
-</div><br /><br /><br />
+</div>
+
+<br /><br /><br />
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="justify-content-center">
-    <a class="btn btn-light" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
-    <a class="btn btn-light" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
-    <a class="btn btn-light" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
-    <a class="btn btn-light" asp-area="" asp-controller="Projects" asp-action="Create">Create a Projects</a>
+    <div class="text-center">
+    <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
+    <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
+    <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+    <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Create">Create a Project</a>
 </div>
 
 }

@@ -2813,28 +2813,70 @@ fieldset:disabled a.btn {
         border-color: #006400;
     }
 
-.btn-light:focus, .btn-light.focus {
+    .btn-light:focus, .btn-light.focus {
+        color: #212529;
+        background-color: #e2e6ea;
+        border-color: #dae0e5;
+        box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
+    }
+
+    .btn-light.disabled, .btn-light:disabled {
+        color: #212529;
+        background-color: #f8f9fa;
+        border-color: #f8f9fa;
+    }
+
+    .btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active,
+    .show > .btn-light.dropdown-toggle {
+        color: #212529;
+        background-color: #dae0e5;
+        border-color: #d3d9df;
+    }
+
+        .btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-light.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
+        }
+.btn-home {
+    color: #212529;
+    background-color: #e6ffe6;
+    border-color: #006400;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    padding:.5em;
+}
+
+    .btn-home:hover {
+        color: #fff;
+        background-color: #006400;
+        border-color: #006400;
+    }
+
+
+.btn-home:focus, .btn-home.focus {
   color: #212529;
   background-color: #e2e6ea;
   border-color: #dae0e5;
   box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
 }
 
-.btn-light.disabled, .btn-light:disabled {
+.btn-home.disabled, .btn-home:disabled {
   color: #212529;
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
 
-.btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active,
-.show > .btn-light.dropdown-toggle {
+.btn-home:not(:disabled):not(.disabled):active, .btn-home:not(:disabled):not(.disabled).active,
+.show > .btn-home.dropdown-toggle {
   color: #212529;
   background-color: #dae0e5;
   border-color: #d3d9df;
 }
 
-.btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus,
-.show > .btn-light.dropdown-toggle:focus {
+.btn-home:not(:disabled):not(.disabled):active:focus, .btn-home:not(:disabled):not(.disabled).active:focus,
+.show > .btn-home.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
 }
 
