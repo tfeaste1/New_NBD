@@ -31,6 +31,7 @@ namespace NBD
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
                     identityContext.Database.Migrate();
                     ApplicationSeedData.SeedAsync(identityContext, services).Wait();
+
                 }
                 catch (Exception ex)
                 {
