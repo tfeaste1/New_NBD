@@ -252,3 +252,4 @@ C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.dll
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
+C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
