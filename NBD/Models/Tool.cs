@@ -10,7 +10,7 @@ namespace NBD.Models
         public int ID { get; set; }
         public string Description { get; set; }
 
-        public ICollection<ProductionTool>ProductionTools { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
 
     }
 }

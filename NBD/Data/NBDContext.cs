@@ -43,11 +43,17 @@ namespace NBD.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<LabourSummary> LabourSummaries { get; set; }
         public DbSet<MaterialRequirement> MaterialRequirements { get; set; }
+       
         public DbSet<Team> Teams { get; set; }
         public DbSet<Models.Task> Tasks { get; set; }
         public DbSet<Tool> Tools { get; set; }
         public DbSet<ProductionTool> ProductionTools { get; set; }
-        //public DbSet<LabourRequirement> LabourRequirements { get; set; }
+        public DbSet<LabourRequirement> LabourRequirements { get; set; }
+        public DbSet<ProjectMaterial> ProjectMaterials { get; set; }
+        public DbSet<ProjectLabour> ProjectLabours { get; set; }
+        public DbSet<ProdPlanLabour> ProdPlanLabours { get; set; }
+        public DbSet<ProdPlanMaterial> ProdPlanMaterials { get; set; }
+        public DbSet<ProductionPlan> ProductionPlans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -83,20 +89,18 @@ namespace NBD.Data
             .IsUnique();
 
             //Many-To-Many Relationships
-            modelBuilder.Entity<LabourSummary>()
-           .HasKey(ls => new { ls.ProjectID, ls.DepartmentID });
+            modelBuilder.Entity<ProdPlanMaterial>()
+           .HasKey(ls => new { ls.MaterialReqID, ls.ProdPlanID });
             
-            modelBuilder.Entity<Team>()
-           .HasKey(t => new { t.ProjectID, t.EmployeeID });
+            modelBuilder.Entity<ProdPlanLabour>()
+           .HasKey(t => new { t.ProdPlanID, t.LabourReqID });
 
-            modelBuilder.Entity<MaterialRequirement>()
-           .HasKey(m => new { m.InventoryID, m.ProjectID });
+            modelBuilder.Entity<ProjectLabour>()
+           .HasKey(m => new { m.ProjectID, m.LabourReqID });
 
-            modelBuilder.Entity<ProductionTool>()
-            .HasKey(pt => new { pt.ProjectID, pt.ToolID });
-
-            //modelBuilder.Entity<LabourRequirement>()
-            //.HasKey(lr => new { lr.TeamID, lr.TaskID });
+            modelBuilder.Entity<ProjectMaterial>()
+            .HasKey(pt => new { pt.ProjectID, pt.MaterialReqID });
+       
 
 
         }
@@ -139,5 +143,8 @@ namespace NBD.Data
                 }
             }
         }
+
+
+        public DbSet<NBD.Models.ProductionPlan> ProductionPlan { get; set; }
     }
 }

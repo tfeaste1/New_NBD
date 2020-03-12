@@ -253,3 +253,8 @@ C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
+C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\ProductionPlans\Create.cshtml.g.cs
+C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\ProductionPlans\Delete.cshtml.g.cs
+C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\ProductionPlans\Details.cshtml.g.cs
+C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\ProductionPlans\Edit.cshtml.g.cs
+C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\ProductionPlans\Index.cshtml.g.cs
