@@ -833,82 +833,82 @@ namespace NBD.Data
                     //        );
                     //    context.SaveChanges();
                     //}
-                    if (!context.MaterialRequirements.Any())
-                    {
-                        context.MaterialRequirements.AddRange(
-                            new MaterialRequirement
-                            {
-                                InventoryID = 1,
-                                ProjectID = 1,
-                                DeliveryDate = DateTime.Parse("2020-06-16"),
-                                DeliveryTime = DateTime.Parse("08:00:00"),
-                                InstallDate = DateTime.Parse("2020-06-16"),
-                                InstallTime = DateTime.Parse("00:00:00"),
-                                EstQuantity = 3
-                            },
-                            new MaterialRequirement
-                            {
-                                InventoryID = 5,
-                                ProjectID = 1,
-                                DeliveryDate = DateTime.Parse("2020-06-17"),
-                                DeliveryTime = DateTime.Parse("08:00:00"),
-                                InstallDate = DateTime.Parse("2020-06-17"),
-                                InstallTime = DateTime.Parse("00:00:00"),
-                                EstQuantity = 5
-                            },
-                            new MaterialRequirement
-                            {
-                                InventoryID = 9,
-                                ProjectID = 1,
-                                DeliveryDate = DateTime.Parse("2020-06-17"),
-                                DeliveryTime = DateTime.Parse("08:00:00"),
-                                InstallDate = DateTime.Parse("2020-06-17"),
-                                InstallTime = DateTime.Parse("00:00:00"),
-                                EstQuantity = 7
-                            },
-                            new MaterialRequirement
-                            {
-                                InventoryID = 13,
-                                ProjectID = 1,
-                                DeliveryDate = DateTime.Parse("2020-06-15"),
-                                DeliveryTime = DateTime.Parse("08:00:00"),
-                                InstallDate = DateTime.Parse("2020-06-15"),
-                                InstallTime = DateTime.Parse("00:00:00"),
-                                EstQuantity = 1
-                            },
-                            new MaterialRequirement
-                            {
-                                InventoryID = 11,
-                                ProjectID = 1,
-                                DeliveryDate = DateTime.Parse("2020-06-15"),
-                                DeliveryTime = DateTime.Parse("08:00:00"),
-                                InstallDate = DateTime.Parse("2020-06-15"),
-                                InstallTime = DateTime.Parse("00:00:00"),
-                                EstQuantity = 3
-                            },
-                            new MaterialRequirement
-                            {
-                                InventoryID = 14,
-                                ProjectID = 1,
-                                DeliveryDate = DateTime.Parse("2020-06-17"),
-                                DeliveryTime = DateTime.Parse("08:00:00"),
-                                InstallDate = DateTime.Parse("2020-06-17"),
-                                InstallTime = DateTime.Parse("00:00:00"),
-                                EstQuantity = 10
-                            },
-                            new MaterialRequirement
-                            {
-                                InventoryID = 18,
-                                ProjectID = 1,
-                                DeliveryDate = DateTime.Parse("2020-06-15"),
-                                DeliveryTime = DateTime.Parse("13:00:00"),
-                                InstallDate = DateTime.Parse("2020-06-15"),
-                                InstallTime = DateTime.Parse("00:00:00"),
-                                EstQuantity = 1
-                            });
-                        context.SaveChanges();
+                    //if (!context.MaterialRequirements.Any())
+                    //{
+                    //    context.MaterialRequirements.AddRange(
+                    //        new MaterialRequirement
+                    //        {
+                    //            InventoryID = 1,
+                    //            ProjectID = 1,
+                    //            DeliveryDate = DateTime.Parse("2020-06-16"),
+                    //            DeliveryTime = DateTime.Parse("08:00:00"),
+                    //            InstallDate = DateTime.Parse("2020-06-16"),
+                    //            InstallTime = DateTime.Parse("00:00:00"),
+                    //            EstQuantity = 3
+                    //        },
+                    //        new MaterialRequirement
+                    //        {
+                    //            InventoryID = 5,
+                    //            ProjectID = 1,
+                    //            DeliveryDate = DateTime.Parse("2020-06-17"),
+                    //            DeliveryTime = DateTime.Parse("08:00:00"),
+                    //            InstallDate = DateTime.Parse("2020-06-17"),
+                    //            InstallTime = DateTime.Parse("00:00:00"),
+                    //            EstQuantity = 5
+                    //        },
+                    //        new MaterialRequirement
+                    //        {
+                    //            InventoryID = 9,
+                    //            ProjectID = 1,
+                    //            DeliveryDate = DateTime.Parse("2020-06-17"),
+                    //            DeliveryTime = DateTime.Parse("08:00:00"),
+                    //            InstallDate = DateTime.Parse("2020-06-17"),
+                    //            InstallTime = DateTime.Parse("00:00:00"),
+                    //            EstQuantity = 7
+                    //        },
+                    //        new MaterialRequirement
+                    //        {
+                    //            InventoryID = 13,
+                    //            ProjectID = 1,
+                    //            DeliveryDate = DateTime.Parse("2020-06-15"),
+                    //            DeliveryTime = DateTime.Parse("08:00:00"),
+                    //            InstallDate = DateTime.Parse("2020-06-15"),
+                    //            InstallTime = DateTime.Parse("00:00:00"),
+                    //            EstQuantity = 1
+                    //        },
+                    //        new MaterialRequirement
+                    //        {
+                    //            InventoryID = 11,
+                    //            ProjectID = 1,
+                    //            DeliveryDate = DateTime.Parse("2020-06-15"),
+                    //            DeliveryTime = DateTime.Parse("08:00:00"),
+                    //            InstallDate = DateTime.Parse("2020-06-15"),
+                    //            InstallTime = DateTime.Parse("00:00:00"),
+                    //            EstQuantity = 3
+                    //        },
+                    //        new MaterialRequirement
+                    //        {
+                    //            InventoryID = 14,
+                    //            ProjectID = 1,
+                    //            DeliveryDate = DateTime.Parse("2020-06-17"),
+                    //            DeliveryTime = DateTime.Parse("08:00:00"),
+                    //            InstallDate = DateTime.Parse("2020-06-17"),
+                    //            InstallTime = DateTime.Parse("00:00:00"),
+                    //            EstQuantity = 10
+                    //        },
+                    //        new MaterialRequirement
+                    //        {
+                    //            InventoryID = 18,
+                    //            ProjectID = 1,
+                    //            DeliveryDate = DateTime.Parse("2020-06-15"),
+                    //            DeliveryTime = DateTime.Parse("13:00:00"),
+                    //            InstallDate = DateTime.Parse("2020-06-15"),
+                    //            InstallTime = DateTime.Parse("00:00:00"),
+                    //            EstQuantity = 1
+                    //        });
+                    //    context.SaveChanges();
                              
-                    }
+                    //}
                     if(!context.ProductionTools.Any())
                     {
                         context.ProductionTools.AddRange(
@@ -960,6 +960,58 @@ namespace NBD.Data
                                   Hours = 10
                               }
                             );
+                    }
+
+                    if (!context.WReports.Any())
+                    {
+                        context.WReports.AddRange(
+                            new WReport
+                            {
+                                date = DateTime.Parse("2020-06-16"),
+                                Hour = 8,
+                                Cost = 18,
+                                EmployeeID = 6,
+                                TaskID = 7,
+                                ProjectID = 1
+                            },
+                            new WReport
+                            {
+                                date = DateTime.Parse("2020-06-16"),
+                                Hour = 8,
+                                Cost = 18,
+                                EmployeeID = 7,
+                                TaskID = 7,
+                                ProjectID = 1
+                            }
+   
+                            );
+                        context.SaveChanges();
+                    }
+
+                    if (!context.MRs.Any())
+                    {
+                        context.MRs.AddRange(
+                            new MR
+                            {
+                                date = DateTime.Parse("2020-06-16"),
+                                Qnty = 5,
+                                Cost = 143,
+                                EmployeeID = 6,
+                                MaterialID = 2,
+                                ProjectID = 1
+                            },
+                            new MR
+                            {
+                                date = DateTime.Parse("2020-06-16"),
+                                Qnty = 7,
+                                Cost = 45,
+                                EmployeeID = 6,
+                                MaterialID = 5,
+                                ProjectID = 1
+                            }
+
+                            );
+                        context.SaveChanges();
                     }
 
                 }

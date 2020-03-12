@@ -12,5 +12,7 @@ namespace NBD.Models
         public string Type { get; set; }
 
         public ICollection<Inventory> Inventories { get; set; }
+        public ICollection<MR> MRs { get; set; }
+
     }
 }

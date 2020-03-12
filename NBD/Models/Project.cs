@@ -76,7 +76,7 @@ namespace NBD.Models
         [Display(Name = "Inventory List")]
         
         public ICollection<LabourSummary> LabourSummaries { get; set; }
-        public ICollection<MaterialRequirement> MaterialRequirements { get; set; }
+        //public ICollection<MaterialRequirement> MaterialRequirements { get; set; }
         public ICollection<ProductionTool> ProductionTools { get; set; }
 
 
@@ -84,8 +84,12 @@ namespace NBD.Models
 
 
         public ICollection<Team> Teams { get; set; }
-        
 
-         
+        public ICollection<WReport> WReports { get; set; }
+
+        public ICollection<MR> MRs{ get; set; }
+
+
+
     }
 }

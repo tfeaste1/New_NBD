@@ -42,11 +42,15 @@ namespace NBD.Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<LabourSummary> LabourSummaries { get; set; }
-        public DbSet<MaterialRequirement> MaterialRequirements { get; set; }
+       
         public DbSet<Team> Teams { get; set; }
         public DbSet<Models.Task> Tasks { get; set; }
         public DbSet<Tool> Tools { get; set; }
         public DbSet<ProductionTool> ProductionTools { get; set; }
+
+        public DbSet<WReport> WReports { get; set; }
+
+        public DbSet<MR> MRs { get; set; }
         //public DbSet<LabourRequirement> LabourRequirements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,6 +86,14 @@ namespace NBD.Data
             .HasIndex(c => new { c.Email })
             .IsUnique();
 
+
+            modelBuilder.Entity<WReport>()
+            .HasIndex(pt => new { pt.ProjectID, pt.TaskID, pt.EmployeeID })
+            .IsUnique();
+
+            modelBuilder.Entity<MR>()
+.HasIndex(pt => new { pt.ProjectID, pt.MaterialID, pt.EmployeeID })
+.IsUnique();
             //Many-To-Many Relationships
             modelBuilder.Entity<LabourSummary>()
            .HasKey(ls => new { ls.ProjectID, ls.DepartmentID });
@@ -89,11 +101,14 @@ namespace NBD.Data
             modelBuilder.Entity<Team>()
            .HasKey(t => new { t.ProjectID, t.EmployeeID });
 
-            modelBuilder.Entity<MaterialRequirement>()
-           .HasKey(m => new { m.InventoryID, m.ProjectID });
+           // modelBuilder.Entity<MaterialRequirement>()
+           //.HasKey(m => new { m.InventoryID, m.ProjectID });
 
             modelBuilder.Entity<ProductionTool>()
             .HasKey(pt => new { pt.ProjectID, pt.ToolID });
+
+//            modelBuilder.Entity<WReport>()
+//.HasKey(pt => new { pt.ProjectID, pt.TaskID,pt.EmployeeID });
 
             //modelBuilder.Entity<LabourRequirement>()
             //.HasKey(lr => new { lr.TeamID, lr.TaskID });

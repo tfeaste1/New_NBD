@@ -188,7 +188,6 @@ C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.dll
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
-C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Create.cshtml.g.cs
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Delete.cshtml.g.cs
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\Employees\Details.cshtml.g.cs
@@ -247,3 +246,13 @@ C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.Vie
 C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.dll
 C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\WReports\Create.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\WReports\Delete.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\WReports\Details.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\WReports\Edit.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\WReports\Index.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MRs\Create.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MRs\Delete.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MRs\Details.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MRs\Edit.cshtml.g.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MRs\Index.cshtml.g.cs
