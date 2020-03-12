@@ -349,8 +349,7 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Phase");
 
-                    b.Property<string>("TeamName")
-                        .IsRequired();
+                    b.Property<string>("TeamName");
 
                     b.HasKey("ProjectID", "EmployeeID");
 

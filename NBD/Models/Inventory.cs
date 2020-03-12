@@ -7,7 +7,7 @@ namespace NBD.Models
 {
     public class Inventory
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public double AvgNet { get; set; }
         public double List { get; set; }
         public int SizeAmount { get; set; }
