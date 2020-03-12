@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,7 @@ namespace NBD.Controllers
             return View(client);
         }
 
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         // GET: Clients/Create
         public IActionResult Create()
         {
@@ -58,6 +60,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,CompanyName,Position,PhoneNumber,Address,CityID,Province,PostalCode,Email")] Client client)
         {
             if (ModelState.IsValid)
@@ -71,6 +74,7 @@ namespace NBD.Controllers
         }
 
         // GET: Clients/Edit/5
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +96,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName,CompanyName,Position,PhoneNumber,Address,CityID,Province,PostalCode,Email")] Client client)
         {
             if (id != client.ID)
@@ -124,6 +129,7 @@ namespace NBD.Controllers
         }
 
         // GET: Clients/Delete/5
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,6 +151,7 @@ namespace NBD.Controllers
         // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var client = await _context.Clients.FindAsync(id);

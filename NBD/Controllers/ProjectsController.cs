@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,7 @@ namespace NBD.Controllers
         }
 
         // GET: Projects/Create
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public IActionResult Create()
         {
             var project = new Project();
@@ -69,6 +71,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Create([Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedSummaries, string[] selectedRequirements, string[] selectedTools, string[] selectedTeams)
         {
             try
@@ -150,6 +153,7 @@ namespace NBD.Controllers
         }
 
         // GET: Projects/Edit/5
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -187,6 +191,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedSummaries, string[] selectedRequirements, string[] selectedTools, string[] selectedTeams)
         {
             var projectToUpdate = await _context.Projects
@@ -269,6 +274,7 @@ namespace NBD.Controllers
         }
 
         // GET: Projects/Delete/5
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -290,6 +296,7 @@ namespace NBD.Controllers
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var project = await _context.Projects.FindAsync(id);

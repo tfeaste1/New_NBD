@@ -48,7 +48,7 @@ namespace NBD.Controllers
         }
 
         // GET: Teams/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public IActionResult Create()
         {
             ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName");
@@ -61,7 +61,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Create([Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team)
         {
             if (ModelState.IsValid)
@@ -76,7 +76,8 @@ namespace NBD.Controllers
         }
 
         // GET: Teams/Edit/5
-        [Authorize(Roles = "Admin")]
+        
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -99,7 +100,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team)
         {
             if (id != team.ID)
@@ -133,7 +134,7 @@ namespace NBD.Controllers
         }
 
         // GET: Teams/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -156,7 +157,7 @@ namespace NBD.Controllers
         // POST: Teams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager,AdministrativeAssistant")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var team = await _context.Teams.FindAsync(id);
