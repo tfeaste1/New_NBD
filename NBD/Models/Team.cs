@@ -13,10 +13,11 @@ namespace NBD.Models
         public string TeamName { get; set; }
        
         public int EmployeeID { get; set; }
-        public Employee Employee { get; set; }
+        public virtual Employee Employee { get; set; }
 
         public int ProjectID { get; set; }
-        public Project Project { get; set;}
+        public virtual Project Project { get; set;}
+
         public ICollection<LabourRequirement> LabourRequirements { get; set; }
 }
 }

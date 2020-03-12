@@ -11,6 +11,6 @@ namespace NBD.Models
         public string Description { get; set; }
         public string Type { get; set; }
 
-        public ICollection<Inventory> Inventories { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

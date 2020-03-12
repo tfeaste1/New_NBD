@@ -14,10 +14,11 @@ namespace NBD.Models
         public DateTime? InstallTime { get; set; }
         public int EstQuantity { get; set; }
         public int Quantity { get; set; }
-        public int ProjectID { get; set; }
-        public Project Project { get; set; }
-
         public int InventoryID { get; set; }
-        public Inventory Inventory { get; set; }
+        public virtual Inventory Inventory { get; set; }
+
+        public virtual ICollection<ProjectMaterial> ProjectMaterials { get; set; }
+        public virtual ICollection<ProdPlanMaterial> ProdPlanMaterials { get; set; }
+
     }
 }

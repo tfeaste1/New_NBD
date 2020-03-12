@@ -79,19 +79,18 @@ namespace NBD.Models
         [Display(Name = "Is Project flagged?")]
         public bool ProjIsFlagged { get; set; }
 
-        
-        
-        public ICollection<LabourSummary> LabourSummaries { get; set; }
-        public ICollection<MaterialRequirement> MaterialRequirements { get; set; }
-        public ICollection<ProductionTool> ProductionTools { get; set; }
-
-
         public virtual Client Client { get; set; }
 
 
-        public ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Team> Teams { get; set; }
+
+        [Display(Name ="Labour Requirements")]
+        public ICollection<ProjectLabour> ProjectLabours { get; set; }
+
+        [Display(Name ="Material Requirements")]
+        public ICollection<ProjectMaterial>ProjectMaterials { get; set; }
         
 
-         
+
     }
 }

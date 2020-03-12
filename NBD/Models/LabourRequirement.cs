@@ -15,9 +15,15 @@ namespace NBD.Models
         public string Comments { get; set; }
 
         public int TeamID { get; set; }
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
+
+        public int LabourSummaryID { get; set; }
+        public virtual LabourSummary LabourSummary { get; set; }
 
         public int TaskID { get; set; }
-        public Task Task { get; set; }
+        public virtual Task Task { get; set; }
+
+        public virtual ICollection<ProjectLabour> ProjectLabours { get; set; }
+        public virtual ICollection<ProdPlanLabour> ProdPlanLabours { get; set; }
     }
 }

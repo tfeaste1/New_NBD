@@ -51,15 +51,13 @@ namespace NBD.Controllers
         public IActionResult Create()
         {
             var project = new Project();
-            project.LabourSummaries = new List<LabourSummary>();
-            project.MaterialRequirements = new List<MaterialRequirement>();
-            project.ProductionTools = new List<ProductionTool>();
-            project.Teams = new List<Team>();
+            project.ProjectLabours = new List<ProjectLabour>();
+            project.ProjectMaterials = new List<ProjectMaterial>();
+            
 
-            PopulateAssignedLabourSumData(project);
+            PopulateAssignedLabourReqData(project);
             PopulateAssignedMaterialReqData(project);
-            PopulateAssignedProdToolData(project);
-            PopulateAssignedTeamData(project);
+           
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "CompanyName");
             return View();
         }
@@ -69,60 +67,36 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedSummaries, string[] selectedRequirements, string[] selectedTools, string[] selectedTeams)
+        public async Task<IActionResult> Create([Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedLrequirements, string[] selectedRequirements)
         {
             try
             {
-                if (selectedSummaries != null)
+                if (selectedLrequirements != null)
                 {
-                    project.LabourSummaries = new List<LabourSummary>();
-                    foreach (var department in selectedSummaries)
+                    project.ProjectLabours = new List<ProjectLabour>();
+                    foreach (var labour in selectedLrequirements)
                     {
-                        var summaryToAdd = new LabourSummary
+                        var lrequirementToAdd = new ProjectLabour
                         {
                             ProjectID = project.ID,
-                            DepartmentID = int.Parse(department)
+                            LabourReqID = int.Parse(labour)
                         };
-                        project.LabourSummaries.Add(summaryToAdd);
+                        project.ProjectLabours.Add(lrequirementToAdd);
                     }
                 }
-                if (selectedTeams != null)
-                {
-                    project.Teams = new List<Team>();
-                    foreach (var employee in selectedTeams)
-                    {
-                        var teamToAdd = new Team
-                        {
-                            ProjectID = project.ID,
-                            EmployeeID = int.Parse(employee)
-                        };
-                        project.Teams.Add(teamToAdd);
-                    }
-                }
-                if (selectedTools != null)
-                {
-                    project.ProductionTools = new List<ProductionTool>();
-                    foreach (var tool in selectedTools)
-                    {
-                        var toolToAdd = new ProductionTool
-                        {
-                            ProjectID = project.ID,
-                            ToolID = int.Parse(tool)
-                        };
-                        project.ProductionTools.Add(toolToAdd);
-                    }
-                }
+          
+             
                 if (selectedRequirements != null)
                 {
-                    project.MaterialRequirements = new List<MaterialRequirement>();
-                    foreach (var inventory in selectedRequirements)
+                    project.ProjectMaterials = new List<ProjectMaterial>();
+                    foreach (var material in selectedRequirements)
                     {
-                        var requirementToAdd = new MaterialRequirement
+                        var requirementToAdd = new ProjectMaterial
                         {
                             ProjectID = project.ID,
-                            InventoryID = int.Parse(inventory)
+                            MaterialReqID = int.Parse(material)
                         };
-                        project.MaterialRequirements.Add(requirementToAdd);
+                        project.ProjectMaterials.Add(requirementToAdd);
                     }
                 }
             }
@@ -141,10 +115,8 @@ namespace NBD.Controllers
                 return RedirectToAction(nameof(Index));
             }
                                  
-            PopulateAssignedLabourSumData(project);
+            PopulateAssignedLabourReqData(project);
             PopulateAssignedMaterialReqData(project);
-            PopulateAssignedProdToolData(project);
-            PopulateAssignedTeamData(project);
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "CompanyName", project.ClientID);
             return View(project);
         }
@@ -159,14 +131,10 @@ namespace NBD.Controllers
 
             var project = await _context.Projects
                 .Include(p => p.Client)
-                .Include(p => p.LabourSummaries)
-                .ThenInclude(p => p.Department)
-                .Include(p => p.Teams)
-                .ThenInclude(p => p.Employee)
-                .Include(p => p.ProductionTools)
-                .ThenInclude(p => p.Tool)
-                .Include(p => p.MaterialRequirements)
-                .ThenInclude(p => p.Inventory)
+                .Include(p => p.ProjectMaterials)
+                .ThenInclude(p => p.MaterialRequirement)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(p => p.LabourRequirement)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.ID == id);
             if (project == null)
@@ -174,10 +142,9 @@ namespace NBD.Controllers
                 return NotFound();
             }
 
-            PopulateAssignedLabourSumData(project);
+            PopulateAssignedLabourReqData(project);
             PopulateAssignedMaterialReqData(project);
-            PopulateAssignedProdToolData(project);
-            PopulateAssignedTeamData(project);
+            
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "CompanyName", project.ClientID);
             return View(project);
         }
@@ -191,14 +158,10 @@ namespace NBD.Controllers
         {
             var projectToUpdate = await _context.Projects
               .Include(p => p.Client)
-              .Include(p => p.LabourSummaries)
-              .ThenInclude(p => p.Department)
-              .Include(p => p.Teams)
-              .ThenInclude(p => p.Employee)
-              .Include(p => p.ProductionTools)
-              .ThenInclude(p => p.Tool)
-              .Include(p => p.MaterialRequirements)
-              .ThenInclude(p => p.Inventory)
+              .Include(p => p.ProjectLabours)
+              .ThenInclude(p => p.LabourRequirement)
+              .Include(p => p.ProjectMaterials)
+              .ThenInclude(p => p.MaterialRequirement)
               .AsNoTracking()
               .SingleOrDefaultAsync(p => p.ID == id);
 
@@ -207,10 +170,9 @@ namespace NBD.Controllers
                 return NotFound();
             }
 
-            UpdateLabourSummaries(selectedSummaries, projectToUpdate);
+            UpdateLabourRequirements(selectedSummaries, projectToUpdate);
             UpdateMaterialRequirements(selectedRequirements, projectToUpdate);
-            UpdateProductionTools(selectedTools, projectToUpdate);
-            UpdateTeams(selectedTeams, projectToUpdate);
+           
             if(await TryUpdateModelAsync<Project>(projectToUpdate, "", p => p.Name, p => p.ProjSite, p => p.ProjBidDate, 
                 p => p.EstStartDate, p => p.EstEndDate, p => p.StartDate, p => p.EndDate, p => p.EstAmount, p => p.ActAmount,
                 p => p.ClientApproval, p => p.AdminApproval, p => p.ClientID))
@@ -260,10 +222,8 @@ namespace NBD.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            PopulateAssignedLabourSumData(projectToUpdate);
+            PopulateAssignedLabourReqData(projectToUpdate);
             PopulateAssignedMaterialReqData(projectToUpdate);
-            PopulateAssignedProdToolData(projectToUpdate);
-            PopulateAssignedTeamData(projectToUpdate);
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "CompanyName", project.ClientID);
             return View(project);
         }
@@ -298,195 +258,83 @@ namespace NBD.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private void PopulateAssignedLabourSumData(Project project)
+        private void PopulateAssignedLabourReqData(Project project)
         {
-            var allSummaries = _context.Departments;
-            var pSummaries = new HashSet<int>(project.LabourSummaries.Select(p => p.DepartmentID));
-            var selectedl = new List<LabourSumVM>();
-            var availablel = new List<LabourSumVM>();
-            foreach (var s in allSummaries)
+            var allLrequirements = _context.LabourRequirements;
+            var pLrequirements = new HashSet<int>(project.ProjectLabours.Select(p => p.LabourReqID));
+            var selectedl = new List<LabourReqVM>();
+            var availablel = new List<LabourReqVM>();
+            foreach (var r in allLrequirements)
             {
-                if (pSummaries.Contains(s.ID))
+                if (pLrequirements.Contains(r.ID))
                 {
-                    selectedl.Add(new LabourSumVM
+                    selectedl.Add(new LabourReqVM
                     {
-                        ID = s.ID,
-                        DisplayText = s.Description
-                    });
+                        ID = r.ID,
+                        Description = r.LabourSummary.Department.Description,
+                        Hours = r.Hours,
+                        CostPerHour = r.LabourSummary.Department.Cost,
+                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        Time = r.Date,
+                        Task = r.Task.Description
+
+                    }) ;
                 }
                 else
                 {
-                    availablel.Add(new LabourSumVM
+                    availablel.Add(new LabourReqVM
                     {
-                        ID = s.ID,
-                        DisplayText = s.Description
+                        ID = r.ID,
+                        Description = r.LabourSummary.Department.Description,
+                        Hours = r.Hours,
+                        CostPerHour = r.LabourSummary.Department.Cost,
+                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        Time = r.Date,
+                        Task = r.Task.Description
                     });
                 }
             }
-            ViewData["selOptsl"] = new MultiSelectList(selectedl.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-            ViewData["availOptsl"] = new MultiSelectList(availablel.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["selOptsl"] = new MultiSelectList(selectedl.OrderBy(s => s.Description), "ID", "Description");
+            ViewData["availOptsl"] = new MultiSelectList(availablel.OrderBy(s => s.Description), "ID", "Description");
         }
-        private void UpdateLabourSummaries (string[] selectedSummaries, Project projectToUpdate)
+        private void UpdateLabourRequirements (string[] selectedLrequirements, Project projectToUpdate)
         {
-            if(selectedSummaries == null)
+            if(selectedLrequirements == null)
             {
-                projectToUpdate.LabourSummaries = new List<LabourSummary>();
+                projectToUpdate.ProjectLabours = new List<ProjectLabour>();
                 return;
             }
-            var selectedSummaryHS = new HashSet<string>(selectedSummaries);
-            var labourSummariesHS = new HashSet<int>
-            (projectToUpdate.LabourSummaries.Select(i => i.DepartmentID));
-            foreach( var department in _context.Departments)
+            var selectedLrequirementHS = new HashSet<string>(selectedLrequirements);
+            var labourLRequirementsHS = new HashSet<int>
+            (projectToUpdate.ProjectLabours.Select(i => i.LabourReqID));
+            foreach( var labour in _context.LabourRequirements)
             {
-                if (selectedSummaryHS.Contains(department.ID.ToString()))
+                if (selectedLrequirementHS.Contains(labour.ID.ToString()))
                 {
-                    if(!labourSummariesHS.Contains(department.ID))
+                    if(!labourLRequirementsHS.Contains(labour.ID))
                     {
-                        projectToUpdate.LabourSummaries.Add(new LabourSummary
+                        projectToUpdate.ProjectLabours.Add(new ProjectLabour
                         {
-                            ProjectID = projectToUpdate.ID, DepartmentID = department.ID
+                            ProjectID = projectToUpdate.ID, LabourReqID = labour.ID
                         });
                     }
                     else
                     {
-                        if(labourSummariesHS.Contains(department.ID))
+                        if(labourLRequirementsHS.Contains(labour.ID))
                         {
-                            LabourSummary summaryToRemove = projectToUpdate.LabourSummaries
-                                                                           .SingleOrDefault(s => s.DepartmentID == department.ID);
+                            ProjectLabour summaryToRemove = projectToUpdate.ProjectLabours
+                                                                           .SingleOrDefault(s => s.LabourReqID == labour.ID);
                             _context.Remove(summaryToRemove);
                         }
                     }
                 }
             }
         }
-        private void PopulateAssignedTeamData(Project project)
-        {
-            var allTeams = _context.Employees;
-            var pTeams = new HashSet<int>(project.Teams.Select(p => p.EmployeeID));
-            var selected = new List<TeamVM>();
-            var available = new List<TeamVM>();
-            foreach (var t in allTeams)
-            {
-              if(pTeams.Contains(t.ID))
-                {
-                    selected.Add(new TeamVM
-                    {
-                        ID = t.ID,
-                        DisplayText = t.FullName
-                    });
-                }
-                else
-                {
-                    available.Add(new TeamVM
-                    {
-                        ID = t.ID,
-                        DisplayText = t.FullName
-                    });
-                }
-            }
-            ViewData["selOptst"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-            ViewData["availOptst"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        }
-        private void UpdateTeams(string[] selectedTeams, Project projectToUpdate)
-        {
-            if (selectedTeams == null)
-            {
-                projectToUpdate.Teams = new List<Team>();
-                return;
-            }
-            var selectedTeamHS = new HashSet<string>(selectedTeams);
-            var teamsHS = new HashSet<int>
-            (projectToUpdate.Teams.Select(e => e.EmployeeID));
-            foreach (var employee in _context.Employees)
-            {
-                if (selectedTeamHS.Contains(employee.ID.ToString()))
-                {
-                    if (!teamsHS.Contains(employee.ID))
-                    {
-                        projectToUpdate.Teams.Add(new Team
-                        {
-                            ProjectID = projectToUpdate.ID,
-                            EmployeeID = employee.ID
-                        });
-                    }
-                    else
-                    {
-                        if (teamsHS.Contains(employee.ID))
-                        {
-                            Team teamToRemove = projectToUpdate.Teams
-                                                               .SingleOrDefault(t => t.EmployeeID == employee.ID);
-                            _context.Remove(teamToRemove);
-                        }
-                    }
-                }
-            }
-        }
-        private void PopulateAssignedProdToolData(Project project)
-        {
-            var allTools = _context.Tools;
-            var pTools = new HashSet<int>(project.ProductionTools.Select(p => p.ToolID));
-            var selectedp = new List<ProdToolVM>();
-            var availablep = new List<ProdToolVM>();
-            foreach (var p in allTools)
-            {
-                if (pTools.Contains(p.ID))
-                {
-                    selectedp.Add(new ProdToolVM
-                    {
-                        ID = p.ID,
-                        DisplayText = p.Description
-                    });
-                }
-                else
-                {
-                    availablep.Add(new ProdToolVM
-                    {
-                        ID = p.ID,
-                        DisplayText = p.Description
-                    });
-                }
-            }
-            ViewData["selOptsp"] = new MultiSelectList(selectedp.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-            ViewData["availOptsp"] = new MultiSelectList(availablep.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        }
-        private void UpdateProductionTools (string[] selectedTools, Project projectToUpdate)
-        {
-            if (selectedTools == null)
-            {
-                projectToUpdate.ProductionTools = new List<ProductionTool>();
-                return;
-            }
-            var selectedToolHS = new HashSet<string>(selectedTools);
-            var prodToolsHS = new HashSet<int>
-            (projectToUpdate.ProductionTools.Select(t => t.ToolID));
-            foreach (var tool in _context.Tools)
-            {
-                if (selectedToolHS.Contains(tool.ID.ToString()))
-                {
-                    if (!prodToolsHS.Contains(tool.ID))
-                    {
-                        projectToUpdate.ProductionTools.Add(new ProductionTool
-                        {
-                            ProjectID = projectToUpdate.ID,
-                            ToolID = tool.ID
-                        });
-                    }
-                    else
-                    {
-                        if (prodToolsHS.Contains(tool.ID))
-                        {
-                            ProductionTool toolToRemove = projectToUpdate.ProductionTools
-                                                                           .SingleOrDefault(t => t.ToolID == tool.ID);
-                            _context.Remove(toolToRemove);
-                        }
-                    }
-                }
-            }
-        }
+       
         private void PopulateAssignedMaterialReqData(Project project)
         {
-            var allRequirements = _context.Inventories;
-            var pRequirements = new HashSet<int>(project.MaterialRequirements.Select(p => p.InventoryID));
+            var allRequirements = _context.MaterialRequirements;
+            var pRequirements = new HashSet<int>(project.ProjectMaterials.Select(p => p.MaterialReqID));
             var selectedm = new List<MaterialReqVM>();
             var availablem = new List<MaterialReqVM>();
             foreach (var r in allRequirements)
@@ -496,7 +344,11 @@ namespace NBD.Controllers
                     selectedm.Add(new MaterialReqVM
                     {
                         ID = r.ID,
-                        DisplayText = r.MaterialID.ToString()
+                        MaterialName = r.Inventory.Material.Description,
+                        Size = r.Quantity.ToString() + " " + r.Inventory.SizeUnit,
+                        NetUnit = r.Inventory.AvgNet,
+                        Cost = r.Quantity * r.Inventory.AvgNet
+                                       
                     });
                 }
                 else
@@ -504,47 +356,51 @@ namespace NBD.Controllers
                     availablem.Add(new MaterialReqVM
                     {
                         ID = r.ID,
-                        DisplayText = r.MaterialID.ToString()
+                        MaterialName = r.Inventory.Material.Description,
+                        Size = r.Quantity.ToString() + " " + r.Inventory.SizeUnit,
+                        NetUnit = r.Inventory.AvgNet,
+                        Cost = r.Quantity * r.Inventory.AvgNet
                     });
                 }
             }
-            ViewData["selOptsm"] = new MultiSelectList(selectedm.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-            ViewData["availOptsm"] = new MultiSelectList(availablem.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["selOptsm"] = new MultiSelectList(selectedm.OrderBy(s => s.MaterialName), "ID", "MaterialName");
+            ViewData["availOptsm"] = new MultiSelectList(availablem.OrderBy(s => s.MaterialName), "ID", "MaterialName");
         }
         private void UpdateMaterialRequirements(string[] selectedRequirements, Project projectToUpdate)
         {
             if (selectedRequirements == null)
             {
-                projectToUpdate.MaterialRequirements = new List<MaterialRequirement>();
+                projectToUpdate.ProjectMaterials = new List<ProjectMaterial>();
                 return;
             }
             var selectedRequirementsHS = new HashSet<string>(selectedRequirements);
             var materialReqsHS = new HashSet<int>
-            (projectToUpdate.MaterialRequirements.Select(r => r.InventoryID));
-            foreach (var inventory in _context.Inventories)
+            (projectToUpdate.ProjectMaterials.Select(r => r.MaterialReqID));
+            foreach (var material in _context.MaterialRequirements)
             {
-                if (selectedRequirementsHS.Contains(inventory.ID.ToString()))
+                if (selectedRequirementsHS.Contains(material.ID.ToString()))
                 {
-                    if (!materialReqsHS.Contains(inventory.ID))
+                    if (!materialReqsHS.Contains(material.ID))
                     {
-                        projectToUpdate.MaterialRequirements.Add(new MaterialRequirement
+                        projectToUpdate.ProjectMaterials.Add(new ProjectMaterial
                         {
                             ProjectID = projectToUpdate.ID,
-                            InventoryID = inventory.ID
+                            MaterialReqID = material.ID
                         });
                     }
                     else
                     {
-                        if (materialReqsHS.Contains(inventory.ID))
+                        if (materialReqsHS.Contains(material.ID))
                         {
-                            MaterialRequirement requirementToRemove = projectToUpdate.MaterialRequirements
-                                                                           .SingleOrDefault(r => r.InventoryID == inventory.ID);
+                            ProjectMaterial requirementToRemove = projectToUpdate.ProjectMaterials
+                                                                           .SingleOrDefault(r => r.MaterialReqID == material.ID);
                             _context.Remove(requirementToRemove);
                         }
                     }
                 }
             }
         }
+
 
         private bool ProjectExists(int id)
         {

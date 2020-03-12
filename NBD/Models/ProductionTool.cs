@@ -13,9 +13,9 @@ namespace NBD.Models
         public DateTime? LatestDelivery { get; set; }
 
         public int ProjectID { get; set; }
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
         public int ToolID { get; set; }
-        public Tool Tool { get; set; }
+        public virtual Tool Tool { get; set; }
     }
 
 }
