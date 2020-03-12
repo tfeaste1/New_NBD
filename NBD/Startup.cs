@@ -37,13 +37,12 @@ namespace NBD
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<NBDContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("NBDContext")));
-            services.AddMvc();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -79,15 +78,13 @@ namespace NBD
                 options.SlidingExpiration = true;
             });
 
-            services.AddDbContext<NBDContext>(options =>
-                          options.UseSqlServer(Configuration.GetConnectionString("NBDContext")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);           
 
             services.AddDbContext<NBDContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("NBDContext")));
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
