@@ -5,9 +5,15 @@
 }
 
 <h1 class="text-center">Projects</h1>
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-light" asp-action="Create">Create New</a>
 
-<p><a class="btn btn-light" asp-action="Create">Create New</a></p>
-    
+    }
+</p>
+
+
 
 
 
@@ -17,16 +23,20 @@
             <div class="card  align-content-center" style="width:400px">
                 <div class="card-body">
                     <h4 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h4>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Client.CompanyName)</p>
-                    <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-                    <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
-                </div>
-            </div>
-        }
-    </div>
+    <p class="card-text">@Html.DisplayFor(modelItem => item.Client.CompanyName)</p>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+    }
 
-    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>
-    
+    <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
+    </div>
+    </div>
+}
+        </div>
+
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>
+
 
 
 

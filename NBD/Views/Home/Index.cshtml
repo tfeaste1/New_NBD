@@ -54,11 +54,17 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="text-center">
+<div class="text-center">
     <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
-    <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
+
+        <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Create">Create a Project</a>
+    }
+
     <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
-    <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Create">Create a Project</a>
+
 </div>
 
 }

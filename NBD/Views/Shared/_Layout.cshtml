@@ -36,34 +36,37 @@
                         <partial name="_LoginPartial" />
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                        Sales
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Create">Create Client</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                        Project Forms
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Index">Projects/Bids</a>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Production Plan</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
-                                </li>
-                                
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                Sales
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Create">Create Client</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                Project Forms
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Index">Projects/Bids</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Production Plan</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="UserRole" asp-action="Index">User</a>
+                        </li>
 
-                            </ul>
+
+                    </ul>
                         }
                         </div>
                 </div>
