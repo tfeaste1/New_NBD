@@ -51,7 +51,7 @@ namespace NBD.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "ID");
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "Description");
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace NBD.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "ID", employee.DepartmentID);
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "Description", employee.DepartmentID);
             return View(employee);
         }
 
@@ -87,7 +87,7 @@ namespace NBD.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "ID", employee.DepartmentID);
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "Description", employee.DepartmentID);
             return View(employee);
         }
 
@@ -124,7 +124,7 @@ namespace NBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "ID", employee.DepartmentID);
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "Description", employee.DepartmentID);
             return View(employee);
         }
 
