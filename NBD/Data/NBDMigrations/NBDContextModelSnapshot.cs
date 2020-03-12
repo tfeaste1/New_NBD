@@ -132,7 +132,7 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.Inventory", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -148,11 +148,44 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("SizeUnit");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("MaterialID");
 
                     b.ToTable("Inventories");
+                });
+
+            modelBuilder.Entity("NBD.Models.LabourRequirement", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments");
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<DateTime?>("EstDate");
+
+                    b.Property<int>("EstHours");
+
+                    b.Property<int>("Hours");
+
+                    b.Property<int>("TaskID");
+
+                    b.Property<int?>("TeamEmployeeID");
+
+                    b.Property<int>("TeamID");
+
+                    b.Property<int?>("TeamProjectID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TaskID");
+
+                    b.HasIndex("TeamProjectID", "TeamEmployeeID");
+
+                    b.ToTable("LabourRequirement");
                 });
 
             modelBuilder.Entity("NBD.Models.LabourSummary", b =>
@@ -269,7 +302,8 @@ namespace NBD.Data.NBDMigrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<DateTime?>("ProjBidDate");
+                    b.Property<DateTime?>("ProjBidDate")
+                        .IsRequired();
 
                     b.Property<string>("ProjCurrentPhase");
 
@@ -318,8 +352,7 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Phase");
 
-                    b.Property<string>("TeamName")
-                        .IsRequired();
+                    b.Property<string>("TeamName");
 
                     b.HasKey("ProjectID", "EmployeeID");
 
@@ -363,6 +396,18 @@ namespace NBD.Data.NBDMigrations
                         .WithMany("Inventories")
                         .HasForeignKey("MaterialID")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("NBD.Models.LabourRequirement", b =>
+                {
+                    b.HasOne("NBD.Models.Task", "Task")
+                        .WithMany("LabourRequirements")
+                        .HasForeignKey("TaskID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Team", "Team")
+                        .WithMany("LabourRequirements")
+                        .HasForeignKey("TeamProjectID", "TeamEmployeeID");
                 });
 
             modelBuilder.Entity("NBD.Models.LabourSummary", b =>
