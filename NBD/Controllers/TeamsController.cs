@@ -38,7 +38,7 @@ namespace NBD.Controllers
             var team = await _context.Teams
                 .Include(t => t.Employee)
                 .Include(t => t.Project)
-                .FirstOrDefaultAsync(m => m.ProjectID == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (team == null)
             {
                 return NotFound();
@@ -51,7 +51,7 @@ namespace NBD.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "Email");
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName");
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
             return View();
         }
@@ -62,7 +62,7 @@ namespace NBD.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Phase,TeamName,EmployeeID,ProjectID")] Team team)
+        public async Task<IActionResult> Create([Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace NBD.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "Email", team.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
             return View(team);
         }
@@ -89,7 +89,7 @@ namespace NBD.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "Email", team.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
             return View(team);
         }
@@ -102,7 +102,7 @@ namespace NBD.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team)
         {
-            if (id != team.ProjectID)
+            if (id != team.ID)
             {
                 return NotFound();
             }
@@ -116,7 +116,7 @@ namespace NBD.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TeamExists(team.ProjectID))
+                    if (!TeamExists(team.ID))
                     {
                         return NotFound();
                     }
@@ -127,7 +127,7 @@ namespace NBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "Email", team.EmployeeID);
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
             return View(team);
         }

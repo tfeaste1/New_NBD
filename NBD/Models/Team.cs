@@ -22,6 +22,6 @@ namespace NBD.Models
         [Display(Name = "Project")]
         public int ProjectID { get; set; }
         public Project Project { get; set;}
-        public ICollection<LabourRequirement> LabourRequirements { get; set; }
+        //public ICollection<LabourRequirement> LabourRequirements { get; set; }
 }
 }

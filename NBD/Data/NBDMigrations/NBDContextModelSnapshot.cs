@@ -155,37 +155,6 @@ namespace NBD.Data.NBDMigrations
                     b.ToTable("Inventories");
                 });
 
-            modelBuilder.Entity("NBD.Models.LabourRequirement", b =>
-                {
-                    b.Property<int>("TeamID");
-
-                    b.Property<int>("TaskID");
-
-                    b.Property<string>("Comments");
-
-                    b.Property<DateTime?>("Date");
-
-                    b.Property<DateTime?>("EstDate");
-
-                    b.Property<int>("EstHours");
-
-                    b.Property<int>("Hours");
-
-                    b.Property<int>("ID");
-
-                    b.Property<int?>("TeamEmployeeID");
-
-                    b.Property<int?>("TeamProjectID");
-
-                    b.HasKey("TeamID", "TaskID");
-
-                    b.HasIndex("TaskID");
-
-                    b.HasIndex("TeamProjectID", "TeamEmployeeID");
-
-                    b.ToTable("LabourRequirements");
-                });
-
             modelBuilder.Entity("NBD.Models.LabourSummary", b =>
                 {
                     b.Property<int>("ProjectID");
@@ -394,18 +363,6 @@ namespace NBD.Data.NBDMigrations
                         .WithMany("Inventories")
                         .HasForeignKey("MaterialID")
                         .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("NBD.Models.LabourRequirement", b =>
-                {
-                    b.HasOne("NBD.Models.Task", "Task")
-                        .WithMany("LabourRequirements")
-                        .HasForeignKey("TaskID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NBD.Models.Team", "Team")
-                        .WithMany("LabourRequirements")
-                        .HasForeignKey("TeamProjectID", "TeamEmployeeID");
                 });
 
             modelBuilder.Entity("NBD.Models.LabourSummary", b =>

@@ -12,6 +12,6 @@ namespace NBD.Models
         public int StdTimeAmnt { get; set; }
         public string stdTimeUnit { get; set; }
 
-        public ICollection<LabourRequirement> LabourRequirements { get; set; }
+        //public ICollection<LabourRequirement> LabourRequirements { get; set; }
     }
 }

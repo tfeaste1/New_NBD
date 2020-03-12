@@ -47,7 +47,7 @@ namespace NBD.Data
         public DbSet<Models.Task> Tasks { get; set; }
         public DbSet<Tool> Tools { get; set; }
         public DbSet<ProductionTool> ProductionTools { get; set; }
-        public DbSet<LabourRequirement> LabourRequirements { get; set; }
+        //public DbSet<LabourRequirement> LabourRequirements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -95,8 +95,8 @@ namespace NBD.Data
             modelBuilder.Entity<ProductionTool>()
             .HasKey(pt => new { pt.ProjectID, pt.ToolID });
 
-            modelBuilder.Entity<LabourRequirement>()
-            .HasKey(lr => new { lr.TeamID, lr.TaskID });
+            //modelBuilder.Entity<LabourRequirement>()
+            //.HasKey(lr => new { lr.TeamID, lr.TaskID });
 
 
         }

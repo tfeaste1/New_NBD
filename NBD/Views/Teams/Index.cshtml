@@ -38,24 +38,24 @@
                 @Html.DisplayFor(modelItem => item.TeamName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.Email)
+                @Html.DisplayFor(modelItem => item.Employee.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Project.Name)
             </td>
             <td>
 
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
 
-                @if (User.IsInRole("Admin,Manager"))
+                @if (User.IsInRole("Admin"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
 
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-
-
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 }
 
+
+
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
             </td>
         </tr>
 }

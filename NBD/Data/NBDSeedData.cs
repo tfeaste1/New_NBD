@@ -322,11 +322,11 @@ namespace NBD.Data
                         context.SaveChanges();
                             
                     }
-                    if(!context.Employees.Any())
+                    if (!context.Employees.Any())
                     {
                         context.Employees.AddRange(
                             new Employee
-                            {   
+                            {
                                 FirstName = "Cheryl",
                                 LastName = "Poy",
                                 Email = "breinhardt@nbd.com",
@@ -406,9 +406,9 @@ namespace NBD.Data
                                DepartmentID = 1
                            });
                         context.SaveChanges();
-                            
+
                     }
-                    if(!context.Tasks.Any())
+                    if (!context.Tasks.Any())
                     {
                         context.Tasks.AddRange(
                             new Models.Task
@@ -725,114 +725,114 @@ namespace NBD.Data
                             );
                         context.SaveChanges();
                     }
-                    if(!context.LabourRequirements.Any())
-                    {
-                        context.LabourRequirements.AddRange(
-                            new LabourRequirement
-                            {
-                                TeamID = 1,
-                                TaskID = 1,
-                                EstHours = 12,
-                            },
-                            new LabourRequirement
-                            {
-                                TeamID = 1,
-                                TaskID = 2,
-                                EstDate = DateTime.Parse("2020-06-10"),
-                                EstHours = 5,
+                    //if(!context.LabourRequirements.Any())
+                    //{
+                    //    context.LabourRequirements.AddRange(
+                    //        new LabourRequirement
+                    //        {
+                    //            TeamID = 1,
+                    //            TaskID = 1,
+                    //            EstHours = 12,
+                    //        },
+                    //        new LabourRequirement
+                    //        {
+                    //            TeamID = 1,
+                    //            TaskID = 2,
+                    //            EstDate = DateTime.Parse("2020-06-10"),
+                    //            EstHours = 5,
 
-                            },
-                             new LabourRequirement
-                             {
-                                 TeamID = 1,
-                                 TaskID = 3,
-                                 EstDate = DateTime.Parse("2020-06-15"),
-                                 EstHours = 3,
+                    //        },
+                    //         new LabourRequirement
+                    //         {
+                    //             TeamID = 1,
+                    //             TaskID = 3,
+                    //             EstDate = DateTime.Parse("2020-06-15"),
+                    //             EstHours = 3,
 
-                             },
-                              new LabourRequirement
-                              {
-                                  TeamID = 1,
-                                  TaskID = 4,
-                                  EstDate = DateTime.Parse("2020-06-16"),
-                                  EstHours = 1,
+                    //         },
+                    //          new LabourRequirement
+                    //          {
+                    //              TeamID = 1,
+                    //              TaskID = 4,
+                    //              EstDate = DateTime.Parse("2020-06-16"),
+                    //              EstHours = 1,
 
-                              },
-                               new LabourRequirement
-                               {
-                                   TeamID = 1,
-                                   TaskID = 5,
-                                   EstDate = DateTime.Parse("2020-06-18"),
-                                   EstHours = 1,
+                    //          },
+                    //           new LabourRequirement
+                    //           {
+                    //               TeamID = 1,
+                    //               TaskID = 5,
+                    //               EstDate = DateTime.Parse("2020-06-18"),
+                    //               EstHours = 1,
 
-                               },
-                                new LabourRequirement
-                                {
-                                    TeamID = 4,
-                                    TaskID = 6,
-                                    EstDate = DateTime.Parse("2020-06-15"),
-                                    EstHours = 3,
+                    //           },
+                    //            new LabourRequirement
+                    //            {
+                    //                TeamID = 4,
+                    //                TaskID = 6,
+                    //                EstDate = DateTime.Parse("2020-06-15"),
+                    //                EstHours = 3,
 
-                                },
-                                 new LabourRequirement
-                                 {
-                                     TeamID = 4,
-                                     TaskID = 7,
-                                     EstDate = DateTime.Parse("2020-06-16"),
-                                     EstHours = 4,
+                    //            },
+                    //             new LabourRequirement
+                    //             {
+                    //                 TeamID = 4,
+                    //                 TaskID = 7,
+                    //                 EstDate = DateTime.Parse("2020-06-16"),
+                    //                 EstHours = 4,
 
-                                 },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 4,
-                                      TaskID = 8,
-                                      EstDate = DateTime.Parse("2020-06-17"),
-                                      EstHours = 8,
+                    //             },
+                    //              new LabourRequirement
+                    //              {
+                    //                  TeamID = 4,
+                    //                  TaskID = 8,
+                    //                  EstDate = DateTime.Parse("2020-06-17"),
+                    //                  EstHours = 8,
 
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 5,
-                                      TaskID = 6,
-                                      EstDate = DateTime.Parse("2020-06-15"),
-                                      EstHours = 3,
+                    //              },
+                    //              new LabourRequirement
+                    //              {
+                    //                  TeamID = 5,
+                    //                  TaskID = 6,
+                    //                  EstDate = DateTime.Parse("2020-06-15"),
+                    //                  EstHours = 3,
 
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 5,
-                                      TaskID = 7,
-                                      EstDate = DateTime.Parse("2020-06-16"),
-                                      EstHours = 4,
+                    //              },
+                    //              new LabourRequirement
+                    //              {
+                    //                  TeamID = 5,
+                    //                  TaskID = 7,
+                    //                  EstDate = DateTime.Parse("2020-06-16"),
+                    //                  EstHours = 4,
 
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 5,
-                                      TaskID = 8,
-                                      EstDate = DateTime.Parse("2020-06-17"),
-                                      EstHours = 8,
+                    //              },
+                    //              new LabourRequirement
+                    //              {
+                    //                  TeamID = 5,
+                    //                  TaskID = 8,
+                    //                  EstDate = DateTime.Parse("2020-06-17"),
+                    //                  EstHours = 8,
 
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 6,
-                                      TaskID = 10,
-                                      EstDate = DateTime.Parse("2020-06-15"),
-                                      EstHours = 4,
+                    //              },
+                    //              new LabourRequirement
+                    //              {
+                    //                  TeamID = 6,
+                    //                  TaskID = 10,
+                    //                  EstDate = DateTime.Parse("2020-06-15"),
+                    //                  EstHours = 4,
 
-                                  },
-                                  new LabourRequirement
-                                  {
-                                      TeamID = 7,
-                                      TaskID = 9,
-                                      EstDate = DateTime.Parse("2020-06-14"),
-                                      EstHours = 6,
+                    //              },
+                    //              new LabourRequirement
+                    //              {
+                    //                  TeamID = 7,
+                    //                  TaskID = 9,
+                    //                  EstDate = DateTime.Parse("2020-06-14"),
+                    //                  EstHours = 6,
 
-                                  }
-                            );
-                        context.SaveChanges();
-                    }
+                    //              }
+                    //        );
+                    //    context.SaveChanges();
+                    //}
                     if (!context.MaterialRequirements.Any())
                     {
                         context.MaterialRequirements.AddRange(
