@@ -4,95 +4,30 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Clients</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-light" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Position)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Province)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostalCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Province)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostalCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City.ID)
-            </td>
-            <td>
+
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+        <div class="card  align-content-center" style="width:400px">
+                <div class="card-body">
+                <h4 class="card-title">@Html.DisplayFor(modelItem => item.FullName)</h4>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Position)&nbsp;of&nbsp;@Html.DisplayFor(modelItem => item.CompanyName), @Html.DisplayFor(modelItem => item.City.Name)</p>
+                <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+                <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
+            </div>
+        </div>
+     }
+</div>
+<br />
+<div>
+<a asp-area="" asp-controller="Projects" asp-action="Create" class="btn btn-light">Create a Project</a>
+<a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>
+</div>
 
 
-                @if (User.IsInRole("Admin"))
-                {
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                }
-
-               
-
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+  

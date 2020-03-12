@@ -19,6 +19,10 @@ namespace NBD.Models
         [Display(Name = "Project Site")]
         public string ProjSite { get; set; }
 
+        [Display(Name = "Project Bid Date")]
+        [Required(ErrorMessage = "Estimated Start Date is required.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? ProjBidDate { get; set; }
 
         [Display(Name = "Estimated Start Date")]
@@ -69,11 +73,13 @@ namespace NBD.Models
         public string ProjCurrentPhase { get; set; }
 
         [Required(ErrorMessage = "Please choose a client.")]
+        [Display(Name ="Client")]
         public int? ClientID { get; set; }
 
+        [Display(Name = "Is Project flagged?")]
         public bool ProjIsFlagged { get; set; }
 
-        [Display(Name = "Inventory List")]
+        
         
         public ICollection<LabourSummary> LabourSummaries { get; set; }
         public ICollection<MaterialRequirement> MaterialRequirements { get; set; }

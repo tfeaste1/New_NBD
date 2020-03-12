@@ -1,13 +1,20 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div>
     <h1 class="text-center">Natural By Design</h1>
-    <div class=" text-center">
-        <a asp-area="" asp-controller="Clients" asp-action="Index" class="btn btn-light">Clients</a>
-        <a asp-area="" asp-controller="Projects" asp-action="Index" class="btn btn-light">Projects</a>
-    </div>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <div class=" text-center">
+            <a class="btn btn-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="btn btn-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>
+    }
+
 </div>
 <hr />
 
@@ -42,6 +49,20 @@
         <span class="carousel-control-next-icon"></span>
     </a>
 </div>
+
+<br /><br /><br />
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+    <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
+    <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
+    <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+    <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Create">Create a Project</a>
+</div>
+
+}
+
 
 
 

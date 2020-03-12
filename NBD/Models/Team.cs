@@ -10,7 +10,7 @@ namespace NBD.Models
     {
         public int ID { get; set; }
         public string Phase { get; set; }
-        public string TeamName { get; set; }
+       
         public int EmployeeID { get; set; }
         public Employee Employee { get; set; }
 

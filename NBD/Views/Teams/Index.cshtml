@@ -7,57 +7,21 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-light" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+        <div class="card  align-content-center" style="width:400px">
+            <div class="card-body">
+                <h4 class="card-title">@Html.DisplayFor(modelItem => item.Project)</h4>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Project.Client.CompanyName)</p>
+                <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
+            </div>
+        </div>
+    }
+</div>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Phase)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TeamName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Project)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phase)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TeamName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
-            </td>
-            <td>
+<a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>
 
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
-
-                @if (User.IsInRole("Admin,Manager"))
-                {
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
-
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-
-
-                }
-
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
