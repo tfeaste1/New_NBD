@@ -77,8 +77,13 @@ namespace NBD.Data
               .WithOne(i => i.Material)
               .HasForeignKey(i => i.MaterialID)
               .OnDelete(DeleteBehavior.Restrict);
+           
+            modelBuilder.Entity<Team>()
+              .HasMany<LabourRequirement>(t => t.LabourRequirements)
+              .WithOne(l => l.Team)
+              .HasForeignKey(l => l.TeamID)
+              .OnDelete(DeleteBehavior.Restrict);
 
-            
             //unique Email Vlaues
             modelBuilder.Entity<Employee>()
              .HasIndex(e => new { e.Email })

@@ -13,14 +13,9 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TeamID)
+                @Html.DisplayNameFor(model => model.Team)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LabourReq)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaterialReq)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.Project)
             </th>
@@ -31,14 +26,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TeamID)
+                @Html.DisplayFor(modelItem => item.Team.TeamName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LabourReq)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaterialReq)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Project.Name)
             </td>

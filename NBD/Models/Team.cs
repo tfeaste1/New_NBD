@@ -18,6 +18,6 @@ namespace NBD.Models
         public int ProjectID { get; set; }
         public virtual Project Project { get; set;}
 
-        public ICollection<LabourRequirement> LabourRequirements { get; set; }
+        public virtual ICollection<LabourRequirement> LabourRequirements { get; set; }
 }
 }

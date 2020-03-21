@@ -465,7 +465,7 @@ namespace NBD.Data
                              new Team
                              {
                                  ID = 1,
-                                 TeamName = "NBD project",
+                                 TeamName = "Team 1",
                                  ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                  EmployeeID = 1,
                                  Phase = "D"
@@ -513,9 +513,7 @@ namespace NBD.Data
                             new Team
                             {
                                 ID = 2,
-                                TeamName = "is none of your problom",
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 7,
                                 Phase = "P"
                             },
                             new Team
