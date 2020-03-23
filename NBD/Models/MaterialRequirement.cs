@@ -15,10 +15,10 @@ namespace NBD.Models
         public int EstQuantity { get; set; }
         public int Quantity { get; set; }
         public int InventoryID { get; set; }
-        public virtual Inventory Inventory { get; set; }
+        public Inventory Inventory { get; set; }
 
-        public virtual ICollection<ProjectMaterial> ProjectMaterials { get; set; }
-        public virtual ICollection<ProdPlanMaterial> ProdPlanMaterials { get; set; }
+        public ICollection<ProjectMaterial> ProjectMaterials { get; set; }
+        public ICollection<ProdPlanMaterial> ProdPlanMaterials { get; set; }
 
     }
 }

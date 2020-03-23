@@ -136,9 +136,9 @@ namespace NBD.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("AvgNet");
+                    b.Property<float?>("AvgNet");
 
-                    b.Property<double>("List");
+                    b.Property<float?>("List");
 
                     b.Property<int>("MaterialID");
 
@@ -173,34 +173,34 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<int>("TaskID");
 
-                    b.Property<int?>("TeamEmployeeID");
-
                     b.Property<int>("TeamID");
-
-                    b.Property<int?>("TeamProjectID");
 
                     b.HasKey("ID");
 
                     b.HasIndex("TaskID");
 
-                    b.HasIndex("TeamProjectID", "TeamEmployeeID");
+                    b.HasIndex("TeamID");
 
-                    b.ToTable("LabourRequirement");
+                    b.ToTable("LabourRequirements");
                 });
 
             modelBuilder.Entity("NBD.Models.LabourSummary", b =>
                 {
-                    b.Property<int>("ProjectID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("DepartmentID");
 
                     b.Property<int>("Hours");
 
-                    b.Property<int>("ID");
+                    b.Property<int>("ProjectID");
 
-                    b.HasKey("ProjectID", "DepartmentID");
+                    b.HasKey("ID");
 
                     b.HasIndex("DepartmentID");
+
+                    b.HasIndex("ProjectID");
 
                     b.ToTable("LabourSummaries");
                 });
@@ -222,9 +222,9 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.MaterialRequirement", b =>
                 {
-                    b.Property<int>("InventoryID");
-
-                    b.Property<int>("ProjectID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("DeliveryDate");
 
@@ -232,36 +232,97 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<int>("EstQuantity");
 
-                    b.Property<int>("ID");
-
                     b.Property<DateTime?>("InstallDate");
 
                     b.Property<DateTime?>("InstallTime");
 
+                    b.Property<int>("InventoryID");
+
                     b.Property<int>("Quantity");
 
-                    b.HasKey("InventoryID", "ProjectID");
+                    b.HasKey("ID");
 
-                    b.HasIndex("ProjectID");
+                    b.HasIndex("InventoryID");
 
                     b.ToTable("MaterialRequirements");
                 });
 
-            modelBuilder.Entity("NBD.Models.ProductionTool", b =>
+            modelBuilder.Entity("NBD.Models.ProdPlanLabour", b =>
                 {
+                    b.Property<int>("ProdPlanID");
+
+                    b.Property<int>("LabourReqID");
+
+                    b.Property<int?>("LabourRequirementID");
+
+                    b.Property<int?>("ProductionPlanID");
+
+                    b.HasKey("ProdPlanID", "LabourReqID");
+
+                    b.HasIndex("LabourRequirementID");
+
+                    b.HasIndex("ProductionPlanID");
+
+                    b.ToTable("ProdPlanLabours");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProdPlanMaterial", b =>
+                {
+                    b.Property<int>("MaterialReqID");
+
+                    b.Property<int>("ProdPlanID");
+
+                    b.Property<int?>("MaterialRequirementID");
+
+                    b.Property<int?>("ProductionPlanID");
+
+                    b.HasKey("MaterialReqID", "ProdPlanID");
+
+                    b.HasIndex("MaterialRequirementID");
+
+                    b.HasIndex("ProductionPlanID");
+
+                    b.ToTable("ProdPlanMaterials");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProductionPlan", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("ProjectID");
 
-                    b.Property<int>("ToolID");
+                    b.Property<int>("TeamID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.HasIndex("TeamID");
+
+                    b.ToTable("ProductionPlan");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProductionTool", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("EarliestDelivery");
 
-                    b.Property<int>("ID");
-
                     b.Property<DateTime?>("LatestDelivery");
+
+                    b.Property<int>("ProjectID");
 
                     b.Property<int>("Quantity");
 
-                    b.HasKey("ProjectID", "ToolID");
+                    b.Property<int>("ToolID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProjectID");
 
                     b.HasIndex("ToolID");
 
@@ -313,6 +374,8 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<DateTime?>("StartDate");
 
+                    b.Property<int?>("ToolID");
+
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
 
@@ -322,7 +385,39 @@ namespace NBD.Data.NBDMigrations
 
                     b.HasIndex("ClientID");
 
+                    b.HasIndex("ToolID");
+
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProjectLabour", b =>
+                {
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int>("LabourReqID");
+
+                    b.Property<int?>("LabourRequirementID");
+
+                    b.HasKey("ProjectID", "LabourReqID");
+
+                    b.HasIndex("LabourRequirementID");
+
+                    b.ToTable("ProjectLabours");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProjectMaterial", b =>
+                {
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int>("MaterialReqID");
+
+                    b.Property<int?>("MaterialRequirementID");
+
+                    b.HasKey("ProjectID", "MaterialReqID");
+
+                    b.HasIndex("MaterialRequirementID");
+
+                    b.ToTable("ProjectMaterials");
                 });
 
             modelBuilder.Entity("NBD.Models.Task", b =>
@@ -344,19 +439,21 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.Team", b =>
                 {
-                    b.Property<int>("ProjectID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("EmployeeID");
 
-                    b.Property<int>("ID");
-
                     b.Property<string>("Phase");
 
-                    b.Property<string>("TeamName");
+                    b.Property<int>("ProjectID");
 
-                    b.HasKey("ProjectID", "EmployeeID");
+                    b.HasKey("ID");
 
                     b.HasIndex("EmployeeID");
+
+                    b.HasIndex("ProjectID");
 
                     b.ToTable("Teams");
                 });
@@ -377,7 +474,7 @@ namespace NBD.Data.NBDMigrations
             modelBuilder.Entity("NBD.Models.Client", b =>
                 {
                     b.HasOne("NBD.Models.City", "City")
-                        .WithMany()
+                        .WithMany("Clients")
                         .HasForeignKey("CityID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -403,11 +500,12 @@ namespace NBD.Data.NBDMigrations
                     b.HasOne("NBD.Models.Task", "Task")
                         .WithMany("LabourRequirements")
                         .HasForeignKey("TaskID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NBD.Models.Team", "Team")
                         .WithMany("LabourRequirements")
-                        .HasForeignKey("TeamProjectID", "TeamEmployeeID");
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NBD.Models.LabourSummary", b =>
@@ -418,7 +516,7 @@ namespace NBD.Data.NBDMigrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("NBD.Models.Project", "Project")
-                        .WithMany("LabourSummaries")
+                        .WithMany()
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -429,22 +527,52 @@ namespace NBD.Data.NBDMigrations
                         .WithMany("MaterialRequirements")
                         .HasForeignKey("InventoryID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
+            modelBuilder.Entity("NBD.Models.ProdPlanLabour", b =>
+                {
+                    b.HasOne("NBD.Models.LabourRequirement", "LabourRequirement")
+                        .WithMany("ProdPlanLabours")
+                        .HasForeignKey("LabourRequirementID");
+
+                    b.HasOne("NBD.Models.ProductionPlan", "ProductionPlan")
+                        .WithMany("ProdPlanLabours")
+                        .HasForeignKey("ProductionPlanID");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProdPlanMaterial", b =>
+                {
+                    b.HasOne("NBD.Models.MaterialRequirement", "MaterialRequirement")
+                        .WithMany("ProdPlanMaterials")
+                        .HasForeignKey("MaterialRequirementID");
+
+                    b.HasOne("NBD.Models.ProductionPlan", "ProductionPlan")
+                        .WithMany("ProdPlanMaterials")
+                        .HasForeignKey("ProductionPlanID");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProductionPlan", b =>
+                {
                     b.HasOne("NBD.Models.Project", "Project")
-                        .WithMany("MaterialRequirements")
+                        .WithMany("ProductionPlans")
                         .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("NBD.Models.Team", "Team")
+                        .WithMany("ProductionPlans")
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NBD.Models.ProductionTool", b =>
                 {
                     b.HasOne("NBD.Models.Project", "Project")
-                        .WithMany("ProductionTools")
+                        .WithMany()
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("NBD.Models.Tool", "Tool")
-                        .WithMany("ProductionTools")
+                        .WithMany()
                         .HasForeignKey("ToolID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -455,6 +583,34 @@ namespace NBD.Data.NBDMigrations
                         .WithMany("Projects")
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("NBD.Models.Tool")
+                        .WithMany("Projects")
+                        .HasForeignKey("ToolID");
+                });
+
+            modelBuilder.Entity("NBD.Models.ProjectLabour", b =>
+                {
+                    b.HasOne("NBD.Models.LabourRequirement", "LabourRequirement")
+                        .WithMany("ProjectLabours")
+                        .HasForeignKey("LabourRequirementID");
+
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany("ProjectLabours")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD.Models.ProjectMaterial", b =>
+                {
+                    b.HasOne("NBD.Models.MaterialRequirement", "MaterialRequirement")
+                        .WithMany("ProjectMaterials")
+                        .HasForeignKey("MaterialRequirementID");
+
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany("ProjectMaterials")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("NBD.Models.Team", b =>

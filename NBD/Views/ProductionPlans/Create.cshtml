@@ -14,25 +14,40 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ProjectID" class="control-label"></label>
-                <select asp-for="ProjectID" class ="form-control" asp-items="ViewBag.ProjectID"></select>
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="TeamID" class="control-label"></label>
                 <input asp-for="TeamID" class="form-control" />
                 <span asp-validation-for="TeamID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="LabourReq" class="control-label"></label>
-                <input asp-for="LabourReq" class="form-control" />
-                <span asp-validation-for="LabourReq" class="text-danger"></span>
+            <div class="form-group col-md-6">
+                <label class="control-label">Labour Requirements</label> <button type="button" id="btnRightlpp" class="btn btn-danger btn-sm">
+                    <strong>-</strong>
+                </button>
+                @Html.ListBox("selOptslpp", (MultiSelectList)ViewBag.selOptsl, new { @size = 10, @class = "form-control" })
             </div>
-            <div class="form-group">
-                <label asp-for="MaterialReq" class="control-label"></label>
-                <input asp-for="MaterialReq" class="form-control" />
-                <span asp-validation-for="MaterialReq" class="text-danger"></span>
+            <div class="form-group col-md-6">
+                <label class="control-label">Choose Labour Requirements</label> <button type="button" id="btnLeftlpp" class="btn btn-success btn-sm">
+                    <strong>+</strong>
+                </button>
+                @Html.ListBox("availOptslpp", (MultiSelectList)ViewBag.availOptsl, new { @size = 10, @class = "form-control" })
             </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Material Requirements</label> <button type="button" id="btnRightmpp" class="btn btn-danger btn-sm">
+                    <strong>-</strong>
+                </button>
+                @Html.ListBox("selOptsmpp", (MultiSelectList)ViewBag.selOptsm, new { @size = 10, @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Choose Material Requirements</label> <button type="button" id="btnLeftmpp" class="btn btn-success btn-sm">
+                    <strong>+</strong>
+                </button>
+                @Html.ListBox("availOptsmpp", (MultiSelectList)ViewBag.availOptsm, new { @size = 10, @class = "form-control" })
+            </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input id="btnSubmitpp" type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -44,4 +59,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script src="~/js/multiselect.js"></script>
 }

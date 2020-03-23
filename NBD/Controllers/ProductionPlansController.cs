@@ -24,7 +24,11 @@ namespace NBD.Controllers
         // GET: ProductionPlans
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.ProductionPlan.Include(p => p.Project);
+            var nBDContext = _context.ProductionPlan
+                .Include(p => p.Project)
+                .Include(p => p.Team)
+                .Include(p => p.ProdPlanLabours) .ThenInclude(pl => pl.LabourRequirement)
+                .Include(p=>p.ProdPlanMaterials) .ThenInclude(pm => pm.MaterialRequirement);
             return View(await nBDContext.ToListAsync());
         }
 
@@ -51,6 +55,7 @@ namespace NBD.Controllers
         public IActionResult Create()
         {
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName");
             return View();
         }
 
@@ -110,6 +115,7 @@ namespace NBD.Controllers
             PopulateAssignedLabourReqData(productionPlan);
             PopulateAssignedMaterialReqData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", productionPlan.ProjectID);
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName", productionPlan.TeamID);
             return View(productionPlan);
         }
 
@@ -122,10 +128,10 @@ namespace NBD.Controllers
             }
 
             var productionPlan = await _context.ProductionPlans
+                .Include(p => p.ProdPlanMaterials)
+                 .ThenInclude(p => p.MaterialRequirement)
                 .Include(p => p.ProdPlanLabours)
                 .ThenInclude(p => p.LabourRequirement)
-                .Include(p => p.ProdPlanMaterials)
-                .ThenInclude(p => p.MaterialRequirement)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.ID == id);
             if (productionPlan == null)
@@ -136,6 +142,7 @@ namespace NBD.Controllers
             PopulateAssignedLabourReqData(productionPlan);
             PopulateAssignedMaterialReqData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", productionPlan.ProjectID);
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName", productionPlan.TeamID);
             return View(productionPlan);
         }
 
@@ -144,11 +151,46 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ProjectID,TeamID,LabourReq,MaterialReq")] ProductionPlan productionPlan)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ProjectID,TeamID,LabourReq,MaterialReq")] ProductionPlan productionPlan, string[] selectedLrequirements, string[] selectedRequirements)
         {
             if (id != productionPlan.ID)
             {
                 return NotFound();
+            }
+            var pPlanToUpdate = await _context.ProductionPlans
+               .Include(p => p.ProdPlanMaterials)
+                .ThenInclude(p => p.MaterialRequirement)
+               .Include(p => p.ProdPlanLabours)
+               .ThenInclude(p => p.LabourRequirement)
+               .AsNoTracking()
+               .SingleOrDefaultAsync(p => p.ID == id);
+           
+            UpdateLabourRequirements(selectedLrequirements, pPlanToUpdate);
+            UpdateMaterialRequirements(selectedRequirements, pPlanToUpdate);
+
+            if (await TryUpdateModelAsync<ProductionPlan>(pPlanToUpdate, "", p => p.ProjectID, p => p.TeamID))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductionPlanExists(pPlanToUpdate.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
 
             if (ModelState.IsValid)
@@ -171,7 +213,11 @@ namespace NBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            PopulateAssignedLabourReqData(pPlanToUpdate);
+            PopulateAssignedMaterialReqData(pPlanToUpdate);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", productionPlan.ProjectID);
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName", productionPlan.TeamID);
             return View(productionPlan);
         }
 
@@ -218,31 +264,31 @@ namespace NBD.Controllers
                     selectedl.Add(new LabourReqVM
                     {
                         ID = r.ID,
-                        Description = r.LabourSummary.Department.Description,
+                        Description = r.Team.Employee.Department.Description,
                         Hours = r.Hours,
-                        CostPerHour = r.LabourSummary.Department.Cost,
-                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        CostPerHour = r.Team.Employee.Department.Cost,
+                        Cost = r.Hours * r.Team.Employee.Department.Cost,
                         Time = r.Date,
                         Task = r.Task.Description
 
-                    });
+                    }); ;
                 }
                 else
                 {
                     availablel.Add(new LabourReqVM
                     {
                         ID = r.ID,
-                        Description = r.LabourSummary.Department.Description,
+                        Description = r.Team.Employee.Department.Description,
                         Hours = r.Hours,
-                        CostPerHour = r.LabourSummary.Department.Cost,
-                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        CostPerHour = r.Team.Employee.Department.Cost,
+                        Cost = r.Hours * r.Team.Employee.Department.Cost,
                         Time = r.Date,
                         Task = r.Task.Description
                     });
                 }
             }
-            ViewData["selOptsl"] = new MultiSelectList(selectedl.OrderBy(s => s.Description), "ID", "Description");
-            ViewData["availOptsl"] = new MultiSelectList(availablel.OrderBy(s => s.Description), "ID", "Description");
+            ViewData["selOptslpp"] = new MultiSelectList(selectedl.OrderBy(s => s.Description), "ID", "Description");
+            ViewData["availOptslpp"] = new MultiSelectList(availablel.OrderBy(s => s.Description), "ID", "Description");
         }
         private void UpdateLabourRequirements(string[] selectedLrequirements, ProductionPlan pPlanToUpdate)
         {
@@ -311,8 +357,8 @@ namespace NBD.Controllers
                     });
                 }
             }
-            ViewData["selOptsm"] = new MultiSelectList(selectedm.OrderBy(s => s.MaterialName), "ID", "MaterialName");
-            ViewData["availOptsm"] = new MultiSelectList(availablem.OrderBy(s => s.MaterialName), "ID", "MaterialName");
+            ViewData["selOptsmpp"] = new MultiSelectList(selectedm.OrderBy(s => s.MaterialName), "ID", "MaterialName");
+            ViewData["availOptsmpp"] = new MultiSelectList(availablem.OrderBy(s => s.MaterialName), "ID", "MaterialName");
         }
         private void UpdateMaterialRequirements(string[] selectedRequirements, ProductionPlan pPlanToUpdate)
         {

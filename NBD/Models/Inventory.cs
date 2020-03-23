@@ -16,8 +16,8 @@ namespace NBD.Models
         public string SizeUnit { get; set; }
         public int Quantity { get; set; }
         public int MaterialID { get; set; }
-        public virtual Material Material { get; set; }
+        public Material Material { get; set; }
 
-        public virtual ICollection<MaterialRequirement> MaterialRequirements { get; set; }
+        public ICollection<MaterialRequirement> MaterialRequirements { get; set; }
     }
 }

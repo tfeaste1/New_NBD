@@ -22,7 +22,7 @@ namespace NBD.Controllers
         }
 
         // GET: Projects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
             var nBDContext = _context.Projects.Include(p => p.Client);
             return View(await nBDContext.ToListAsync());
@@ -38,12 +38,19 @@ namespace NBD.Controllers
 
             var project = await _context.Projects
                 .Include(p => p.Client)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(p=>p.ProjectLabours)
+                .ThenInclude(p=>p.LabourRequirement)
+                .Include(p=>p.ProjectMaterials)
+                .ThenInclude(p=>p.MaterialRequirement)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(p => p.ID == id);
             if (project == null)
             {
                 return NotFound();
             }
 
+            PopulateAssignedLabourReqData(project);
+            PopulateAssignedMaterialReqData(project);
             return View(project);
         }
 
@@ -154,7 +161,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedSummaries, string[] selectedRequirements, string[] selectedTools, string[] selectedTeams)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedLrequirements, string[] selectedRequirements)
         {
             var projectToUpdate = await _context.Projects
               .Include(p => p.Client)
@@ -170,7 +177,7 @@ namespace NBD.Controllers
                 return NotFound();
             }
 
-            UpdateLabourRequirements(selectedSummaries, projectToUpdate);
+            UpdateLabourRequirements(selectedLrequirements, projectToUpdate);
             UpdateMaterialRequirements(selectedRequirements, projectToUpdate);
            
             if(await TryUpdateModelAsync<Project>(projectToUpdate, "", p => p.Name, p => p.ProjSite, p => p.ProjBidDate, 
@@ -271,10 +278,10 @@ namespace NBD.Controllers
                     selectedl.Add(new LabourReqVM
                     {
                         ID = r.ID,
-                        Description = r.LabourSummary.Department.Description,
+                        Description = r.Team.Employee.Department.Description,
                         Hours = r.Hours,
-                        CostPerHour = r.LabourSummary.Department.Cost,
-                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        CostPerHour = r.Team.Employee.Department.Cost,
+                        Cost = r.Hours * r.Team.Employee.Department.Cost,
                         Time = r.Date,
                         Task = r.Task.Description
 
@@ -285,10 +292,10 @@ namespace NBD.Controllers
                     availablel.Add(new LabourReqVM
                     {
                         ID = r.ID,
-                        Description = r.LabourSummary.Department.Description,
+                        Description = r.Team.Employee.Department.Description,
                         Hours = r.Hours,
-                        CostPerHour = r.LabourSummary.Department.Cost,
-                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        CostPerHour = r.Team.Employee.Department.Cost,
+                        Cost = r.Hours * r.Team.Employee.Department.Cost,
                         Time = r.Date,
                         Task = r.Task.Description
                     });

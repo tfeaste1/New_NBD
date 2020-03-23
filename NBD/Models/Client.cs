@@ -65,8 +65,8 @@ namespace NBD.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        public virtual City City { get; set; }
-        public virtual ICollection<Project> Projects { get; set; }
+        public City City { get; set; }
+        public ICollection<Project> Projects { get; set; }
         
 
 

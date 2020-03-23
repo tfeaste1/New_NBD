@@ -44,7 +44,7 @@ namespace NBD.Models
         [Required(ErrorMessage = "Department is required.")]
         public int DepartmentID { get; set; }
 
-        public virtual Department Department { get; set; }
+        public Department Department { get; set; }
         public ICollection<Team> Teams { get; set; }
     }
 }

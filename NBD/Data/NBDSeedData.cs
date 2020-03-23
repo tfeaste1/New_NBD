@@ -464,64 +464,60 @@ namespace NBD.Data
                         context.Teams.AddRange(
                              new Team
                              {
-                                 ID = 1,
-                                 TeamName = "NBD project",
                                  ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                  EmployeeID = 1,
                                  Phase = "D"
                              },
                             new Team
                             {
-                                ID = 3,
-                                TeamName = "I am team 2",
+                                
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 2,
                                 Phase = "D"
                             },
                             new Team
                             {
-                                ID = 3,
-                                TeamName = "So I am team 3",
+                                
+                               
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 3,
                                 Phase = "P"
                             },
                             new Team
                             {
-                                ID = 4,
-                                TeamName = "I dont want be 4",
+                                
+                                
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 4,
                                 Phase = "P"
                             },
                             new Team
                             {
-                                ID = 2,
-                                TeamName = "5",
+                                
+                                
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 5,
                                 Phase = "P"
                             },
                             new Team
                             {
-                                ID = 2,
-                                TeamName = "why 5 is such short",
+                                
+                                
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 6,
                                 Phase = "P"
                             },
                             new Team
                             {
-                                ID = 2,
-                                TeamName = "is none of your problom",
+                                
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 7,
                                 Phase = "P"
                             },
                             new Team
                             {
-                                ID = 2,
-                                TeamName = "Finally",
+                                
+                                
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
                                 EmployeeID = 8,
                                 Phase = "P"
@@ -733,14 +729,14 @@ namespace NBD.Data
                             {
                                 TeamID = 1,
                                 TaskID = 1,
-                                LabourSummaryID = 2,
+                                
                                 EstHours = 12,
                             },
                             new LabourRequirement
                             {
                                 TeamID = 1,
                                 TaskID = 2,
-                                LabourSummaryID = 1,
+                                
                                 EstDate = DateTime.Parse("2020-06-10"),
                                 EstHours = 5,
 
@@ -749,7 +745,7 @@ namespace NBD.Data
                              {
                                  TeamID = 1,
                                  TaskID = 3,
-                                 LabourSummaryID = 10,
+                                 
                                  EstDate = DateTime.Parse("2020-06-15"),
                                  EstHours = 3,
 
@@ -758,7 +754,7 @@ namespace NBD.Data
                               {
                                   TeamID = 1,
                                   TaskID = 4,
-                                  LabourSummaryID = 11,
+                                  
                                   EstDate = DateTime.Parse("2020-06-16"),
                                   EstHours = 1,
 
@@ -767,7 +763,7 @@ namespace NBD.Data
                                {
                                    TeamID = 1,
                                    TaskID = 5,
-                                   LabourSummaryID = 12,
+                                   
                                    EstDate = DateTime.Parse("2020-06-18"),
                                    EstHours = 1,
 
@@ -776,7 +772,7 @@ namespace NBD.Data
                                 {
                                     TeamID = 4,
                                     TaskID = 6,
-                                    LabourSummaryID = 13,
+                                    
                                     EstDate = DateTime.Parse("2020-06-15"),
                                     EstHours = 3,
 
@@ -784,7 +780,7 @@ namespace NBD.Data
                                  new LabourRequirement
                                  {
                                      TeamID = 4,
-                                     LabourSummaryID = 1,
+                                     
                                      TaskID = 7,
                                      EstDate = DateTime.Parse("2020-06-16"),
                                      EstHours = 4,
@@ -793,7 +789,7 @@ namespace NBD.Data
                                   new LabourRequirement
                                   {
                                       TeamID = 4,
-                                      LabourSummaryID = 2,
+                                      
                                       TaskID = 8,
                                       EstDate = DateTime.Parse("2020-06-17"),
                                       EstHours = 8,
@@ -802,7 +798,7 @@ namespace NBD.Data
                                   new LabourRequirement
                                   {
                                       TeamID = 5,
-                                      LabourSummaryID= 3,
+                                      
                                       TaskID = 6,
                                       EstDate = DateTime.Parse("2020-06-15"),
                                       EstHours = 3,
@@ -812,7 +808,6 @@ namespace NBD.Data
                                   {
                                       TeamID = 5,
                                       TaskID = 7,
-                                      LabourSummaryID =4,
                                       EstDate = DateTime.Parse("2020-06-16"),
                                       EstHours = 4,
 
@@ -820,7 +815,6 @@ namespace NBD.Data
                                   new LabourRequirement
                                   {
                                       TeamID = 5,
-                                      LabourSummaryID =5,
                                       TaskID = 8,
                                       EstDate = DateTime.Parse("2020-06-17"),
                                       EstHours = 8,
@@ -829,7 +823,7 @@ namespace NBD.Data
                                   new LabourRequirement
                                   {
                                       TeamID = 6,
-                                      LabourSummaryID = 6,
+                                      
                                       TaskID = 10,
                                       EstDate = DateTime.Parse("2020-06-15"),
                                       EstHours = 4,
@@ -839,7 +833,7 @@ namespace NBD.Data
                                   {
                                       TeamID = 7,
                                       TaskID = 9,
-                                      LabourSummaryID = 7,
+                                      
                                       EstDate = DateTime.Parse("2020-06-14"),
                                       EstHours = 6,
 
@@ -988,6 +982,7 @@ namespace NBD.Data
                             ) ;
                         context.SaveChanges();
                     }
+
                     if (!context.ProdPlanLabours.Any())
                     {
                         context.ProdPlanLabours.AddRange(
