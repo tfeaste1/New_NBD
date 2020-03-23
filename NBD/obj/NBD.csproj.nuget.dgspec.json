@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\toryf\\OneDrive\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj": {}
+    "C:\\Users\\toryf\\Desktop\\NBD-GitHub\\New_NBD\\NBD\\NBD.csproj": {}
   },
   "projects": {
-    "C:\\Users\\toryf\\OneDrive\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj": {
+    "C:\\Users\\toryf\\Desktop\\NBD-GitHub\\New_NBD\\NBD\\NBD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\toryf\\OneDrive\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
+        "projectUniqueName": "C:\\Users\\toryf\\Desktop\\NBD-GitHub\\New_NBD\\NBD\\NBD.csproj",
         "projectName": "NBD",
-        "projectPath": "C:\\Users\\toryf\\OneDrive\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
+        "projectPath": "C:\\Users\\toryf\\Desktop\\NBD-GitHub\\New_NBD\\NBD\\NBD.csproj",
         "packagesPath": "C:\\Users\\toryf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\toryf\\OneDrive\\Documents\\GitHub\\New_NBD\\NBD\\obj\\",
+        "outputPath": "C:\\Users\\toryf\\Desktop\\NBD-GitHub\\New_NBD\\NBD\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -79,7 +79,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

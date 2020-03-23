@@ -24,7 +24,11 @@ namespace NBD.Controllers
         // GET: ProductionPlans
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.ProductionPlan.Include(p => p.Project);
+            var nBDContext = _context.ProductionPlan
+                .Include(p => p.Project)
+                .Include(p => p.Team)
+                .Include(p => p.ProdPlanLabours) .ThenInclude(pl => pl.LabourRequirement)
+                .Include(p=>p.ProdPlanMaterials) .ThenInclude(pm => pm.MaterialRequirement);
             return View(await nBDContext.ToListAsync());
         }
 
@@ -283,8 +287,8 @@ namespace NBD.Controllers
                     });
                 }
             }
-            ViewData["selOptsl"] = new MultiSelectList(selectedl.OrderBy(s => s.Description), "ID", "Description");
-            ViewData["availOptsl"] = new MultiSelectList(availablel.OrderBy(s => s.Description), "ID", "Description");
+            ViewData["selOptslpp"] = new MultiSelectList(selectedl.OrderBy(s => s.Description), "ID", "Description");
+            ViewData["availOptslpp"] = new MultiSelectList(availablel.OrderBy(s => s.Description), "ID", "Description");
         }
         private void UpdateLabourRequirements(string[] selectedLrequirements, ProductionPlan pPlanToUpdate)
         {
@@ -353,8 +357,8 @@ namespace NBD.Controllers
                     });
                 }
             }
-            ViewData["selOptsm"] = new MultiSelectList(selectedm.OrderBy(s => s.MaterialName), "ID", "MaterialName");
-            ViewData["availOptsm"] = new MultiSelectList(availablem.OrderBy(s => s.MaterialName), "ID", "MaterialName");
+            ViewData["selOptsmpp"] = new MultiSelectList(selectedm.OrderBy(s => s.MaterialName), "ID", "MaterialName");
+            ViewData["availOptsmpp"] = new MultiSelectList(availablem.OrderBy(s => s.MaterialName), "ID", "MaterialName");
         }
         private void UpdateMaterialRequirements(string[] selectedRequirements, ProductionPlan pPlanToUpdate)
         {

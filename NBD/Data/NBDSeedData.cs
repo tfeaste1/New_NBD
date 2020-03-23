@@ -511,6 +511,7 @@ namespace NBD.Data
                             {
                                 
                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                                EmployeeID = 7,
                                 Phase = "P"
                             },
                             new Team
