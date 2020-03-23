@@ -310,7 +310,6 @@ namespace NBD.Data.NBDMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Phase = table.Column<string>(nullable: true),
-                    TeamName = table.Column<string>(nullable: true),
                     EmployeeID = table.Column<int>(nullable: false),
                     ProjectID = table.Column<int>(nullable: false)
                 },
@@ -374,33 +373,25 @@ namespace NBD.Data.NBDMigrations
                     Hours = table.Column<int>(nullable: false),
                     Comments = table.Column<string>(nullable: true),
                     TeamID = table.Column<int>(nullable: false),
-                    LabourSummaryID = table.Column<int>(nullable: false),
                     TaskID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LabourRequirements", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_LabourRequirements_LabourSummaries_LabourSummaryID",
-                        column: x => x.LabourSummaryID,
-                        principalSchema: "MO",
-                        principalTable: "LabourSummaries",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_LabourRequirements_Tasks_TaskID",
                         column: x => x.TaskID,
                         principalSchema: "MO",
                         principalTable: "Tasks",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LabourRequirements_Teams_TeamID",
                         column: x => x.TeamID,
                         principalSchema: "MO",
                         principalTable: "Teams",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -422,14 +413,14 @@ namespace NBD.Data.NBDMigrations
                         principalSchema: "MO",
                         principalTable: "Projects",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductionPlan_Teams_TeamID",
                         column: x => x.TeamID,
                         principalSchema: "MO",
                         principalTable: "Teams",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -551,12 +542,6 @@ namespace NBD.Data.NBDMigrations
                 column: "MaterialID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LabourRequirements_LabourSummaryID",
-                schema: "MO",
-                table: "LabourRequirements",
-                column: "LabourSummaryID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_LabourRequirements_TaskID",
                 schema: "MO",
                 table: "LabourRequirements",
@@ -674,6 +659,10 @@ namespace NBD.Data.NBDMigrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "LabourSummaries",
+                schema: "MO");
+
+            migrationBuilder.DropTable(
                 name: "ProdPlanLabours",
                 schema: "MO");
 
@@ -703,10 +692,6 @@ namespace NBD.Data.NBDMigrations
 
             migrationBuilder.DropTable(
                 name: "MaterialRequirements",
-                schema: "MO");
-
-            migrationBuilder.DropTable(
-                name: "LabourSummaries",
                 schema: "MO");
 
             migrationBuilder.DropTable(

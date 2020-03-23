@@ -19,14 +19,14 @@ namespace NBD.Models
         [Display(Name = "Staff")]
         public int TeamID { get; set; }
         
-        public virtual Project Project { get; set; }
-        public virtual Team Team { get; set; }
+        public Project Project { get; set; }
+        public Team Team { get; set; }
 
         [Display(Name ="Material Requirements")]
-        public virtual ICollection<ProdPlanMaterial> ProdPlanMaterials { get; set; }
+        public ICollection<ProdPlanMaterial> ProdPlanMaterials { get; set; }
 
         [Display(Name ="Labour Requirements")]
-        public virtual ICollection<ProdPlanLabour> ProdPlanLabours { get; set; }
+        public ICollection<ProdPlanLabour> ProdPlanLabours { get; set; }
 
 
     }

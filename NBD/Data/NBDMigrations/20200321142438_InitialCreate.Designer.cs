@@ -10,7 +10,7 @@ using NBD.Data;
 namespace NBD.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20200312222201_InitialCreate")]
+    [Migration("20200321142438_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,15 +173,11 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<int>("Hours");
 
-                    b.Property<int>("LabourSummaryID");
-
                     b.Property<int>("TaskID");
 
                     b.Property<int>("TeamID");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("LabourSummaryID");
 
                     b.HasIndex("TaskID");
 
@@ -455,8 +451,6 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<int>("ProjectID");
 
-                    b.Property<string>("TeamName");
-
                     b.HasKey("ID");
 
                     b.HasIndex("EmployeeID");
@@ -505,20 +499,15 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.LabourRequirement", b =>
                 {
-                    b.HasOne("NBD.Models.LabourSummary", "LabourSummary")
-                        .WithMany("labourRequirements")
-                        .HasForeignKey("LabourSummaryID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("NBD.Models.Task", "Task")
                         .WithMany("LabourRequirements")
                         .HasForeignKey("TaskID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NBD.Models.Team", "Team")
                         .WithMany("LabourRequirements")
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NBD.Models.LabourSummary", b =>
@@ -567,14 +556,14 @@ namespace NBD.Data.NBDMigrations
             modelBuilder.Entity("NBD.Models.ProductionPlan", b =>
                 {
                     b.HasOne("NBD.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("ProductionPlans")
                         .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NBD.Models.Team", "Team")
-                        .WithMany()
+                        .WithMany("ProductionPlans")
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NBD.Models.ProductionTool", b =>

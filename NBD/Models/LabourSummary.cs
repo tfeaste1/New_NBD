@@ -14,11 +14,10 @@ namespace NBD.Models
         public int Hours { get; set; }
 
         public int ProjectID {get;set;}
-        public virtual Project Project { get; set; }
+        public Project Project { get; set; }
 
         public int DepartmentID { get; set; }
-        public virtual Department Department { get; set; }
-
-        public ICollection<LabourRequirement> labourRequirements { get; set; }
-    }
+        public Department Department { get; set; }
+        
+           }
 }

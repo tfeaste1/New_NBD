@@ -16,8 +16,8 @@ namespace NBD.Models
         public float? Price { get; set; }
         public float? Cost { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
-        public virtual ICollection<LabourSummary> LabourSummaries { get; set; }
+        public ICollection<Employee> Employees { get; set; }
+        public ICollection<LabourSummary> LabourSummaries { get; set; }
 
     }
 }

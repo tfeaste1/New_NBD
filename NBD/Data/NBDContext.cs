@@ -84,6 +84,24 @@ namespace NBD.Data
               .HasForeignKey(l => l.TeamID)
               .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Team>()
+              .HasMany<ProductionPlan>(t => t.ProductionPlans)
+              .WithOne(p => p.Team)
+              .HasForeignKey(p => p.TeamID)
+              .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+              .HasMany<ProductionPlan>(pr => pr.ProductionPlans)
+              .WithOne(p => p.Project)
+              .HasForeignKey(p => p.ProjectID)
+              .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<NBD.Models.Task>()
+              .HasMany<LabourRequirement>(t => t.LabourRequirements)
+              .WithOne(l => l.Task)
+              .HasForeignKey(l => l.TaskID)
+              .OnDelete(DeleteBehavior.Restrict);
+
             //unique Email Vlaues
             modelBuilder.Entity<Employee>()
              .HasIndex(e => new { e.Email })

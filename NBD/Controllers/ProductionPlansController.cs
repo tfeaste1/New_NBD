@@ -260,24 +260,24 @@ namespace NBD.Controllers
                     selectedl.Add(new LabourReqVM
                     {
                         ID = r.ID,
-                        Description = r.LabourSummary.Department.Description,
+                        Description = r.Team.Employee.Department.Description,
                         Hours = r.Hours,
-                        CostPerHour = r.LabourSummary.Department.Cost,
-                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        CostPerHour = r.Team.Employee.Department.Cost,
+                        Cost = r.Hours * r.Team.Employee.Department.Cost,
                         Time = r.Date,
                         Task = r.Task.Description
 
-                    });
+                    }); ;
                 }
                 else
                 {
                     availablel.Add(new LabourReqVM
                     {
                         ID = r.ID,
-                        Description = r.LabourSummary.Department.Description,
+                        Description = r.Team.Employee.Department.Description,
                         Hours = r.Hours,
-                        CostPerHour = r.LabourSummary.Department.Cost,
-                        Cost = r.Hours * r.LabourSummary.Department.Cost,
+                        CostPerHour = r.Team.Employee.Department.Cost,
+                        Cost = r.Hours * r.Team.Employee.Department.Cost,
                         Time = r.Date,
                         Task = r.Task.Description
                     });
