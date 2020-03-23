@@ -981,6 +981,7 @@ namespace NBD.Data
                             ) ;
                         context.SaveChanges();
                     }
+
                     if (!context.ProdPlanLabours.Any())
                     {
                         context.ProdPlanLabours.AddRange(

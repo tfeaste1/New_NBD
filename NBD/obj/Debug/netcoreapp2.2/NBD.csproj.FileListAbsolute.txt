@@ -209,6 +209,7 @@ C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD.Views.dll
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD.Views.pdb
+C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.RazorAssemblyInfo.cache
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.RazorAssemblyInfo.cs
 C:\Users\toryf\OneDrive\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.AssemblyInfoInputs.cache
