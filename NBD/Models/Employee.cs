@@ -46,5 +46,9 @@ namespace NBD.Models
 
         public Department Department { get; set; }
         public ICollection<Team> Teams { get; set; }
+
+        public ICollection<WorkerReport> WorkerReports { get; set; }
+
+        public ICollection<MaterialReport> MaterialReports { get; set; }
     }
 }

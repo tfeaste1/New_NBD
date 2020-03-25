@@ -92,6 +92,10 @@ namespace NBD.Models
 
         public ICollection<ProductionPlan> ProductionPlans { get; set; }
 
+        public ICollection<WorkerReport> WorkerReports { get; set; }
+
+        public ICollection<MaterialReport> MaterialReports { get; set; }
+
 
 
     }
