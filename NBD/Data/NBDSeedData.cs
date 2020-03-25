@@ -99,6 +99,7 @@ namespace NBD.Data
                          PostalCode = "M2J5H6"
                      });
                     context.SaveChanges();
+                }  
 
                     if (!context.Materials.Any())
                     {
@@ -1071,10 +1072,66 @@ namespace NBD.Data
                             );
                         context.SaveChanges();
                     }
+                
+                if (!context.WorkerReports.Any())
+                    {
+                        context.WorkerReports.AddRange(
+                            new WorkerReport
+                            {
+                                Date = DateTime.Parse("2020-06-16"),
+                                Hours = 8,
+                                Costs = 18,
+                                EmployeeID = 6,
+                                TaskID = 7,
+                                ProjectID = 1
+                            },
+                            new WorkerReport
+                            {
+                                Date = DateTime.Parse("2020-06-16"),
+                                Hours = 8,
+                                Costs = 18,
+                                EmployeeID = 7,
+                                TaskID = 7,
+                                ProjectID = 1
+                            }
+
+                            );
+                        context.SaveChanges();
+                    }
+                if (!context.MaterialReports.Any())
+                {
+                    context.MaterialReports.AddRange(
+                        new MaterialReport
+                        {
+                            Date = DateTime.Parse("2020-06-16"),
+                            Quantity = 15,
+                            Costs = 200,
+                            EmployeeID = 6,
+                            ProjectID = 1,
+                            MaterialID = 5
+
+
+                        },
+                        new MaterialReport
+                        {
+                            Date = DateTime.Parse("2020-06-16"),
+                            Quantity = 34,
+                            Costs = 200,
+                            EmployeeID = 6,
+                            ProjectID = 2,
+                            MaterialID = 5
+
+
+                        }
+                        ) ;
+                    context.SaveChanges();
+                }
+                    
+
 
 
                 }
-            }
+                
         }
     }
 }

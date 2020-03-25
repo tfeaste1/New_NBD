@@ -55,9 +55,23 @@ namespace NBD.Data
         public DbSet<ProdPlanMaterial> ProdPlanMaterials { get; set; }
         public DbSet<ProductionPlan> ProductionPlans { get; set; }
 
+        public DbSet<WorkerReport> WorkerReports { get; set; }
+
+        public DbSet<MaterialReport> MaterialReports { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("MO");
+
+
+            modelBuilder.Entity<WorkerReport>()
+            .HasIndex(pt => new { pt.ProjectID, pt.TaskID, pt.EmployeeID })
+            .IsUnique();
+
+            modelBuilder.Entity<MaterialReport>()
+            .HasIndex(pt => new { pt.ProjectID, pt.MaterialID, pt.EmployeeID })
+            .IsUnique();
+
 
             //Prevent Cascade Delete
             modelBuilder.Entity<Department>()

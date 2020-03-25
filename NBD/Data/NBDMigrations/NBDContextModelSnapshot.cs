@@ -220,6 +220,36 @@ namespace NBD.Data.NBDMigrations
                     b.ToTable("Materials");
                 });
 
+            modelBuilder.Entity("NBD.Models.MaterialReport", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Costs");
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.Property<int>("MaterialID");
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("MaterialID");
+
+                    b.HasIndex("ProjectID", "MaterialID", "EmployeeID")
+                        .IsUnique();
+
+                    b.ToTable("MaterialReports");
+                });
+
             modelBuilder.Entity("NBD.Models.MaterialRequirement", b =>
                 {
                     b.Property<int>("ID")
@@ -471,6 +501,36 @@ namespace NBD.Data.NBDMigrations
                     b.ToTable("Tools");
                 });
 
+            modelBuilder.Entity("NBD.Models.WorkerReport", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Costs");
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.Property<int>("Hours");
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int>("TaskID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("TaskID");
+
+                    b.HasIndex("ProjectID", "TaskID", "EmployeeID")
+                        .IsUnique();
+
+                    b.ToTable("WorkerReports");
+                });
+
             modelBuilder.Entity("NBD.Models.Client", b =>
                 {
                     b.HasOne("NBD.Models.City", "City")
@@ -517,6 +577,24 @@ namespace NBD.Data.NBDMigrations
 
                     b.HasOne("NBD.Models.Project", "Project")
                         .WithMany()
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD.Models.MaterialReport", b =>
+                {
+                    b.HasOne("NBD.Models.Employee", "Employee")
+                        .WithMany("MaterialReports")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Material", "Material")
+                        .WithMany("MaterialReports")
+                        .HasForeignKey("MaterialID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany("MaterialReports")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -623,6 +701,24 @@ namespace NBD.Data.NBDMigrations
                     b.HasOne("NBD.Models.Project", "Project")
                         .WithMany("Teams")
                         .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD.Models.WorkerReport", b =>
+                {
+                    b.HasOne("NBD.Models.Employee", "Employee")
+                        .WithMany("WorkerReports")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany("WorkerReports")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Task", "Task")
+                        .WithMany("WorkerReports")
+                        .HasForeignKey("TaskID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
