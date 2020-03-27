@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "o3DjXEPwe2XBsYaLl314SsO7OOUDmKJ0q8uhaRzqyhTXiqruCoYPSfNIEmYkZFVTS7vKyduCjkFACBTqil//4A==",
+  "dgSpecHash": "Ya3eyjLVPRPhNMPbcUb+XIxyKd6lu/1GV+ZeUvu9k4p5KN8y/sqS+edd5XbbSosErOvr2MNaDLH9fFRs5UsxUA==",
   "success": true,
   "projectFilePath": "C:\\Users\\toryf\\Desktop\\NBD-GitHub\\New_NBD\\NBD\\NBD.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\toryf\\.nuget\\packages\\all\\1.1.0.1\\all.1.1.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnet.webapi.client\\5.2.6\\microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",
     "C:\\Users\\toryf\\.nuget\\packages\\microsoft.aspnetcore\\2.2.0\\microsoft.aspnetcore.2.2.0.nupkg.sha512",
     "C:\\Users\\toryf\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
