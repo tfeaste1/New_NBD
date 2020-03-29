@@ -101,6 +101,10 @@ namespace NBD.Controllers
                 .Include(p => p.Client)
                 .Include(p => p.ProjectLabours)
                 .ThenInclude(p => p.LabourRequirement)
+                .ThenInclude(p=>p.Task)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(p => p.LabourRequirement)
+                .ThenInclude(p => p.Team)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.ID == id);
             if (project == null)
@@ -193,7 +197,7 @@ namespace NBD.Controllers
             }
             PopulateAssignedLaborData(projectToUpdate);
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address", project.ClientID);
-            return View(projectToUpdate)
+            return View(projectToUpdate);
         }
 
         // GET: Projects/Delete/5
