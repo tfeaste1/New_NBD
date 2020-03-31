@@ -28,8 +28,14 @@ namespace NBD.Controllers
                 .Include(p => p.Client)
                 .Include (p=>p.ProjectLabours)
                 .ThenInclude(pl => pl.LabourRequirement)
-                .Include (p=>p.ProjectMaterials)
-                .ThenInclude(pm=>pm.MaterialRequirement);
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p=>p.ProjectLabours)
+                .ThenInclude(pl=>pl.LabourRequirement)
+                .ThenInclude(l=>l.Team)
+                ;
+            
             return View(await nBDContext.ToListAsync());
         }
 
@@ -43,12 +49,20 @@ namespace NBD.Controllers
 
             var project = await _context.Projects
                 .Include(p => p.Client)
+                 .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Team)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (project == null)
             {
                 return NotFound();
             }
-
+            PopulateAssignedLaborData(project);
             return View(project);
         }
 
@@ -128,6 +142,13 @@ namespace NBD.Controllers
                 .Include(p => p.Client)
                 .Include(p => p.ProjectLabours)
                 .ThenInclude(p => p.LabourRequirement)
+                 .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Team)
+
                 .SingleOrDefaultAsync(p => p.ID == id);
 
             if(projectToUpdate == null)
@@ -210,6 +231,14 @@ namespace NBD.Controllers
 
             var project = await _context.Projects
                 .Include(p => p.Client)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(p => p.LabourRequirement)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p => p.ProjectLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Team)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (project == null)
             {

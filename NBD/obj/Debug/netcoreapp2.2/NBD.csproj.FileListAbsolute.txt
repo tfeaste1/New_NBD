@@ -343,3 +343,4 @@ C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.dll
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.genruntimeconfig.cache
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
+C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
