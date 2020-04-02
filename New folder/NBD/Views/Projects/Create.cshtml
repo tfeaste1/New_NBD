@@ -1,0 +1,150 @@
+﻿@model NBD.Models.Project
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Project</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjSite" class="control-label"></label>
+                <input asp-for="ProjSite" class="form-control" />
+                <span asp-validation-for="ProjSite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjBidDate" class="control-label"></label>
+                <input asp-for="ProjBidDate" class="form-control" />
+                <span asp-validation-for="ProjBidDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstStartDate" class="control-label"></label>
+                <input asp-for="EstStartDate" class="form-control" />
+                <span asp-validation-for="EstStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstEndDate" class="control-label"></label>
+                <input asp-for="EstEndDate" class="form-control" />
+                <span asp-validation-for="EstEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActAmount" class="control-label"></label>
+                <input asp-for="ActAmount" class="form-control" />
+                <span asp-validation-for="ActAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstAmount" class="control-label"></label>
+                <input asp-for="EstAmount" class="form-control" />
+                <span asp-validation-for="EstAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ClientApproval" /> @Html.DisplayNameFor(model => model.ClientApproval)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="AdminApproval" /> @Html.DisplayNameFor(model => model.AdminApproval)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjCurrentPhase" class="control-label"></label>
+                <input asp-for="ProjCurrentPhase" class="form-control" />
+                <span asp-validation-for="ProjCurrentPhase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientID" class="control-label"></label>
+                <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ProjIsFlagged" /> @Html.DisplayNameFor(model => model.ProjIsFlagged)
+                </label>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Staff Assigned</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
+                    <strong>-</strong>
+                </button>
+                @Html.ListBox("selectedTeams", (MultiSelectList)ViewBag.selOptst, new { @size = 10, @class = "form-control" })
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label"> Choose Staff</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
+                    <strong>+</strong>
+                </button>
+                @Html.ListBox("availTeams", (MultiSelectList)ViewBag.availOptst, new { @size = 10, @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Tools Assigned</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
+                    <strong>-</strong>
+                </button>
+                @Html.ListBox("selectedTools", (MultiSelectList)ViewBag.selOptsp, new { @size = 10, @class = "form-control" })
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label"> Choose Tools</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
+                    <strong>+</strong>
+                </button>
+                @Html.ListBox("availTools", (MultiSelectList)ViewBag.availOptsp, new { @size = 10, @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">Labour Assigned</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
+                    <strong>-</strong>
+                </button>
+                @Html.ListBox("selectedSummaries", (MultiSelectList)ViewBag.selOptsl, new { @size = 10, @class = "form-control" })
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label">Choose Labour</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
+                    <strong>+</strong>
+                </button>
+                @Html.ListBox("availSummaries", (MultiSelectList)ViewBag.availOptsl, new { @size = 10, @class = "form-control" })
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label">Material Requirements Assigned</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
+                    <strong>-</strong>
+                </button>
+                @Html.ListBox("selectedRequirements", (MultiSelectList)ViewBag.selOptsm, new { @size = 10, @class = "form-control" })
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label">Choose Material Requirements</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
+                    <strong>+</strong>
+                </button>
+                @Html.ListBox("availRequirements", (MultiSelectList)ViewBag.availOptsm, new { @size = 10, @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-danger" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
