@@ -57,12 +57,17 @@ namespace NBD.Controllers
                 .Include(p => p.ProjectLabours)
                 .ThenInclude(pl => pl.LabourRequirement)
                 .ThenInclude(l => l.Team)
+                .Include(p=>p.ProjectMaterials)
+                .ThenInclude(pm=>pm.MaterialRequirement)
+                .ThenInclude(m=>m.Inventory)
+                .ThenInclude(i=>i.Material)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (project == null)
             {
                 return NotFound();
             }
             PopulateAssignedLaborData(project);
+            PopulateAssignedMaterialData(project);
             return View(project);
         }
 
@@ -72,6 +77,7 @@ namespace NBD.Controllers
             Project project = new Project();
 
             PopulateAssignedLaborData(project);
+            PopulateAssignedMaterialData(project);
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address");
             return View();
         }
@@ -81,11 +87,12 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string [] selectedLabors)
+        public async Task<IActionResult> Create([Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string [] selectedLabors, string[] selectedMaterials)
         {
             try
             {
                 UpdateProjectLabours(selectedLabors, project);
+                UpdateProjectMaterials(selectedMaterials, project);
                 if (ModelState.IsValid)
                 {
                     _context.Add(project);
@@ -99,6 +106,7 @@ namespace NBD.Controllers
                 }
 
             PopulateAssignedLaborData(project);
+            PopulateAssignedMaterialData(project);
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address", project.ClientID);
             return View(project);
         }
@@ -119,6 +127,10 @@ namespace NBD.Controllers
                 .Include(p => p.ProjectLabours)
                 .ThenInclude(p => p.LabourRequirement)
                 .ThenInclude(p => p.Team)
+                .Include(p=>p.ProjectMaterials)
+                .ThenInclude(pm => pm.MaterialRequirement)
+                .ThenInclude(m => m.Inventory)
+                .ThenInclude(i => i.Material)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.ID == id);
             if (project == null)
@@ -126,6 +138,7 @@ namespace NBD.Controllers
                 return NotFound();
             }
 
+            PopulateAssignedMaterialData(project);
             PopulateAssignedLaborData(project);
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address", project.ClientID);
             return View(project);
@@ -136,7 +149,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedLabors)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ProjSite,ProjBidDate,EstStartDate,EstEndDate,StartDate,EndDate,ActAmount,EstAmount,ClientApproval,AdminApproval,ProjCurrentPhase,ClientID,ProjIsFlagged")] Project project, string[] selectedLabors, string[] selectedMaterials)
         {
             var projectToUpdate = await _context.Projects
                 .Include(p => p.Client)
@@ -148,6 +161,10 @@ namespace NBD.Controllers
                 .Include(p => p.ProjectLabours)
                 .ThenInclude(pl => pl.LabourRequirement)
                 .ThenInclude(l => l.Team)
+                .Include(p => p.ProjectMaterials)
+                .ThenInclude(pm => pm.MaterialRequirement)
+                .ThenInclude(m => m.Inventory)
+                .ThenInclude(i => i.Material)
 
                 .SingleOrDefaultAsync(p => p.ID == id);
 
@@ -157,6 +174,7 @@ namespace NBD.Controllers
             }
 
             UpdateProjectLabours(selectedLabors, projectToUpdate);
+            UpdateProjectMaterials(selectedMaterials, projectToUpdate);
 
             if(await TryUpdateModelAsync<Project>(projectToUpdate,"",
                     p=>p.Name, p=>p.ProjSite,p=>p.ProjBidDate,p=>p.EstStartDate,
@@ -217,6 +235,7 @@ namespace NBD.Controllers
                 return RedirectToAction(nameof(Index));
             }
             PopulateAssignedLaborData(projectToUpdate);
+            PopulateAssignedMaterialData(projectToUpdate);
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address", project.ClientID);
             return View(projectToUpdate);
         }
@@ -239,6 +258,10 @@ namespace NBD.Controllers
                 .Include(p => p.ProjectLabours)
                 .ThenInclude(pl => pl.LabourRequirement)
                 .ThenInclude(l => l.Team)
+                .Include(p => p.ProjectMaterials)
+                .ThenInclude(pm => pm.MaterialRequirement)
+                .ThenInclude(m => m.Inventory)
+                .ThenInclude(i => i.Material)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (project == null)
             {
@@ -261,7 +284,9 @@ namespace NBD.Controllers
 
         private void PopulateAssignedLaborData(Project project)
         {
-            var allLabors = _context.LabourRequirements;
+            var allLabors = _context.LabourRequirements
+                .Include(l=>l.Task)
+                .Include(l=>l.Team);
             var projLabors = new HashSet<int>
                 (project.ProjectLabours.Select(p => p.LabourReqID));
             var selectedLabor = new List<LabourReqVM>();
@@ -276,7 +301,8 @@ namespace NBD.Controllers
                         ID = l.ID,
                         DisplayText = l.Task.Description
                         + ", " + l.EstHours.ToString()
-                        + ",  " + l.EstDate.ToString()
+                        + ",  " + l.EstDate.ToString
+                        ()
                         + ", " + l.Team.Phase
                         + (string.IsNullOrEmpty(l.Date.ToString())? " " : (" " + l.Date.ToString()))
                         + (string.IsNullOrEmpty(l.Hours.ToString()) ? " " : (" " + l.Hours.ToString()))
@@ -341,7 +367,93 @@ namespace NBD.Controllers
                       
             }
             
-        }    
+        }
+
+        private void PopulateAssignedMaterialData(Project project)
+        {
+            var allMaterials = _context.MaterialRequirements
+                .Include(m=>m.Inventory)
+                .ThenInclude(m=>m.Material);
+            var projMaterials = new HashSet<int>
+                (project.ProjectMaterials.Select(p => p.MaterialReqID));
+            var selectedMaterials = new List<MaterialReqVM>();
+            var availableMaterials = new List<MaterialReqVM>();
+
+            foreach (var m in allMaterials)
+            {
+                if (projMaterials.Contains(m.ID))
+                {
+                    selectedMaterials.Add(new MaterialReqVM
+                    {
+                        ID = m.ID,
+                        DisplayText = m.Inventory.Material.Description
+                        + ", " + m.DeliveryDate.ToString() +" @ "+ m.DeliveryTime.ToString()
+                        + ",  " + m.InstallDate.ToString() + " @ " + m.InstallTime.ToString()
+                        + ", " + m.EstQuantity.ToString()
+                        + (string.IsNullOrEmpty(m.Quantity.ToString()) ? " " : (" " + m.Quantity.ToString()))
+                        
+
+                    });
+                }
+                else
+                {
+                    availableMaterials.Add(new MaterialReqVM
+                    {
+                        ID = m.ID,
+                        DisplayText = m.Inventory.Material.Description
+                        + ", " + m.DeliveryDate.ToString() + " @ " + m.DeliveryTime.ToString()
+                        + ",  " + m.InstallDate.ToString() + " @ " + m.InstallTime.ToString()
+                        + ", " + m.EstQuantity.ToString()
+                        + (string.IsNullOrEmpty(m.Quantity.ToString()) ? " " : (" " + m.Quantity.ToString()))
+
+                    });
+                }
+            }
+            ViewData["selMaterials"] = new MultiSelectList(selectedMaterials.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["availMaterials"] = new MultiSelectList(availableMaterials.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        }
+        private void UpdateProjectMaterials(string[] selectedMaterials, Project projectToUpdate)
+        {
+            if (selectedMaterials == null)
+            {
+                projectToUpdate.ProjectMaterials = new List<ProjectMaterial>();
+                return;
+
+            }
+            var selectedMaterialsHS = new HashSet<string>(selectedMaterials);
+            var projMaterials = new HashSet<int>
+                             (projectToUpdate.ProjectMaterials.Select(p => p.MaterialReqID));
+
+            foreach (var m in _context.MaterialRequirements 
+                .Include(m=>m.Inventory) 
+                .ThenInclude(i=>i.Material))
+            {
+                if (selectedMaterialsHS.Contains(m.ID.ToString()))
+                {
+                    if (!projMaterials.Contains(m.ID))
+                    {
+                        projectToUpdate.ProjectMaterials.Add(new ProjectMaterial
+                        {
+                            MaterialReqID = m.ID,
+                            ProjectID = projectToUpdate.ID
+
+                        });
+                    }
+                }
+                else
+                {
+                    if (projMaterials.Contains(m.ID))
+                    {
+                        ProjectMaterial materialToRemove = projectToUpdate.ProjectMaterials.SingleOrDefault(p => p.MaterialReqID == m.ID);
+                        _context.Remove(materialToRemove);
+
+                    }
+
+                }
+
+            }
+
+        }
 
         private bool ProjectExists(int id)
         {
