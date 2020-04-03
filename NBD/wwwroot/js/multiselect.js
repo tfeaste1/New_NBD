@@ -107,3 +107,31 @@ $('#btnSubmitpp').click(function (e) {
     $('#selOptsmpp option').prop('selected', true);
     $('#selOptslpp option').prop('selected', true);
 });
+
+$('#btnEmpMoveRight').click(function (e) {
+    var selectedOpts = $('#selectedOptions option:selected');
+    if (selectedOpts.length == 0) {
+        alert("Nothing to move.");
+        e.preventDefault();
+    }
+
+    $('#availOptions').append($(selectedOpts).clone());
+    $(selectedOpts).remove();
+    e.preventDefault();
+});
+
+$('#btnEmpMoveLeft').click(function (e) {
+    var selectedOpts = $('#availOptions option:selected');
+    if (selectedOpts.length == 0) {
+        alert("Nothing to move.");
+        e.preventDefault();
+    }
+
+    $('#selectedOptions').append($(selectedOpts).clone());
+    $(selectedOpts).remove();
+    e.preventDefault();
+});
+
+$('#btnCreate').click(function (e) {
+    $('#selectedOptions option').prop('selected', true);
+});

@@ -10,6 +10,8 @@ namespace NBD.Models
     public class Employee
     {
         [Display(Name = "Client")]
+
+       
         public string FullName
         {
             get
@@ -17,6 +19,11 @@ namespace NBD.Models
                 return FirstName + " " + LastName;
 
             }
+        }
+
+        public Employee()
+        {
+            TeamEmployees = new HashSet<TeamEmployee>();
         }
         public int ID { get; set; }
         [Display(Name = "First Name")]
@@ -45,10 +52,12 @@ namespace NBD.Models
         public int DepartmentID { get; set; }
 
         public Department Department { get; set; }
-        public ICollection<Team> Teams { get; set; }
+        
 
         public ICollection<WorkerReport> WorkerReports { get; set; }
 
         public ICollection<MaterialReport> MaterialReports { get; set; }
+
+        public ICollection<TeamEmployee> TeamEmployees { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using NBD.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NBD.Data;
+using System.IO;
 
 namespace NBD.Data
 {
@@ -460,73 +461,102 @@ namespace NBD.Data
 
 
                     }
-                    if (!context.Teams.Any())
+                if (!context.Teams.Any())
+                {
+                    context.Teams.AddRange(
+                         new Team
+                         {
+                             TeamName = "NBD project",
+                             ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                             
+                             Phase = "Done"
+                         },
+                        new Team
+                        {
+
+                            TeamName = "I am team 2",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                           
+                            Phase = "70%"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "So I am team 3",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
+                            Phase = "Fail"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "I dont want be 4",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
+                            Phase = "Pass"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "5",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
+                            Phase = "Pass"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "why 5 is such short",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
+                            Phase = "In processing"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "is none of your problom",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
+                            Phase = "In processing"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "Finally",
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            Phase = "In processing"
+                        }
+                        );
+                    context.SaveChanges();
+                }
+                int[] employeeIDs= context.Employees.Select(e => e.ID).ToArray();
+                int[] teamIDs = context.Teams.Select(t => t.ID).ToArray();
+                //Prepare Random
+                Random random = new Random();
+
+                //TeamEmployees - the Intersection
+                //Add a few Employees to each Team
+                if (!context.TeamEmployees.Any())
+                {
+                    int specialtyCount = employeeIDs.Count();
+                    foreach (int i in teamIDs)
                     {
-                        context.Teams.AddRange(
-                             new Team
-                             {
-                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                 EmployeeID = 1,
-                                 Phase = "D"
-                             },
-                            new Team
+                        int howMany = random.Next(1, 4);
+                        howMany = (howMany > specialtyCount) ? specialtyCount : howMany;
+                        for (int j = 1; j <= howMany; j++)
+                        {
+                            TeamEmployee TE = new TeamEmployee()
                             {
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 2,
-                                Phase = "D"
-                            },
-                            new Team
-                            {
-                                
-                               
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 3,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 4,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 5,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 6,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 7,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 8,
-                                Phase = "P"
-                            }
-                            );
-                        context.SaveChanges();
+                                TeamID = i,
+                                EmployeeID = employeeIDs[random.Next(specialtyCount)]
+                            };
+                            context.TeamEmployees.Add(TE);
+                        }
                     }
-                    if (!context.Inventories.Any())
+                    context.SaveChanges();
+                }
+
+                if (!context.Inventories.Any())
                     {
                         context.Inventories.AddRange(
                             new Inventory

@@ -479,6 +479,9 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<int>("ProjectID");
 
+                    b.Property<string>("TeamName")
+                        .IsRequired();
+
                     b.HasKey("ID");
 
                     b.HasIndex("EmployeeID");
@@ -486,6 +489,19 @@ namespace NBD.Data.NBDMigrations
                     b.HasIndex("ProjectID");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("NBD.Models.TeamEmployee", b =>
+                {
+                    b.Property<int>("TeamID");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.HasKey("TeamID", "EmployeeID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.ToTable("TeamEmployees");
                 });
 
             modelBuilder.Entity("NBD.Models.Tool", b =>
@@ -694,7 +710,7 @@ namespace NBD.Data.NBDMigrations
             modelBuilder.Entity("NBD.Models.Team", b =>
                 {
                     b.HasOne("NBD.Models.Employee", "Employee")
-                        .WithMany("Teams")
+                        .WithMany()
                         .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -702,6 +718,19 @@ namespace NBD.Data.NBDMigrations
                         .WithMany("Teams")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NBD.Models.TeamEmployee", b =>
+                {
+                    b.HasOne("NBD.Models.Employee", "Employee")
+                        .WithMany("TeamEmployees")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Team", "Team")
+                        .WithMany("TeamEmployees")
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NBD.Models.WorkerReport", b =>

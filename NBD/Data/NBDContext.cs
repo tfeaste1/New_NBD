@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+
 using NBD.Models;
 
 namespace NBD.Data
@@ -41,9 +42,9 @@ namespace NBD.Data
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<TeamEmployee> TeamEmployees { get; set; }
         public DbSet<LabourSummary> LabourSummaries { get; set; }
         public DbSet<MaterialRequirement> MaterialRequirements { get; set; }
-       
         public DbSet<Team> Teams { get; set; }
         public DbSet<Models.Task> Tasks { get; set; }
         public DbSet<Tool> Tools { get; set; }
@@ -71,6 +72,10 @@ namespace NBD.Data
             modelBuilder.Entity<MaterialReport>()
             .HasIndex(pt => new { pt.ProjectID, pt.MaterialID, pt.EmployeeID })
             .IsUnique();
+
+            //Many to Many team employee
+            modelBuilder.Entity<TeamEmployee>()
+            .HasKey(t => new { t.TeamID, t.EmployeeID });
 
 
             //Prevent Cascade Delete
@@ -103,6 +108,12 @@ namespace NBD.Data
               .WithOne(p => p.Team)
               .HasForeignKey(p => p.TeamID)
               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Team>()
+               .HasMany<TeamEmployee>(t => t.TeamEmployees)
+               .WithOne(l => l.Team)
+               .HasForeignKey(l => l.TeamID)
+               .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Project>()
               .HasMany<ProductionPlan>(pr => pr.ProductionPlans)

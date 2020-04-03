@@ -8,17 +8,30 @@ namespace NBD.Models
 {
     public class Team
     {
+        public Team()
+        {
+            this.LabourRequirements = new HashSet<LabourRequirement>();
+            ProductionPlans = new HashSet<ProductionPlan>();
+            TeamEmployees = new HashSet<TeamEmployee>();
+        }
         public int ID { get; set; }
         public string Phase { get; set; }
-       
-       
+
+        [Required(ErrorMessage = "Team Name is required.")]
+        [Display(Name = "Team Name")]
+        public string TeamName { get; set; }
+
+        [Display(Name = "Employee")]
         public int EmployeeID { get; set; }
         public virtual Employee Employee { get; set; }
 
+        [Display(Name = "Project")]
         public int ProjectID { get; set; }
         public Project Project { get; set;}
 
         public ICollection<LabourRequirement> LabourRequirements { get; set; }
         public ICollection<ProductionPlan>ProductionPlans { get; set; }
-}
+
+        public ICollection<TeamEmployee> TeamEmployees { get; set; }
+    }
 }
