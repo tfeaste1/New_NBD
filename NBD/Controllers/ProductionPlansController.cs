@@ -69,6 +69,9 @@ namespace NBD.Controllers
         // GET: ProductionPlans/Create
         public IActionResult Create()
         {
+            ProductionPlan productionPlan = new ProductionPlan();
+
+            PopulateAssignedLaborData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
             ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "Phase");
             return View();
@@ -284,7 +287,7 @@ namespace NBD.Controllers
                 }
                 else
                 {
-                    selectedProdLabor.Add(new LabourReqVM
+                    availableProdLabor.Add(new LabourReqVM
                     {
                         ID = l.ID,
                         DisplayText = l.Task.Description

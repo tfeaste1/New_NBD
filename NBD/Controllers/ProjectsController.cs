@@ -24,7 +24,7 @@ namespace NBD.Controllers
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.Projects
+            var projects = from p in _context.Projects
                 .Include(p => p.Client)
                 .Include (p=>p.ProjectLabours)
                 .ThenInclude(pl => pl.LabourRequirement)
@@ -34,9 +34,9 @@ namespace NBD.Controllers
                 .Include(p=>p.ProjectLabours)
                 .ThenInclude(pl=>pl.LabourRequirement)
                 .ThenInclude(l=>l.Team)
-                ;
+                select p;
             
-            return View(await nBDContext.ToListAsync());
+            return View(await projects.ToListAsync());
         }
 
         // GET: Projects/Details/5
@@ -78,7 +78,7 @@ namespace NBD.Controllers
 
             PopulateAssignedLaborData(project);
             PopulateAssignedMaterialData(project);
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address");
+            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "FullName");
             return View();
         }
 
