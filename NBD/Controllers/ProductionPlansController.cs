@@ -24,7 +24,7 @@ namespace NBD.Controllers
         // GET: ProductionPlans
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.ProductionPlans
+            var productionPlans = from pp in _context.ProductionPlans
                 .Include(p => p.Project)
                 .Include(p => p.Team)
                 .Include(p => p.ProdPlanLabours)
@@ -33,8 +33,10 @@ namespace NBD.Controllers
                 .Include(p => p.ProdPlanMaterials)
                 .ThenInclude(pm => pm.MaterialRequirement)
                 .ThenInclude(m => m.Inventory)
-                .ThenInclude(i => i.Material);
-            return View(await nBDContext.ToListAsync());
+                .ThenInclude(i => i.Material)
+                select pp;
+            
+            return View(await productionPlans.ToListAsync());
         }
 
         // GET: ProductionPlans/Details/5
@@ -72,6 +74,7 @@ namespace NBD.Controllers
             ProductionPlan productionPlan = new ProductionPlan();
 
             PopulateAssignedLaborData(productionPlan);
+            PopulateAssignedMaterialData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
             ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "Phase");
             return View();
@@ -103,7 +106,7 @@ namespace NBD.Controllers
             PopulateAssignedLaborData(productionPlan);
             PopulateAssignedMaterialData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", productionPlan.ProjectID);
-            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "ID", productionPlan.TeamID);
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "Phase", productionPlan.TeamID);
             return View(productionPlan);
         }
 

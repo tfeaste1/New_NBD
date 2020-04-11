@@ -9,7 +9,11 @@ namespace NBD.Models
 {
     public class Project : Auditable
     {
-       
+       public Project()
+        {
+            this.ProjectLabours = new HashSet<ProjectLabour>();
+            this.ProjectMaterials = new HashSet<ProjectMaterial>();
+        }
 
         public int ID { get; set; }
         

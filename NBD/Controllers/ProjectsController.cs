@@ -107,7 +107,7 @@ namespace NBD.Controllers
 
             PopulateAssignedLaborData(project);
             PopulateAssignedMaterialData(project);
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address", project.ClientID);
+            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "FullName", project.ClientID);
             return View(project);
         }
 
@@ -236,7 +236,7 @@ namespace NBD.Controllers
             }
             PopulateAssignedLaborData(projectToUpdate);
             PopulateAssignedMaterialData(projectToUpdate);
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Address", project.ClientID);
+            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "FullName", project.ClientID);
             return View(projectToUpdate);
         }
 
@@ -287,7 +287,7 @@ namespace NBD.Controllers
             var allLabors = _context.LabourRequirements
                 .Include(l=>l.Task)
                 .Include(l=>l.Team);
-            var projLabors = new HashSet<int>
+            var projLabors = new HashSet<int?>
                 (project.ProjectLabours.Select(p => p.LabourReqID));
             var selectedLabor = new List<LabourReqVM>();
             var availableLabor = new List<LabourReqVM>();
@@ -337,10 +337,12 @@ namespace NBD.Controllers
 
             }
             var selectedLaborsHS = new HashSet<string>(selectedLabors);
-            var projLabors = new HashSet<int>
-                             (projectToUpdate.ProjectLabours.Select(p => p.LabourReqID));
+                    var projLabors = new HashSet<int?>
+                                     (projectToUpdate.ProjectLabours.Select(p => p.LabourReqID));
 
-            foreach(var l in _context.LabourRequirements)
+                    foreach(var l in _context.LabourRequirements
+                                             .Include(l => l.Task)
+                                             .Include(l => l.Team))
             {
                 if (selectedLaborsHS.Contains(l.ID.ToString()))
                 {
@@ -375,7 +377,7 @@ namespace NBD.Controllers
                 .Include(m=>m.Inventory)
                 .ThenInclude(m=>m.Material);
             var projMaterials = new HashSet<int>
-                (project.ProjectMaterials.Select(p => p.MaterialReqID));
+                (project.ProjectMaterials?.Select(p => p.MaterialReqID));
             var selectedMaterials = new List<MaterialReqVM>();
             var availableMaterials = new List<MaterialReqVM>();
 
@@ -422,7 +424,7 @@ namespace NBD.Controllers
             }
             var selectedMaterialsHS = new HashSet<string>(selectedMaterials);
             var projMaterials = new HashSet<int>
-                             (projectToUpdate.ProjectMaterials.Select(p => p.MaterialReqID));
+                             (projectToUpdate.ProjectMaterials?.Select(p => p.MaterialReqID));
 
             foreach (var m in _context.MaterialRequirements 
                 .Include(m=>m.Inventory) 
