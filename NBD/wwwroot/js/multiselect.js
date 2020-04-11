@@ -1,109 +1,104 @@
-﻿$('#btnRightmp').click(function (e) {
-    var selectedOpts = $('#selOptsm option:selected');
-    if (selectedOpts.length == 0) {
+﻿$('#btnLaborRight').click(function (e) {
+    var selectedLabors = $('#selectedLabors labor:selected');
+    if (selectedLabors.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#availOptsm').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#availLabors').append($(selectedLabors).clone());
+    $(selectedLabors).remove();
     e.preventDefault();
 });
 
-$('#btnLeftmp').click(function (e) {
-    var selectedOpts = $('#availOptsm option:selected');
-    if (selectedOpts.length == 0) {
+$('#btnLaborLeft').click(function (e) {
+    var selectedLabors = $('availLabors labor:selected');
+    if (selectedLabors.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#selOptsm').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#selectedLabors').append($(selectedLabors).clone());
+    $(selectedLabors).remove();
     e.preventDefault();
+
 });
 
-
-
-$('#btnRightlp').click(function (e) {
-    var selectedOpts = $('#selOptsl option:selected');
-    if (selectedOpts.length == 0) {
+$('#btnMaterialRight').click(function (e) {
+    var selectedMaterials = $('#selectedMaterials material:selected');
+    if (selectedMaterials.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#availOptsl').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#availMaterials').append($(selectedMaterials).clone());
+    $(selectedMaterials).remove();
     e.preventDefault();
 });
 
-$('#btnLeftlp').click(function (e) {
-    var selectedOpts = $('#availOptsl option:selected');
-    if (selectedOpts.length == 0) {
+$('#btnMaterialLeft').click(function (e) {
+    var selectedMaterials = $('availMaterials material:selected');
+    if (selectedMaterials.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#selOptsl').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#selectedMaterials').append($(selectedMaterials).clone());
+    $(selectedMaterials).remove();
     e.preventDefault();
+
 });
 
-$('#btnSubmitp').click(function (e) {
-    $('#selOptsm option').prop('selected', true);
-    $('#selOptsl option').prop('selected', true);
+$('#btnProjectSubmit').click(function (e) {
+    $('#selectedLabors labor').prop('selected', true);
+    $('#selectedMaterials material').prop('selected', true);
 });
 
-$('#btnRightlpp').click(function (e) {
-    var selectedOpts = $('#selOptslpp option:selected');
-    if (selectedOpts.length == 0) {
+//ProductionPlan Listboxes
+$('#btnProdLaborRight').click(function (e) {
+    var selectedProdLabors = $('#selectedProdLabors labor:selected');
+    if (selectedProdLabors.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#availOptslpp').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#availProdLabors').append($(selectedProdLabors).clone());
+    $(selectedProdLabors).remove();
     e.preventDefault();
 });
 
-$('#btnLeftlpp').click(function (e) {
-    var selectedOpts = $('#availOptslpp option:selected');
-    if (selectedOpts.length == 0) {
+$('#btnProdLaborLeft').click(function (e) {
+    var selectedProdLabors = $('availProdLabors labor:selected');
+    if (selectedProdLabors.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#selOptslpp').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#selectedProdLabors').append($(selectedProdLabors).clone());
+    $(selectedProdLabors).remove();
     e.preventDefault();
+
 });
 
-
-
-$('#btnRightmpp').click(function (e) {
-    var selectedOpts = $('#selOptsmpp option:selected');
-    if (selectedOpts.length == 0) {
+$('#btnProdMaterialRight').click(function (e) {
+    var selectedProdMaterials = $('#selectedProdMaterials material:selected');
+    if (selectedProdMaterials.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#availOptsmpp').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#availProdMaterials').append($(selectedProdMaterials).clone());
+    $(selectedProdMaterials).remove();
     e.preventDefault();
 });
 
-$('#btnLeftmpp').click(function (e) {
-    var selectedOpts = $('#availOptsmpp option:selected');
-    if (selectedOpts.length == 0) {
+$('#btnProdMaterialLeft').click(function (e) {
+    var selectedProdMaterials = $('availProdMaterials material:selected');
+    if (selectedProdMaterials.length == 0) {
         alert("Nothing to move.");
         e.preventDefault();
     }
-
-    $('#selOptsmpp').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
+    $('#selectedProdMaterials').append($(selectedProdMaterials).clone());
+    $(selectedProdMaterials).remove();
     e.preventDefault();
+
 });
 
-$('#btnSubmitpp').click(function (e) {
-    $('#selOptsmpp option').prop('selected', true);
-    $('#selOptslpp option').prop('selected', true);
+$('#btnProductionPlanSubmit').click(function (e) {
+    $('#selectedProdLabors labor').prop('selected', true);
+    $('#selectedProdMaterials material').prop('selected', true);
 });
+
+

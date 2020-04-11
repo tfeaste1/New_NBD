@@ -8,7 +8,12 @@ namespace NBD.Models
 {
     public class ProductionPlan
     {
-       
+        public ProductionPlan()
+        {
+            this.ProdPlanLabours = new HashSet<ProdPlanLabour>();
+            this.ProdPlanMaterials = new HashSet<ProdPlanMaterial>();
+        }
+
         public int ID { get; set; }
 
        

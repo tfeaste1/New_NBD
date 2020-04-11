@@ -24,12 +24,19 @@ namespace NBD.Controllers
         // GET: ProductionPlans
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.ProductionPlan
+            var productionPlans = from pp in _context.ProductionPlans
                 .Include(p => p.Project)
                 .Include(p => p.Team)
-                .Include(p => p.ProdPlanLabours) .ThenInclude(pl => pl.LabourRequirement)
-                .Include(p=>p.ProdPlanMaterials) .ThenInclude(pm => pm.MaterialRequirement);
-            return View(await nBDContext.ToListAsync());
+                .Include(p => p.ProdPlanLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p => p.ProdPlanMaterials)
+                .ThenInclude(pm => pm.MaterialRequirement)
+                .ThenInclude(m => m.Inventory)
+                .ThenInclude(i => i.Material)
+                select pp;
+            
+            return View(await productionPlans.ToListAsync());
         }
 
         // GET: ProductionPlans/Details/5
@@ -40,22 +47,36 @@ namespace NBD.Controllers
                 return NotFound();
             }
 
-            var productionPlan = await _context.ProductionPlan
+            var productionPlan = await _context.ProductionPlans
                 .Include(p => p.Project)
+                .Include(p => p.Team)
+                .Include(p => p.ProdPlanLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p => p.ProdPlanMaterials)
+                .ThenInclude(pm => pm.MaterialRequirement)
+                .ThenInclude(m => m.Inventory)
+                .ThenInclude(i => i.Material)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (productionPlan == null)
             {
                 return NotFound();
             }
 
+            PopulateAssignedLaborData(productionPlan);
+            PopulateAssignedMaterialData(productionPlan);
             return View(productionPlan);
         }
 
         // GET: ProductionPlans/Create
         public IActionResult Create()
         {
+            ProductionPlan productionPlan = new ProductionPlan();
+
+            PopulateAssignedLaborData(productionPlan);
+            PopulateAssignedMaterialData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
-            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName");
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "Phase");
             return View();
         }
 
@@ -64,58 +85,28 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ProjectID,TeamID,LabourReq,MaterialReq")] ProductionPlan productionPlan, string[] selectedLrequirements, string[] selectedRequirements)
+        public async Task<IActionResult> Create([Bind("ID,ProjectID,TeamID")] ProductionPlan productionPlan, string[] selectedProdLabors, string[] selectedProdMaterials)
         {
             try
             {
-                if (selectedLrequirements != null)
+                UpdateProdLabors(selectedProdLabors, productionPlan);
+                UpdateProdMaterials(selectedProdMaterials, productionPlan);
+                if (ModelState.IsValid)
                 {
-                    productionPlan.ProdPlanLabours = new List<ProdPlanLabour>();
-                    foreach (var labour in selectedLrequirements)
-                    {
-                        var lrequirementToAdd = new ProdPlanLabour
-                        {
-                            ProdPlanID = productionPlan.ID,
-                            LabourReqID = int.Parse(labour)
-                        };
-                        productionPlan.ProdPlanLabours.Add(lrequirementToAdd);
-                    }
-                }
-
-
-                if (selectedRequirements != null)
-                {
-                    productionPlan.ProdPlanMaterials = new List<ProdPlanMaterial>();
-                    foreach (var material in selectedRequirements)
-                    {
-                        var requirementToAdd = new ProdPlanMaterial
-                        {
-                            ProdPlanID = productionPlan.ID,
-                            MaterialReqID = int.Parse(material)
-                        };
-                        productionPlan.ProdPlanMaterials.Add(requirementToAdd);
-                    }
+                    _context.Add(productionPlan);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (RetryLimitExceededException /* dex */)
             {
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
-            catch (Exception)
-            {
-                ModelState.AddModelError("", "Unknown error!");
-            }
-            if (ModelState.IsValid)
-            {
-                _context.Add(productionPlan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
 
-            PopulateAssignedLabourReqData(productionPlan);
-            PopulateAssignedMaterialReqData(productionPlan);
+            PopulateAssignedLaborData(productionPlan);
+            PopulateAssignedMaterialData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", productionPlan.ProjectID);
-            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName", productionPlan.TeamID);
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "Phase", productionPlan.TeamID);
             return View(productionPlan);
         }
 
@@ -128,21 +119,27 @@ namespace NBD.Controllers
             }
 
             var productionPlan = await _context.ProductionPlans
-                .Include(p => p.ProdPlanMaterials)
-                 .ThenInclude(p => p.MaterialRequirement)
+                .Include(p => p.Project)
+                .Include(p => p.Team)
                 .Include(p => p.ProdPlanLabours)
-                .ThenInclude(p => p.LabourRequirement)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p => p.ProdPlanMaterials)
+                .ThenInclude(pm => pm.MaterialRequirement)
+                .ThenInclude(m => m.Inventory)
+                .ThenInclude(i => i.Material)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(p => p.ID == id);
+                .SingleOrDefaultAsync(d => d.ID == id);
+                
             if (productionPlan == null)
             {
                 return NotFound();
             }
 
-            PopulateAssignedLabourReqData(productionPlan);
-            PopulateAssignedMaterialReqData(productionPlan);
+            PopulateAssignedLaborData(productionPlan);
+            PopulateAssignedMaterialData(productionPlan);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", productionPlan.ProjectID);
-            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName", productionPlan.TeamID);
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "Phase", productionPlan.TeamID);
             return View(productionPlan);
         }
 
@@ -151,24 +148,30 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ProjectID,TeamID,LabourReq,MaterialReq")] ProductionPlan productionPlan, string[] selectedLrequirements, string[] selectedRequirements)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ProjectID,TeamID")] ProductionPlan productionPlan, string[] selectedProdLabors, string[] selectedProdMaterials)
         {
-            if (id != productionPlan.ID)
+            var productionPlanToUpdate = await _context.ProductionPlans
+                .Include(p => p.Project)
+                .Include(p => p.Team)
+                .Include(p => p.ProdPlanLabours)
+                .ThenInclude(pl => pl.LabourRequirement)
+                .ThenInclude(l => l.Task)
+                .Include(p => p.ProdPlanMaterials)
+                .ThenInclude(pm => pm.MaterialRequirement)
+                .ThenInclude(m => m.Inventory)
+                .ThenInclude(i => i.Material)
+                .SingleOrDefaultAsync(d => d.ID == id);
+            if(productionPlanToUpdate == null)
             {
                 return NotFound();
             }
-            var pPlanToUpdate = await _context.ProductionPlans
-               .Include(p => p.ProdPlanMaterials)
-                .ThenInclude(p => p.MaterialRequirement)
-               .Include(p => p.ProdPlanLabours)
-               .ThenInclude(p => p.LabourRequirement)
-               .AsNoTracking()
-               .SingleOrDefaultAsync(p => p.ID == id);
-           
-            UpdateLabourRequirements(selectedLrequirements, pPlanToUpdate);
-            UpdateMaterialRequirements(selectedRequirements, pPlanToUpdate);
+            UpdateProdLabors(selectedProdLabors, productionPlanToUpdate);
+            UpdateProdMaterials(selectedProdMaterials, productionPlanToUpdate);
 
-            if (await TryUpdateModelAsync<ProductionPlan>(pPlanToUpdate, "", p => p.ProjectID, p => p.TeamID))
+            if(await TryUpdateModelAsync<ProductionPlan> 
+                (productionPlanToUpdate,"",
+                p=>p.ProjectID, p=>p.TeamID
+                ))
             {
                 try
                 {
@@ -182,7 +185,7 @@ namespace NBD.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductionPlanExists(pPlanToUpdate.ID))
+                    if (!ProductionPlanExists(productionPlanToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -191,6 +194,14 @@ namespace NBD.Controllers
                         throw;
                     }
                 }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
+            }
+            if (id != productionPlan.ID)
+            {
+                return NotFound();
             }
 
             if (ModelState.IsValid)
@@ -213,11 +224,8 @@ namespace NBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-
-            PopulateAssignedLabourReqData(pPlanToUpdate);
-            PopulateAssignedMaterialReqData(pPlanToUpdate);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", productionPlan.ProjectID);
-            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "TeamName", productionPlan.TeamID);
+            ViewData["TeamID"] = new SelectList(_context.Teams, "ID", "ID", productionPlan.TeamID);
             return View(productionPlan);
         }
 
@@ -229,8 +237,9 @@ namespace NBD.Controllers
                 return NotFound();
             }
 
-            var productionPlan = await _context.ProductionPlan
+            var productionPlan = await _context.ProductionPlans
                 .Include(p => p.Project)
+                .Include(p => p.Team)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (productionPlan == null)
             {
@@ -245,160 +254,188 @@ namespace NBD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productionPlan = await _context.ProductionPlan.FindAsync(id);
-            _context.ProductionPlan.Remove(productionPlan);
+            var productionPlan = await _context.ProductionPlans.FindAsync(id);
+            _context.ProductionPlans.Remove(productionPlan);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private void PopulateAssignedLabourReqData(ProductionPlan productionPlan)
+        private void PopulateAssignedLaborData(ProductionPlan productionPlan)
         {
-            var allLrequirements = _context.LabourRequirements;
-            var pLrequirements = new HashSet<int>(productionPlan.ProdPlanLabours.Select(p => p.LabourReqID));
-            var selectedl = new List<LabourReqVM>();
-            var availablel = new List<LabourReqVM>();
-            foreach (var r in allLrequirements)
-            {
-                if (pLrequirements.Contains(r.ID))
-                {
-                    selectedl.Add(new LabourReqVM
-                    {
-                        ID = r.ID,
-                        Description = r.Team.Employee.Department.Description,
-                        Hours = r.Hours,
-                        CostPerHour = r.Team.Employee.Department.Cost,
-                        Cost = r.Hours * r.Team.Employee.Department.Cost,
-                        Time = r.Date,
-                        Task = r.Task.Description
+            var allLabors = _context.LabourRequirements
+                .Include(l => l.Task)
+                .Include(l => l.Team);
+            var prodLabors = new HashSet<int>
+                (productionPlan.ProdPlanLabours.Select(p => p.LabourReqID));
+            var selectedProdLabor = new List<LabourReqVM>();
+            var availableProdLabor = new List<LabourReqVM>();
 
-                    }); ;
-                }
-                else
-                {
-                    availablel.Add(new LabourReqVM
-                    {
-                        ID = r.ID,
-                        Description = r.Team.Employee.Department.Description,
-                        Hours = r.Hours,
-                        CostPerHour = r.Team.Employee.Department.Cost,
-                        Cost = r.Hours * r.Team.Employee.Department.Cost,
-                        Time = r.Date,
-                        Task = r.Task.Description
-                    });
-                }
-            }
-            ViewData["selOptslpp"] = new MultiSelectList(selectedl.OrderBy(s => s.Description), "ID", "Description");
-            ViewData["availOptslpp"] = new MultiSelectList(availablel.OrderBy(s => s.Description), "ID", "Description");
-        }
-        private void UpdateLabourRequirements(string[] selectedLrequirements, ProductionPlan pPlanToUpdate)
-        {
-            if (selectedLrequirements == null)
+            foreach (var l in allLabors)
             {
-                pPlanToUpdate.ProdPlanLabours = new List<ProdPlanLabour>();
-                return;
-            }
-            var selectedLrequirementHS = new HashSet<string>(selectedLrequirements);
-            var labourLRequirementsHS = new HashSet<int>
-            (pPlanToUpdate.ProdPlanLabours.Select(i => i.LabourReqID));
-            foreach (var labour in _context.LabourRequirements)
-            {
-                if (selectedLrequirementHS.Contains(labour.ID.ToString()))
+                if (prodLabors.Contains(l.ID))
                 {
-                    if (!labourLRequirementsHS.Contains(labour.ID))
+                    selectedProdLabor.Add(new LabourReqVM
                     {
-                        pPlanToUpdate.ProdPlanLabours.Add(new ProdPlanLabour
-                        {
-                            ProdPlanID = pPlanToUpdate.ID,
-                            LabourReqID = labour.ID
-                        });
-                    }
-                    else
-                    {
-                        if (labourLRequirementsHS.Contains(labour.ID))
-                        {
-                            ProdPlanLabour summaryToRemove = pPlanToUpdate.ProdPlanLabours
-                                                                           .SingleOrDefault(s => s.LabourReqID == labour.ID);
-                            _context.Remove(summaryToRemove);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void PopulateAssignedMaterialReqData(ProductionPlan productionPlan)
-        {
-            var allRequirements = _context.MaterialRequirements;
-            var pRequirements = new HashSet<int>(productionPlan.ProdPlanMaterials.Select(p => p.MaterialReqID));
-            var selectedm = new List<MaterialReqVM>();
-            var availablem = new List<MaterialReqVM>();
-            foreach (var r in allRequirements)
-            {
-                if (pRequirements.Contains(r.ID))
-                {
-                    selectedm.Add(new MaterialReqVM
-                    {
-                        ID = r.ID,
-                        MaterialName = r.Inventory.Material.Description,
-                        Size = r.Quantity.ToString() + " " + r.Inventory.SizeUnit,
-                        NetUnit = r.Inventory.AvgNet,
-                        Cost = r.Quantity * r.Inventory.AvgNet
+                        ID = l.ID,
+                        DisplayText = l.Task.Description
+                        + ", " + l.EstHours.ToString()
+                        + ",  " + l.EstDate.ToString
+                        ()
+                        + ", " + l.Team.Phase
+                        + (string.IsNullOrEmpty(l.Date.ToString()) ? " " : (" " + l.Date.ToString()))
+                        + (string.IsNullOrEmpty(l.Hours.ToString()) ? " " : (" " + l.Hours.ToString()))
+                        + (string.IsNullOrEmpty(l.Comments) ? " " : (" " + l.Comments))
 
                     });
                 }
                 else
                 {
-                    availablem.Add(new MaterialReqVM
+                    availableProdLabor.Add(new LabourReqVM
                     {
-                        ID = r.ID,
-                        MaterialName = r.Inventory.Material.Description,
-                        Size = r.Quantity.ToString() + " " + r.Inventory.SizeUnit,
-                        NetUnit = r.Inventory.AvgNet,
-                        Cost = r.Quantity * r.Inventory.AvgNet
+                        ID = l.ID,
+                        DisplayText = l.Task.Description
+                        + ", " + l.EstHours.ToString()
+                        + ",  " + l.EstDate.ToString()
+                        + ", " + l.Team.Phase
+                        + (string.IsNullOrEmpty(l.Date.ToString()) ? " " : (" " + l.Date.ToString()))
+                        + (string.IsNullOrEmpty(l.Hours.ToString()) ? " " : (" " + l.Hours.ToString()))
+                        + (string.IsNullOrEmpty(l.Comments) ? " " : (" " + l.Comments))
                     });
                 }
             }
-            ViewData["selOptsmpp"] = new MultiSelectList(selectedm.OrderBy(s => s.MaterialName), "ID", "MaterialName");
-            ViewData["availOptsmpp"] = new MultiSelectList(availablem.OrderBy(s => s.MaterialName), "ID", "MaterialName");
+            ViewData["selProdLabors"] = new MultiSelectList(selectedProdLabor.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["availProdLabors"] = new MultiSelectList(availableProdLabor.OrderBy(s => s.DisplayText), "ID", "DisplayText");
         }
-        private void UpdateMaterialRequirements(string[] selectedRequirements, ProductionPlan pPlanToUpdate)
+        private void UpdateProdLabors(string[] selectedProdLabors, ProductionPlan productionPlanToUpdate)
         {
-            if (selectedRequirements == null)
+            if (selectedProdLabors == null)
             {
-                pPlanToUpdate.ProdPlanMaterials = new List<ProdPlanMaterial>();
+                productionPlanToUpdate.ProdPlanLabours = new List<ProdPlanLabour>();
                 return;
+
             }
-            var selectedRequirementsHS = new HashSet<string>(selectedRequirements);
-            var materialReqsHS = new HashSet<int>
-            (pPlanToUpdate.ProdPlanMaterials.Select(r => r.MaterialReqID));
-            foreach (var material in _context.MaterialRequirements)
+            var selectedProdLaborsHS = new HashSet<string>(selectedProdLabors);
+            var prodLabors = new HashSet<int>
+                             (productionPlanToUpdate.ProdPlanLabours.Select(p => p.LabourReqID));
+
+            foreach (var l in _context.LabourRequirements)
             {
-                if (selectedRequirementsHS.Contains(material.ID.ToString()))
+                if (selectedProdLaborsHS.Contains(l.ID.ToString()))
                 {
-                    if (!materialReqsHS.Contains(material.ID))
+                    if (!prodLabors.Contains(l.ID))
                     {
-                        pPlanToUpdate.ProdPlanMaterials.Add(new ProdPlanMaterial
+                        productionPlanToUpdate.ProdPlanLabours.Add(new ProdPlanLabour
                         {
-                            ProdPlanID = pPlanToUpdate.ID,
-                            MaterialReqID = material.ID
+                            LabourReqID = l.ID,
+                            ProdPlanID = productionPlanToUpdate.ID
+
                         });
                     }
-                    else
-                    {
-                        if (materialReqsHS.Contains(material.ID))
-                        {
-                            ProdPlanMaterial requirementToRemove = pPlanToUpdate.ProdPlanMaterials
-                                                                           .SingleOrDefault(r => r.MaterialReqID == material.ID);
-                            _context.Remove(requirementToRemove);
-                        }
-                    }
                 }
+                else
+                {
+                    if (prodLabors.Contains(l.ID))
+                    {
+                        ProdPlanLabour labourToRemove = productionPlanToUpdate.ProdPlanLabours.SingleOrDefault(p => p.LabourReqID == l.ID);
+                        _context.Remove(labourToRemove);
+
+                    }
+
+                }
+
             }
+
         }
 
+        private void PopulateAssignedMaterialData(ProductionPlan productionPlan)
+        {
+            var allMaterials = _context.MaterialRequirements
+                .Include(m => m.Inventory)
+                .ThenInclude(m => m.Material);
+            var prodMaterials = new HashSet<int>
+                (productionPlan.ProdPlanMaterials.Select(p => p.MaterialReqID));
+            var selectedProdMaterials = new List<MaterialReqVM>();
+            var availableProdMaterials = new List<MaterialReqVM>();
+
+            foreach (var m in allMaterials)
+            {
+                if (prodMaterials.Contains(m.ID))
+                {
+                    selectedProdMaterials.Add(new MaterialReqVM
+                    {
+                        ID = m.ID,
+                        DisplayText = m.Inventory.Material.Description
+                        + ", " + m.DeliveryDate.ToString() + " @ " + m.DeliveryTime.ToString()
+                        + ",  " + m.InstallDate.ToString() + " @ " + m.InstallTime.ToString()
+                        + ", " + m.EstQuantity.ToString()
+                        + (string.IsNullOrEmpty(m.Quantity.ToString()) ? " " : (" " + m.Quantity.ToString()))
+
+
+                    });
+                }
+                else
+                {
+                    availableProdMaterials.Add(new MaterialReqVM
+                    {
+                        ID = m.ID,
+                        DisplayText = m.Inventory.Material.Description
+                        + ", " + m.DeliveryDate.ToString() + " @ " + m.DeliveryTime.ToString()
+                        + ",  " + m.InstallDate.ToString() + " @ " + m.InstallTime.ToString()
+                        + ", " + m.EstQuantity.ToString()
+                        + (string.IsNullOrEmpty(m.Quantity.ToString()) ? " " : (" " + m.Quantity.ToString()))
+
+                    });
+                }
+            }
+            ViewData["selProdMaterials"] = new MultiSelectList(selectedProdMaterials.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["availProdMaterials"] = new MultiSelectList(availableProdMaterials.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        }
+        private void UpdateProdMaterials(string[] selectedProdMaterials, ProductionPlan productionPlanToUpdate)
+        {
+            if (selectedProdMaterials == null)
+            {
+                productionPlanToUpdate.ProdPlanMaterials = new List<ProdPlanMaterial>();
+                return;
+
+            }
+            var selectedProdMaterialsHS = new HashSet<string>(selectedProdMaterials);
+            var prodMaterials = new HashSet<int>
+                             (productionPlanToUpdate.ProdPlanMaterials.Select(p => p.MaterialReqID));
+
+            foreach (var m in _context.MaterialRequirements
+                .Include(m => m.Inventory)
+                .ThenInclude(i => i.Material))
+            {
+                if (selectedProdMaterialsHS.Contains(m.ID.ToString()))
+                {
+                    if (!prodMaterials.Contains(m.ID))
+                    {
+                        productionPlanToUpdate.ProdPlanMaterials.Add(new ProdPlanMaterial
+                        {
+                            MaterialReqID = m.ID,
+                            ProdPlanID = productionPlanToUpdate.ID
+
+                        });
+                    }
+                }
+                else
+                {
+                    if (prodMaterials.Contains(m.ID))
+                    {
+                        ProdPlanMaterial materialToRemove = productionPlanToUpdate.ProdPlanMaterials.SingleOrDefault(p => p.MaterialReqID == m.ID);
+                        _context.Remove(materialToRemove);
+
+                    }
+
+                }
+
+            }
+
+        }
 
         private bool ProductionPlanExists(int id)
         {
-            return _context.ProductionPlan.Any(e => e.ID == id);
+            return _context.ProductionPlans.Any(e => e.ID == id);
         }
     }
 }
