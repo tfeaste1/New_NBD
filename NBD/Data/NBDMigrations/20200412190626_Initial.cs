@@ -2,7 +2,7 @@
 
 namespace NBD.Data.NBDMigrations
 {
-    public partial class TMigrations : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

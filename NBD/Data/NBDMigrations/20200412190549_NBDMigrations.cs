@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NBD.Data.NBDMigrations
 {
-    public partial class InitialCreate : Migration
+    public partial class NBDMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -271,6 +271,46 @@ namespace NBD.Data.NBDMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MaterialReports",
+                schema: "MO",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Quantity = table.Column<int>(nullable: false),
+                    Costs = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: true),
+                    EmployeeID = table.Column<int>(nullable: false),
+                    ProjectID = table.Column<int>(nullable: false),
+                    MaterialID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaterialReports", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_MaterialReports_Employees_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalSchema: "MO",
+                        principalTable: "Employees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MaterialReports_Materials_MaterialID",
+                        column: x => x.MaterialID,
+                        principalSchema: "MO",
+                        principalTable: "Materials",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MaterialReports_Projects_ProjectID",
+                        column: x => x.ProjectID,
+                        principalSchema: "MO",
+                        principalTable: "Projects",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductionTools",
                 schema: "MO",
                 columns: table => new
@@ -310,6 +350,7 @@ namespace NBD.Data.NBDMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Phase = table.Column<string>(nullable: true),
+                    TeamName = table.Column<string>(nullable: false),
                     EmployeeID = table.Column<int>(nullable: false),
                     ProjectID = table.Column<int>(nullable: false)
                 },
@@ -328,6 +369,46 @@ namespace NBD.Data.NBDMigrations
                         column: x => x.ProjectID,
                         principalSchema: "MO",
                         principalTable: "Projects",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkerReports",
+                schema: "MO",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Hours = table.Column<int>(nullable: false),
+                    Costs = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: true),
+                    EmployeeID = table.Column<int>(nullable: false),
+                    ProjectID = table.Column<int>(nullable: false),
+                    TaskID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkerReports", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_WorkerReports_Employees_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalSchema: "MO",
+                        principalTable: "Employees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WorkerReports_Projects_ProjectID",
+                        column: x => x.ProjectID,
+                        principalSchema: "MO",
+                        principalTable: "Projects",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WorkerReports_Tasks_TaskID",
+                        column: x => x.TaskID,
+                        principalSchema: "MO",
+                        principalTable: "Tasks",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -416,6 +497,33 @@ namespace NBD.Data.NBDMigrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductionPlan_Teams_TeamID",
+                        column: x => x.TeamID,
+                        principalSchema: "MO",
+                        principalTable: "Teams",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeamEmployees",
+                schema: "MO",
+                columns: table => new
+                {
+                    TeamID = table.Column<int>(nullable: false),
+                    EmployeeID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamEmployees", x => new { x.TeamID, x.EmployeeID });
+                    table.ForeignKey(
+                        name: "FK_TeamEmployees_Employees_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalSchema: "MO",
+                        principalTable: "Employees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeamEmployees_Teams_TeamID",
                         column: x => x.TeamID,
                         principalSchema: "MO",
                         principalTable: "Teams",
@@ -566,6 +674,25 @@ namespace NBD.Data.NBDMigrations
                 column: "ProjectID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MaterialReports_EmployeeID",
+                schema: "MO",
+                table: "MaterialReports",
+                column: "EmployeeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialReports_MaterialID",
+                schema: "MO",
+                table: "MaterialReports",
+                column: "MaterialID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialReports_ProjectID_MaterialID_EmployeeID",
+                schema: "MO",
+                table: "MaterialReports",
+                columns: new[] { "ProjectID", "MaterialID", "EmployeeID" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MaterialRequirements_InventoryID",
                 schema: "MO",
                 table: "MaterialRequirements",
@@ -644,6 +771,12 @@ namespace NBD.Data.NBDMigrations
                 column: "ToolID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TeamEmployees_EmployeeID",
+                schema: "MO",
+                table: "TeamEmployees",
+                column: "EmployeeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Teams_EmployeeID",
                 schema: "MO",
                 table: "Teams",
@@ -654,12 +787,35 @@ namespace NBD.Data.NBDMigrations
                 schema: "MO",
                 table: "Teams",
                 column: "ProjectID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkerReports_EmployeeID",
+                schema: "MO",
+                table: "WorkerReports",
+                column: "EmployeeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkerReports_TaskID",
+                schema: "MO",
+                table: "WorkerReports",
+                column: "TaskID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkerReports_ProjectID_TaskID_EmployeeID",
+                schema: "MO",
+                table: "WorkerReports",
+                columns: new[] { "ProjectID", "TaskID", "EmployeeID" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "LabourSummaries",
+                schema: "MO");
+
+            migrationBuilder.DropTable(
+                name: "MaterialReports",
                 schema: "MO");
 
             migrationBuilder.DropTable(
@@ -680,6 +836,14 @@ namespace NBD.Data.NBDMigrations
 
             migrationBuilder.DropTable(
                 name: "ProjectMaterials",
+                schema: "MO");
+
+            migrationBuilder.DropTable(
+                name: "TeamEmployees",
+                schema: "MO");
+
+            migrationBuilder.DropTable(
+                name: "WorkerReports",
                 schema: "MO");
 
             migrationBuilder.DropTable(
