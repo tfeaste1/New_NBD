@@ -356,3 +356,4 @@ C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razo
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\WorkerReports\Index.g.cshtml.cs
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
 C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
+C:\Users\Administrator\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache

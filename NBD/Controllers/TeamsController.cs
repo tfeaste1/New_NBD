@@ -51,12 +51,20 @@ namespace NBD.Controllers
         }
 
         // GET: Teams/Create
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
+        //[Authorize(Roles = "Admin")]
+        public IActionResult Create(int? id)
         {
+            Team team = new Team();
+            
             ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName");
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
-            return View();
+           
+            if (team == null)
+            {
+                return NotFound();
+            }
+            PopulateAssignedEmpData(team);
+            return View(team);
         }
 
         // POST: Teams/Create
@@ -64,7 +72,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team, string[] selectedOptions)
         {
             try
@@ -76,18 +84,18 @@ namespace NBD.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
-                ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
+                //ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
+                //ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
             }
 
             catch (RetryLimitExceededException /* dex */)
             {
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "Something went wrong in the database.");
-            }
+            //catch (DbUpdateException)
+            //{
+            //    ModelState.AddModelError("", "Something went wrong in the database.");
+            //}
             PopulateAssignedEmpData(team);
             return View(team);
 
@@ -104,7 +112,7 @@ namespace NBD.Controllers
             }
 
             var team = await _context.Teams.Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
-                .Include(t => t.ProductionPlans).ThenInclude(t => t.Project)
+                .Include(t => t.Project)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(t => t.ID == id);
             if (team == null)
@@ -112,8 +120,8 @@ namespace NBD.Controllers
                 return NotFound();
             }
             PopulateAssignedEmpData(team);
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
+            //ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
+            //ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
             return View(team);
         }
 
@@ -123,11 +131,11 @@ namespace NBD.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team, string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, string[] selectedOptions)
         {
             var teamToUpdate = await _context.Teams
            .Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
-                .Include(t => t.ProductionPlans).ThenInclude(t => t.Project)
+                .Include(t => t.Project)
            .SingleOrDefaultAsync(d => d.ID == id);
             if (teamToUpdate == null)
             {
@@ -166,8 +174,8 @@ namespace NBD.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
+            //ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
+            //ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name", team.ProjectID);
             PopulateAssignedEmpData(teamToUpdate);
             return View(teamToUpdate);
         }
@@ -183,7 +191,7 @@ namespace NBD.Controllers
 
             var team = await _context.Teams
                 .Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
-                .Include(t => t.ProductionPlans).ThenInclude(t => t.Project)
+                .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.ProjectID == id);
             if (team == null)
             {
