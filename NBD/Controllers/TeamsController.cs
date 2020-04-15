@@ -216,7 +216,7 @@ namespace NBD.Controllers
             }
             catch (DbUpdateException dex)
             {
-                if (dex.InnerException.Message.Contains("FK_Patients_Doctors_DoctorID"))
+                if (dex.InnerException.Message.Contains("FK_Teams_Employees_EmployeeID"))
                 {
                     ModelState.AddModelError("", "Unable to save changes. Remember, you cannot delete a Doctor that has Patients.");
                 }

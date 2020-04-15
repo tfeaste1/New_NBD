@@ -10,8 +10,8 @@ using NBD.Data;
 namespace NBD.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20200412190549_NBDMigrations")]
-    partial class NBDMigrations
+    [Migration("20200415220201_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
