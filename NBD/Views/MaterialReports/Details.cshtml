@@ -11,25 +11,25 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Material)
+            @Html.DisplayNameFor(model => model.Material) :
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Material.ID)
+            @Html.DisplayFor(model => model.Material.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.Quantity) ($):
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Costs)
+            @Html.DisplayNameFor(model => model.Costs) ($):
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Costs)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ExtCosts)
+            @Html.DisplayNameFor(model => model.ExtCosts) ($):
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ExtCosts)
@@ -43,7 +43,7 @@
             @Html.DisplayFor(model => model.Employee.FullName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
+           Project Name:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Project.Name)
