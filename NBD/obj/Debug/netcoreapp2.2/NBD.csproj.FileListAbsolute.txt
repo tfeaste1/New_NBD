@@ -272,7 +272,6 @@ C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\V
 C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MaterialReports\Details.cshtml.g.cs
 C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MaterialReports\Edit.cshtml.g.cs
 C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\MaterialReports\Index.cshtml.g.cs
-C:\Users\Weird.Scar\Documents\GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\appsettings.Development.json
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\appsettings.json
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
