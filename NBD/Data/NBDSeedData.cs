@@ -467,7 +467,7 @@ namespace NBD.Data
                          new Team
                          {
                              TeamName = "NBD project",
-                             ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                             
                              
                              Phase = "Done"
                          },
@@ -475,7 +475,7 @@ namespace NBD.Data
                         {
 
                             TeamName = "I am team 2",
-                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
                            
                             Phase = "70%"
                         },
@@ -483,7 +483,7 @@ namespace NBD.Data
                         {
 
                             TeamName = "So I am team 3",
-                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
                             
                             Phase = "Fail"
                         },
@@ -499,7 +499,7 @@ namespace NBD.Data
                         {
 
                             TeamName = "5",
-                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                           
                             
                             Phase = "Pass"
                         },
@@ -507,7 +507,7 @@ namespace NBD.Data
                         {
 
                             TeamName = "why 5 is such short",
-                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
                             
                             Phase = "In processing"
                         },
@@ -515,7 +515,7 @@ namespace NBD.Data
                         {
 
                             TeamName = "is none of your problom",
-                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
                             
                             Phase = "In processing"
                         },
@@ -523,7 +523,7 @@ namespace NBD.Data
                         {
 
                             TeamName = "Finally",
-                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
+                            
                             Phase = "In processing"
                         }
                         );
