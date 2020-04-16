@@ -27,11 +27,7 @@
                 <input asp-for="Costs" class="form-control" />
                 <span asp-validation-for="Costs" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="EmployeeID" class="control-label"> Approved By:</label>
                 <select asp-for="EmployeeID" class="form-control" asp-items="ViewBag.EmployeeID"></select>

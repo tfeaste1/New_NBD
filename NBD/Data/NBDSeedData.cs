@@ -1101,29 +1101,26 @@ namespace NBD.Data
                 if (!context.MaterialReports.Any())
                 {
                     context.MaterialReports.AddRange(
-                        new MaterialReport
-                        {
-                            Date = DateTime.Parse("2020-06-16"),
-                            Quantity = 15,
-                            Costs = 200,
-                            EmployeeID = 6,
-                            ProjectID = 1,
-                            MaterialID = 5
+                           new MaterialReport
+                           {
+                               Date = DateTime.Parse("2020-06-16"),
+                               Quantity = 8,
+                               Costs = 18,
+                               EmployeeID = 6,
+                               MaterialID = 3,
+                               ProjectID = 1
+                           },
+                           new MaterialReport
+                           {
+                               Date = DateTime.Parse("2020-06-16"),
+                               Quantity = 8,
+                               Costs = 180,
+                               EmployeeID = 6,
+                               MaterialID = 3,
+                               ProjectID = 2
+                           }
 
-
-                        },
-                        new MaterialReport
-                        {
-                            Date = DateTime.Parse("2020-06-16"),
-                            Quantity = 34,
-                            Costs = 200,
-                            EmployeeID = 6,
-                            ProjectID = 2,
-                            MaterialID = 5
-
-
-                        }
-                        ) ;
+                        );
                     context.SaveChanges();
                 }
                     
