@@ -26,6 +26,7 @@ namespace NBD.Controllers
         public async Task<IActionResult> Index()
         {
             var nBDContext = _context.Teams
+               .OrderBy(t=>t.TeamName)
                .Include(t => t.TeamEmployees).ThenInclude(t => t.Employee);
                              
                

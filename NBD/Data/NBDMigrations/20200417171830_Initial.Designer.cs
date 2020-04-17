@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NBD.Data;
 
 namespace NBD.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    partial class NBDContextModelSnapshot : ModelSnapshot
+    [Migration("20200417171830_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.BidStageReport", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -42,9 +44,9 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Remaining");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ProjectID", "ID")
+                    b.HasIndex("ProjectID", "Id")
                         .IsUnique();
 
                     b.ToTable("BidStageReports");
@@ -386,17 +388,13 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("EstimatedDesingCost");
 
-                    b.Property<int>("ProductionPlanID");
-
                     b.Property<int>("ProjectID");
 
                     b.Property<string>("TotalCosttoDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductionPlanID");
-
-                    b.HasIndex("ProjectID", "ProductionPlanID", "Id")
+                    b.HasIndex("ProjectID", "Id")
                         .IsUnique();
 
                     b.ToTable("ProductionStageReports");
@@ -736,11 +734,6 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.ProductionStageReport", b =>
                 {
-                    b.HasOne("NBD.Models.ProductionPlan", "ProductionPlan")
-                        .WithMany("ProductionStageReports")
-                        .HasForeignKey("ProductionPlanID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("NBD.Models.Project", "Project")
                         .WithMany("ProductionStageReports")
                         .HasForeignKey("ProjectID")

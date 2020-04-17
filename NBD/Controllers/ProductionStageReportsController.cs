@@ -37,7 +37,7 @@ namespace NBD.Controllers
             }
 
             var productionStageReport = await _context.ProductionStageReports
-                .Include(p => p.Project)
+                .Include(p => p.ProductionPlan)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (productionStageReport == null)
             {

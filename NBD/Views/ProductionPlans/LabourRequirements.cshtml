@@ -1,0 +1,74 @@
+﻿@model NBD.Models.LabourRequirement
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<h4>Labour Requirements</h4>
+<p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskID)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstHours)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Team.TeamName)
+                </th>
+            </tr>
+            <tr>
+                @foreach (var item in Model.ProdPlanLabours)
+                {
+
+                    <td>
+                        @Html.DisplayFor(model => model.Task.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.EstDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.EstHours)
+                    </td>
+
+                @foreach (var employee in Model.Team.TeamEmployees)
+                {
+
+                    <td>
+                        @Html.DisplayFor(modelEmployee => employee.Employee.FullName)
+                    </td>
+                }
+                <a class="btn btn-light" asp-controller="ProductionPlans" asp-action="Edit" asp-route-id="@item.ProdPlanID">Edit</a>
+                }
+            </tr>
+
+        </thead>
+    </table>
+    }
+</p>
+
+<div>
+     |
+</div>
+
+
+
+
+
+<div>
+    <h4>ProdPlanLabour</h4>
+    <hr />
+    <dl class="row">
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) 
+    <a asp-action="Index">Back to List</a>
+</div>

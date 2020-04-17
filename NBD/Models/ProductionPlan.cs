@@ -33,6 +33,8 @@ namespace NBD.Models
         [Display(Name ="Labour Requirements")]
         public ICollection<ProdPlanLabour> ProdPlanLabours { get; set; }
 
+        public ICollection<ProductionStageReport> ProductionStageReports { get; set; }
+
 
     }
 }

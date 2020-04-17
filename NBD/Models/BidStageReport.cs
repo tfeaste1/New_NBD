@@ -8,7 +8,7 @@ namespace NBD.Models
 {
     public class BidStageReport
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
 
     
         [Display(Name = "Est.Bid")]

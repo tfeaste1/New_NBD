@@ -10,8 +10,8 @@ using NBD.Data;
 namespace NBD.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20200417140907_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200417224641_Check")]
+    partial class Check
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.BidStageReport", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -44,9 +44,9 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Remaining");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("ProjectID", "Id")
+                    b.HasIndex("ProjectID", "ID")
                         .IsUnique();
 
                     b.ToTable("BidStageReports");
@@ -388,13 +388,17 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("EstimatedDesingCost");
 
+                    b.Property<int>("ProductionPlanID");
+
                     b.Property<int>("ProjectID");
 
                     b.Property<string>("TotalCosttoDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectID", "Id")
+                    b.HasIndex("ProductionPlanID");
+
+                    b.HasIndex("ProjectID", "ProductionPlanID", "Id")
                         .IsUnique();
 
                     b.ToTable("ProductionStageReports");
@@ -734,6 +738,11 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.ProductionStageReport", b =>
                 {
+                    b.HasOne("NBD.Models.ProductionPlan", "ProductionPlan")
+                        .WithMany("ProductionStageReports")
+                        .HasForeignKey("ProductionPlanID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("NBD.Models.Project", "Project")
                         .WithMany("ProductionStageReports")
                         .HasForeignKey("ProjectID")

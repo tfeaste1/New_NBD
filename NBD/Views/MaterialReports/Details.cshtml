@@ -4,54 +4,57 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h4 align="center ">@Html.DisplayFor(model => model.Project.Name) - </h4>
+<h3 align="center"> Material Details</h3>
 
-<div>
-    <h4>Material Report</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Material) :
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Material.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity) ($):
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Costs) ($):
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Costs)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ExtCosts) ($):
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ExtCosts)
-        </dd>
-        <dt class="col-sm-2">
-            Approved by:
-            
-        </dt>
-        <dd class="col-sm-10">
-            
-            @Html.DisplayFor(model => model.Employee.FullName)
-        </dd>
-        <dt class="col-sm-2">
-           Project Name:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Project.Name)
-        </dd>
+<div class="card  align-content-center" style="width:400px; height:500px;">
+    <div class="card-body">
+        <h4 class="card-title">Material Report Details</h4>
+        <dl class="card-body">
+            <dt>
+                @Html.DisplayNameFor(model => model.Material)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Material.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
 
-    </dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Costs)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Costs)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ExtCosts)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ExtCosts)
+            </dd>
+            <dt>
+                Approved by:
+
+            </dt>
+            <dd class="col-sm-10">
+
+                @Html.DisplayFor(model => model.Employee.FullName)
+            </dd>
+            <dt class="col-sm-2">
+
+
+        </dl>
+
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-light" asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a class="btn btn-danger" asp-action="Index">Back to List</a>
 </div>
+
+
+

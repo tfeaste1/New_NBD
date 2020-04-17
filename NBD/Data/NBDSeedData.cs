@@ -1162,7 +1162,8 @@ namespace NBD.Data
                                EstLaborProdCost = "$990",
                                ActuLaborDesingCost = "$880",
                                EstLaborDesingCost = "$880",
-                               ProjectID = 1
+                               ProductionPlanID = 1,
+                               ProjectID = 1,
                            }
                         );
                     context.SaveChanges();

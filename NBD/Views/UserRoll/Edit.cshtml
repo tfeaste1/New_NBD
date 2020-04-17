@@ -26,6 +26,7 @@
                         @{
                             int cnt = 0;
                             List<NBD.ViewModels.RoleVM> roles = ViewBag.Roles;
+
                             foreach (var role in roles)
                             {
                                 if (cnt++ % 3 == 0)
@@ -37,10 +38,10 @@
                                            name="selectedRoles"
                                            value="@role.RoleName"
                                            @(Html.Raw(role.Assigned ? "checked=\"checked\"" : "")) />
-                                    @role.RoleName @:&nbsp;&nbsp;
+                                    @role.RoleName
                                 @:</td>
                             }
-                        @:</tr>
+                        @:</tr> 
                         }
                     </table>
                 </div>
@@ -49,12 +50,12 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <input type="submit" id="btnSubmit" value="Save" class="btn btn-primary" />
+                    <input type="submit" id="btnSubmit" value="Save" class="btn btn-light" />
                 </div>
             </div>
         </div>
     </form>
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        <a class="btn btn-danger" asp-action="Index">Back to List</a>
     </div>

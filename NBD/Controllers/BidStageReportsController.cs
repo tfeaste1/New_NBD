@@ -38,7 +38,7 @@ namespace NBD.Controllers
 
             var bidStageReport = await _context.BidStageReports
                 .Include(b => b.Project)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (bidStageReport == null)
             {
                 return NotFound();
@@ -59,7 +59,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,EstimatedBid,ActualDesingHours,EstimatedDesingHours,ActualDesingCost,EstimatedDesingCost,Hours,Remaining,ProjectID")] BidStageReport bidStageReport)
+        public async Task<IActionResult> Create([Bind("ID,EstimatedBid,ActualDesingHours,EstimatedDesingHours,ActualDesingCost,EstimatedDesingCost,Hours,Remaining,ProjectID")] BidStageReport bidStageReport)
         {
             if (ModelState.IsValid)
             {
@@ -93,9 +93,9 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EstimatedBid,ActualDesingHours,EstimatedDesingHours,ActualDesingCost,EstimatedDesingCost,Hours,Remaining,ProjectID")] BidStageReport bidStageReport)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,EstimatedBid,ActualDesingHours,EstimatedDesingHours,ActualDesingCost,EstimatedDesingCost,Hours,Remaining,ProjectID")] BidStageReport bidStageReport)
         {
-            if (id != bidStageReport.Id)
+            if (id != bidStageReport.ID)
             {
                 return NotFound();
             }
@@ -109,7 +109,7 @@ namespace NBD.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BidStageReportExists(bidStageReport.Id))
+                    if (!BidStageReportExists(bidStageReport.ID))
                     {
                         return NotFound();
                     }
@@ -134,7 +134,7 @@ namespace NBD.Controllers
 
             var bidStageReport = await _context.BidStageReports
                 .Include(b => b.Project)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (bidStageReport == null)
             {
                 return NotFound();
@@ -156,7 +156,7 @@ namespace NBD.Controllers
 
         private bool BidStageReportExists(int id)
         {
-            return _context.BidStageReports.Any(e => e.Id == id);
+            return _context.BidStageReports.Any(e => e.ID == id);
         }
     }
 }

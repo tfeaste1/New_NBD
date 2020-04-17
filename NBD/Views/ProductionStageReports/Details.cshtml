@@ -1,4 +1,4 @@
-﻿@model NBD.Models.ProductionStageReport
+﻿@*@model NBD.Models.ProductionStageReport
 
 @{
     ViewData["Title"] = "Details";
@@ -6,6 +6,70 @@
 
 <h1>Details</h1>
 
+<div class="card-columns align-content-center">
+    <div class="card  align-content-center" style="width:400px; height:500px;">
+        <div class="card-body">
+            <h4 class="card-title">Production Plan Details - Predicted</h4>
+
+            <dl class="card-body">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Project.EstStartDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Project.EstStartDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Project.EstEndDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Project.EstEndDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Project.EstAmount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Project.EstAmount)
+                </dd>
+                @foreach(var item in Model.ProductionPlan.ProdPlanLabours)
+                    <dt>
+
+                    </dt>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card  align-content-center" style="width:400px; height:500px;">
+        <div class="card-body">
+            <h4 class="card-title">Production Plan Details - Confirmed</h4>
+            <dl class="card-body">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ActualDesingHours)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ActualDesingHours)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ActualDesingCost)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ActualDesingCost)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Hours)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Hours)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Remaining)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Remaining)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
 <div>
     <h4>ProductionStageReport</h4>
     <hr />
@@ -75,4 +139,4 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@

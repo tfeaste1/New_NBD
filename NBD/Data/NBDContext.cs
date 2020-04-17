@@ -78,11 +78,11 @@ namespace NBD.Data
             .IsUnique();
 
             modelBuilder.Entity<ProductionStageReport>()
-           .HasIndex(pt => new { pt.ProjectID, pt.Id})
+           .HasIndex(pt => new { pt.ProjectID, pt.ProductionPlanID, pt.Id})
            .IsUnique();
 
             modelBuilder.Entity<BidStageReport>()
-           .HasIndex(pt => new { pt.ProjectID, pt.Id})
+           .HasIndex(pt => new { pt.ProjectID, pt.ID})
            .IsUnique();
 
 

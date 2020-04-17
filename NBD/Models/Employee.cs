@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NBD.Models
 {
-    public class Employee
+    public class Employee 
     {
         [Display(Name = "Client")]
         public string FullName
@@ -49,7 +49,7 @@ namespace NBD.Models
         public int DepartmentID { get; set; }
 
         public Department Department { get; set; }
-        public ICollection<TeamEmployee> TeamEmployees { get; set; }
+        public IEnumerable<TeamEmployee> TeamEmployees { get; set; }
 
         public ICollection<WorkerReport> WorkerReports { get; set; }
 

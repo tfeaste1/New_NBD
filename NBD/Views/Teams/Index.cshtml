@@ -8,82 +8,74 @@
 
 <p><a class="btn btn-light" asp-action="Create">Create New</a></p>
 
-<table class="table">
-    <thead>
-        <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Phase)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TeamName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TeamEmployees)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phase)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TeamName)
-                </td>
-                <td>
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+        <div class="card  align-content-center" style="width:400px">
+            <div class="card-body">
+                <h4 class="card-title">@Html.DisplayFor(modelItem => item.TeamName)</h4>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Phase)</p>
 
-                    @{
-                        int specCount = item.TeamEmployees.Count;
-                        if (specCount > 0)
-                        {
-                            string firstSpec = item.TeamEmployees.FirstOrDefault().Employee.FullName;
-                            if (specCount > 1)
-                            {
-                                string specList = "";
-                                var c = item.TeamEmployees.ToList();
-                                for (int i = 1; i < specCount; i++)
-                                {
-                                    specList += c[i].Employee.FullName + " <br />";
-                                }
-                                <a class="" role="button" data-toggle="collapse" href="#collapseSum@(item.ID)" aria-expanded="false" aria-controls="collapseSum@(item.ID)">
-                                    @firstSpec... <span class="badge badge-info">@specCount</span>
-                                </a>
-                                <div class="collapse" id="collapseSum@(item.ID)">
-                                    @Html.Raw(specList)
-                                </div>
-                            }
-                            else
-                            {
-                                @firstSpec
-                            }
-                        }
-                    }
-                    @*For help with Bootstrap Collapse see: https://getbootstrap.com/docs/4.0/components/collapse/*@
-
-                </td>
-
-                <td>
+                <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
 
 
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                @if (User.IsInRole("Admin, Manager"))
+                {
+                    @:|
+                    <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    <a class="btn btn-danger card-link" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
 
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                    }
+                }
 
 
 
-                    <a class="btn btn-light" asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+
+            </div>
+        </div>
+    }
+</div>
 <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>
+
+
+
+@*<table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Phase)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TeamName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TeamEmployees)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+
+
+
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        }
+
+
+
+                        <a class="btn btn-light" asp-action="Details" asp-route-id="@item.ID">Details</a>
+                    </td>
+                </tr>
+
+
+    </table>
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>*@
 
 

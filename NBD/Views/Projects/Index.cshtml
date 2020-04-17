@@ -6,22 +6,12 @@
 
 <h1 class="text-center">Projects</h1>
 
-@if (User.IsInRole("Admin"))
+@if (User.IsInRole("Admin,Manager"))
 {
     @:|
     <p><a class="btn btn-light" asp-action="Create">Create New</a></p>
 
 }
-
-@if (User.IsInRole("Manager"))
-{
-    @:|
-    <p><a class="btn btn-light" asp-action="Create">Create New</a></p>
-
-}
-
-
-
 
 
 

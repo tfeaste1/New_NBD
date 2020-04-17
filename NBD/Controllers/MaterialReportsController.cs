@@ -24,7 +24,11 @@ namespace NBD.Controllers
         // GET: MaterialReports
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.MaterialReports.Include(m => m.Employee).Include(m => m.Material).Include(m => m.Project);
+            var nBDContext = _context.MaterialReports
+                .OrderBy(m=>m.ProjectID)
+                .Include(m => m.Employee)
+                .Include(m => m.Material)
+                .Include(m => m.Project);
             return View(await nBDContext.ToListAsync());
         }
 

@@ -404,7 +404,6 @@ C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD.dll
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD.Views.dll
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\bin\Debug\netcoreapp2.2\NBD.Views.pdb
-C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CoreCompileInputs.cache
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.RazorAssemblyInfo.cache
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.RazorAssemblyInfo.cs
@@ -483,3 +482,5 @@ C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.dll
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.pdb
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.genruntimeconfig.cache
 C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csproj.CopyComplete
+C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\Razor\Views\ProductionPlans\LabourRequirements.cshtml.g.cs
+C:\Users\toryf\Desktop\NBD-GitHub\New_NBD\NBD\obj\Debug\netcoreapp2.2\NBD.csprojAssemblyReference.cache

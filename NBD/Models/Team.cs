@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace NBD.Models
 {
-    public class Team
+    public class Team 
     {
         public Team()
         {
             this.LabourRequirements = new HashSet<LabourRequirement>();
-            ProductionPlans = new HashSet<ProductionPlan>();
-            
+            this.ProductionPlans = new HashSet<ProductionPlan>();
+
             this.TeamEmployees = new HashSet<TeamEmployee>();
         }
         public int ID { get; set; }

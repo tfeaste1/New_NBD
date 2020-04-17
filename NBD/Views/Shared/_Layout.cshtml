@@ -40,71 +40,54 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                Sales
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    @:|
-                                    <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Create">Create Client</a>
-                                }
-
-                                @if (User.IsInRole("Manager"))
-                                {
-                                    @:|
-                                    <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Create">Create Client</a>
-                                }
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Index">Client Management</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                Project Forms
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Index">Projects/Bids</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="ProductionPlans" asp-action="Index">Production Plan</a>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Team Management</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        @if (User.IsInRole("Admin"))
+                        {
 
-                            @if (User.IsInRole("Admin"))
-                            {
-                                @:|
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                    Daily Reports
+                                    Form Management
                                 </a>
-
                                 <div class="dropdown-menu">
+                                    <a class="nav-link">Project/Production Plan</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Index">Projects/Bids</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="ProductionPlans" asp-action="Index">Production Plan</a>
+                                    <a class="nav-link">Work Reports</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="WorkerReports" asp-action="Index">Worker Report</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="MaterialReports" asp-action="Index">Material Reports</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="BidStageReports" asp-action="Index">BidStage Report</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="ProductionStageReports" asp-action="Index">ProductionStage Reports</a>
                                 </div>
-
-                            }
-                        </li>
-
-                            @if (User.IsInRole("Admin"))
-                            {
-                                @:|
-                                <li class="nav-item">
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                    Administrator
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="nav-link" asp-area="" asp-controller="Employees" asp-action="Index">Employee Management</a>
+                                    <a class="nav-link">Project Administration Reports</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="BidStageReports" asp-action="Index">BidStage Report</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="ProductionStageReports" asp-action="Index">Production Stage Reports</a>
                                     <a class="nav-link text-dark" asp-area="" asp-controller="UserRoll" asp-action="Index">Security</a>
-                                </li>
-
-                            }
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
+                                </div>
                             </li>
 
+                        }
 
 
 
 
-                        </ul>
+
+
+
+                    </ul>
                         }
                         </div>
                 </div>

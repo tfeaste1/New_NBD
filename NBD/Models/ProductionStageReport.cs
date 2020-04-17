@@ -39,9 +39,12 @@ namespace NBD.Models
         [Display(Name = "Est.LaborDesingCost")]
         public string EstLaborDesingCost { get; set; }
 
-        public int ProjectID { get; set; }
+        public int ProductionPlanID { get; set; }
 
-        public Project Project{ get; set; }
+        public ProductionPlan ProductionPlan{ get; set; }
+        public int ProjectID { get; set; }
+        public Project Project { get; set; }
+
 
     }
 }
