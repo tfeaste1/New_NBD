@@ -10,8 +10,8 @@ using NBD.Data;
 namespace NBD.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20200416232332_produbidreport")]
-    partial class produbidreport
+    [Migration("20200417050213_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,13 +42,12 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<int>("ProjectID");
 
-                    b.Property<string>("ProjectName");
-
                     b.Property<string>("Remaining");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectID");
+                    b.HasIndex("ProjectID", "Id")
+                        .IsUnique();
 
                     b.ToTable("BidStageReports");
                 });
@@ -391,13 +390,12 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<int>("ProjectID");
 
-                    b.Property<string>("ProjectName");
-
                     b.Property<string>("TotalCosttoDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectID");
+                    b.HasIndex("ProjectID", "Id")
+                        .IsUnique();
 
                     b.ToTable("ProductionStageReports");
                 });
@@ -472,6 +470,8 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<DateTime?>("StartDate");
 
+                    b.Property<int?>("TeamID");
+
                     b.Property<int?>("ToolID");
 
                     b.Property<string>("UpdatedBy")
@@ -482,6 +482,8 @@ namespace NBD.Data.NBDMigrations
                     b.HasKey("ID");
 
                     b.HasIndex("ClientID");
+
+                    b.HasIndex("TeamID");
 
                     b.HasIndex("ToolID");
 
@@ -541,19 +543,31 @@ namespace NBD.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EmployeeID");
-
                     b.Property<string>("Phase");
 
-                    b.Property<int>("ProjectID");
+                    b.Property<int?>("ProjectID");
+
+                    b.Property<string>("TeamName")
+                        .IsRequired();
 
                     b.HasKey("ID");
-
-                    b.HasIndex("EmployeeID");
 
                     b.HasIndex("ProjectID");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("NBD.Models.TeamEmployee", b =>
+                {
+                    b.Property<int>("TeamID");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.HasKey("TeamID", "EmployeeID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.ToTable("TeamEmployees");
                 });
 
             modelBuilder.Entity("NBD.Models.Tool", b =>
@@ -746,6 +760,11 @@ namespace NBD.Data.NBDMigrations
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("NBD.Models.Team", "Team")
+                        .WithMany("Projects")
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("NBD.Models.Tool")
                         .WithMany("Projects")
                         .HasForeignKey("ToolID");
@@ -777,15 +796,22 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.Team", b =>
                 {
-                    b.HasOne("NBD.Models.Employee", "Employee")
+                    b.HasOne("NBD.Models.Project")
                         .WithMany("Teams")
+                        .HasForeignKey("ProjectID");
+                });
+
+            modelBuilder.Entity("NBD.Models.TeamEmployee", b =>
+                {
+                    b.HasOne("NBD.Models.Employee", "Employee")
+                        .WithMany("TeamEmployees")
                         .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NBD.Models.Project", "Project")
-                        .WithMany("Teams")
-                        .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("NBD.Models.Team", "Team")
+                        .WithMany("TeamEmployees")
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NBD.Models.WorkerReport", b =>

@@ -23,8 +23,8 @@ namespace NBD.Models
         [Display(Name = "Team Name")]
         public string TeamName { get; set; }
 
-        public int ProjectID { get; set; }
-        public virtual Project Project { get; set; }
+        
+        
         public ICollection<LabourRequirement> LabourRequirements { get; set; }
 
         public ICollection<ProductionPlan> ProductionPlans { get; set; }

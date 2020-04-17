@@ -543,7 +543,7 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Phase");
 
-                    b.Property<int>("ProjectID");
+                    b.Property<int?>("ProjectID");
 
                     b.Property<string>("TeamName")
                         .IsRequired();
@@ -758,9 +758,10 @@ namespace NBD.Data.NBDMigrations
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("NBD.Models.Team")
+                    b.HasOne("NBD.Models.Team", "Team")
                         .WithMany("Projects")
-                        .HasForeignKey("TeamID");
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("NBD.Models.Tool")
                         .WithMany("Projects")
@@ -793,10 +794,9 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.Team", b =>
                 {
-                    b.HasOne("NBD.Models.Project", "Project")
+                    b.HasOne("NBD.Models.Project")
                         .WithMany("Teams")
-                        .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ProjectID");
                 });
 
             modelBuilder.Entity("NBD.Models.TeamEmployee", b =>

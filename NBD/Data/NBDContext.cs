@@ -137,9 +137,9 @@ namespace NBD.Data
                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Project>()
-                .HasMany<Team>(t => t.Teams)
-                .WithOne(p => p.Project)
-                .HasForeignKey(p => p.ProjectID)
+                .HasOne(t => t.Team)
+                .WithMany(p => p.Projects)
+                .HasForeignKey(p => p.TeamID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //modelBuilder.Entity<TeamEmployee>()

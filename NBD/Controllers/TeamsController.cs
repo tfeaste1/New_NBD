@@ -54,7 +54,7 @@ namespace NBD.Controllers
         }
 
         // GET: Teams/Create
-        [Authorize(Roles = "Admin,Manager")]
+        //[Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             Team team = new Team();
@@ -73,7 +73,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager")]
+        //[Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("ID,Phase,TeamName")] Team team, string[] selectedOptions)
         {
             try

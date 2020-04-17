@@ -86,6 +86,9 @@ namespace NBD.Models
 
         public Client Client { get; set; }
 
+        public int? TeamID { get; set; }
+
+        public Team Team { get; set; }
 
         public ICollection<Team> Teams { get; set; }
 
