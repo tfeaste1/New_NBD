@@ -20,6 +20,36 @@ namespace NBD.Data.NBDMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("NBD.Models.BidStageReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActualDesingCost");
+
+                    b.Property<string>("ActualDesingHours");
+
+                    b.Property<string>("EstimatedBid");
+
+                    b.Property<string>("EstimatedDesingCost");
+
+                    b.Property<string>("EstimatedDesingHours");
+
+                    b.Property<string>("Hours");
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<string>("Remaining");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectID", "Id")
+                        .IsUnique();
+
+                    b.ToTable("BidStageReports");
+                });
+
             modelBuilder.Entity("NBD.Models.City", b =>
                 {
                     b.Property<int>("ID")
@@ -334,6 +364,40 @@ namespace NBD.Data.NBDMigrations
                     b.ToTable("ProductionPlan");
                 });
 
+            modelBuilder.Entity("NBD.Models.ProductionStageReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActuLaborDesingCost");
+
+                    b.Property<string>("ActuLaborPro");
+
+                    b.Property<string>("ActualMtl");
+
+                    b.Property<string>("Bid");
+
+                    b.Property<string>("EstLaborDesingCost");
+
+                    b.Property<string>("EstLaborProdCost");
+
+                    b.Property<string>("EstProdPlan");
+
+                    b.Property<string>("EstimatedDesingCost");
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<string>("TotalCosttoDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectID", "Id")
+                        .IsUnique();
+
+                    b.ToTable("ProductionStageReports");
+                });
+
             modelBuilder.Entity("NBD.Models.ProductionTool", b =>
                 {
                     b.Property<int>("ID")
@@ -422,9 +486,9 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.ProjectLabour", b =>
                 {
-                    b.Property<int>("ProjectID");
+                    b.Property<int?>("ProjectID");
 
-                    b.Property<int>("LabourReqID");
+                    b.Property<int?>("LabourReqID");
 
                     b.Property<int?>("LabourRequirementID");
 
@@ -529,6 +593,14 @@ namespace NBD.Data.NBDMigrations
                         .IsUnique();
 
                     b.ToTable("WorkerReports");
+                });
+
+            modelBuilder.Entity("NBD.Models.BidStageReport", b =>
+                {
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany("BidStageReports")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("NBD.Models.Client", b =>
@@ -640,6 +712,14 @@ namespace NBD.Data.NBDMigrations
                         .WithMany("ProductionPlans")
                         .HasForeignKey("TeamID")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("NBD.Models.ProductionStageReport", b =>
+                {
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany("ProductionStageReports")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("NBD.Models.ProductionTool", b =>

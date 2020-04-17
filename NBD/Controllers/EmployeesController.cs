@@ -11,6 +11,7 @@ using NBD.Models;
 
 namespace NBD.Controllers
 {
+
     public class EmployeesController : Controller
     {
         private readonly NBDContext _context;
@@ -48,7 +49,7 @@ namespace NBD.Controllers
         }
 
         // GET: Employees/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             ViewData["DepartmentID"] = new SelectList(_context.Departments, "ID", "Description");
@@ -60,7 +61,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,Email,PhoneNumber,DepartmentID")] Employee employee)
         {
             if (ModelState.IsValid)
@@ -74,7 +75,7 @@ namespace NBD.Controllers
         }
 
         // GET: Employees/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,7 +97,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName,Email,PhoneNumber,DepartmentID")] Employee employee)
         {
             if (id != employee.ID)
@@ -129,7 +130,7 @@ namespace NBD.Controllers
         }
 
         // GET: Employees/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -151,7 +152,7 @@ namespace NBD.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var employee = await _context.Employees.FindAsync(id);

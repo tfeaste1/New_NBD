@@ -13079,25 +13079,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Weird.Scar\\.nuget\\packages\\": {},
+    "C:\\Users\\Dhrumil Dave\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Weird.Scar\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
+      "projectUniqueName": "C:\\Users\\Dhrumil Dave\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
       "projectName": "NBD",
-      "projectPath": "C:\\Users\\Weird.Scar\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
-      "packagesPath": "C:\\Users\\Weird.Scar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Weird.Scar\\Documents\\GitHub\\New_NBD\\NBD\\obj\\",
+      "projectPath": "C:\\Users\\Dhrumil Dave\\Documents\\GitHub\\New_NBD\\NBD\\NBD.csproj",
+      "packagesPath": "C:\\Users\\Dhrumil Dave\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Dhrumil Dave\\Documents\\GitHub\\New_NBD\\NBD\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Weird.Scar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Dhrumil Dave\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],

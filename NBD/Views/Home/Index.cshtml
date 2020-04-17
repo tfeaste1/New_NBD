@@ -3,6 +3,9 @@
 @inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Home Page";
+
+
+
 }
 
 <div>
@@ -50,16 +53,36 @@
     </a>
 </div>
 
-<br /><br /><br />
+<br />
+<br />
+<br />
 
-@if (SignInManager.IsSignedIn(User))
+
+
+
+
+@if (User.IsInRole("Admin"))
 {
+    @:|
     <div class="text-center">
-    <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
-    <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
-    <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
-    <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Create">Create a Project</a>
-</div>
+        <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
+        <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
+        <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+        <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Create">Create a Project</a>
+    </div>
+
+}
+
+
+@if (User.IsInRole("Manager"))
+{
+    @:|
+    <div class="text-center">
+        <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
+        <a class="btn btn-home" asp-area="" asp-controller="Clients" asp-action="Create">Create a Client</a>
+        <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+        <a class="btn btn-home" asp-area="" asp-controller="Projects" asp-action="Create">Create a Project</a>
+    </div>
 
 }
 
