@@ -474,7 +474,7 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "I am team 2",
+                            TeamName = "Power Ramger",
                             
                            
                             Phase = "70%"
@@ -482,7 +482,7 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "So I am team 3",
+                            TeamName = "RNG NO.1",
                             
                             
                             Phase = "Fail"
@@ -490,23 +490,19 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "I dont want be 4",
-                            ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                            
+                            TeamName = "FPX No.1",
                             Phase = "Pass"
                         },
                         new Team
                         {
 
-                            TeamName = "5",
-                           
-                            
+                            TeamName = "BESTTeam",
                             Phase = "Pass"
                         },
                         new Team
                         {
 
-                            TeamName = "why 5 is such short",
+                            TeamName = "CodeNinja",
                             
                             
                             Phase = "In processing"
@@ -514,7 +510,7 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "is none of your problom",
+                            TeamName = "PokemonGo",
                             
                             
                             Phase = "In processing"
@@ -522,8 +518,7 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "Finally",
-                            
+                            TeamName = "DesktopCleaner",
                             Phase = "In processing"
                         }
                         );

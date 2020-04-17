@@ -18,12 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.TeamName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Project)
-            </th>
+           <th>
+               @Html.DisplayNameFor(model => model.TeamEmployees)
+           </th>
             <th></th>
         </tr>
     </thead>
@@ -68,9 +65,7 @@
                     @*For help with Bootstrap Collapse see: https://getbootstrap.com/docs/4.0/components/collapse/*@
 
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Project.Name)
-                </td>
+              
                 <td>
 
 

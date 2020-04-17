@@ -23,7 +23,7 @@ namespace NBD.Models
 
         public Employee()
         {
-            TeamEmployees = new HashSet<TeamEmployee>();
+            this.TeamEmployees = new HashSet<TeamEmployee>();
         }
         public int ID { get; set; }
         [Display(Name = "First Name")]

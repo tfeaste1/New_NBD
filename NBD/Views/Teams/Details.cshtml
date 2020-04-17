@@ -28,17 +28,33 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TeamName)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Employee)
-        </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Employee.FullName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Project.Name)
+            @{
+                int empCount = Model.TeamEmployees.Count;
+                if (empCount > 0)
+                {
+                    string firstEmployee = Model.TeamEmployees.FirstOrDefault().Employee.FullName;
+                    if (empCount > 1)
+                    {
+                        string empList = "";
+                        var c = Model.TeamEmployees.ToList();
+                        for (int i = 1; i < empCount; i++)
+                        {
+                            empList += c[i].Employee.FullName + " <br />";
+                        }
+                        <a class="" role="button" data-toggle="collapse" href="#collapseCamper@(Model.ID)" aria-expanded="false" aria-controls="collapseCamper@(Model.ID)">
+                            @firstEmployee... <span class="badge badge-info">@empCount</span>
+                        </a>
+                        <div class="collapse" id="collapseCamper@(Model.ID)">
+                            @Html.Raw(empList)
+                        </div>
+                    }
+                    else
+                    {
+                        @firstEmployee
+                    }
+                }
+            }
         </dd>
     </dl>
 </div>

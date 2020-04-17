@@ -25,8 +25,9 @@ namespace NBD.Controllers
         // GET: Teams
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.Teams.Include(t => t.TeamEmployees).ThenInclude(t =>t.Employee)
-               .Include(t =>t.Project);
+            var nBDContext = from c in  _context.Teams
+               .Include(t => t.TeamEmployees).ThenInclude(t =>t.Employee)
+               select c;
             return View(await nBDContext.ToListAsync());
         }
 
@@ -39,8 +40,9 @@ namespace NBD.Controllers
             }
 
             var team = await _context.Teams
-                .Include(t => t.Employee)
-                .Include(t => t.Project)
+                .Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
+                .Include(t => t.Projects)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (team == null)
             {
@@ -55,10 +57,7 @@ namespace NBD.Controllers
         public IActionResult Create(int? id)
         {
             Team team = new Team();
-            
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName");
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
-           
+
             if (team == null)
             {
                 return NotFound();
@@ -73,7 +72,7 @@ namespace NBD.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("ID,Phase,TeamName,EmployeeID,ProjectID")] Team team, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,Phase,TeamName")] Team team, string[] selectedOptions)
         {
             try
             {
@@ -111,8 +110,9 @@ namespace NBD.Controllers
                 return NotFound();
             }
 
-            var team = await _context.Teams.Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
-                .Include(t => t.Project)
+            var team = await _context.Teams
+                .Include(t => t.TeamEmployees)//.ThenInclude(t => t.Employee)
+                //.Include(t => t.Projects)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(t => t.ID == id);
             if (team == null)
@@ -134,8 +134,8 @@ namespace NBD.Controllers
         public async Task<IActionResult> Edit(int id, string[] selectedOptions)
         {
             var teamToUpdate = await _context.Teams
-           .Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
-                .Include(t => t.Project)
+           .Include(t => t.TeamEmployees)//.ThenInclude(t => t.Employee)
+                //.Include(t => t.Projects)
            .SingleOrDefaultAsync(d => d.ID == id);
             if (teamToUpdate == null)
             {
@@ -145,12 +145,13 @@ namespace NBD.Controllers
             UpdateEmpFullNametoTeam(selectedOptions, teamToUpdate);
 
             if (await TryUpdateModelAsync<Team>(teamToUpdate, "",
-               d => d.Phase, d => d.TeamName, d => d.ProjectID))
+               d => d.Phase, d => d.TeamName))
             {
                 try
                 {
                     _context.Update(teamToUpdate);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (RetryLimitExceededException /* dex */)
                 {
@@ -171,7 +172,7 @@ namespace NBD.Controllers
                 {
                     ModelState.AddModelError("", "Something went wrong in the database.");
                 }
-                return RedirectToAction(nameof(Index));
+               
 
             }
             //ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName", team.EmployeeID);
@@ -190,9 +191,7 @@ namespace NBD.Controllers
             }
 
             var team = await _context.Teams
-                .Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
-                .Include(t => t.Project)
-                .FirstOrDefaultAsync(m => m.ProjectID == id);
+             .FirstOrDefaultAsync(m => m.ID == id);
             if (team == null)
             {
                 return NotFound();
@@ -294,7 +293,7 @@ namespace NBD.Controllers
 
         private bool TeamExists(int id)
         {
-            return _context.Teams.Any(e => e.ProjectID == id);
+            return _context.Teams.Any(e => e.ID == id);
         }
     }
 }

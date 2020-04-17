@@ -12,8 +12,8 @@ namespace NBD.Models
         {
             this.LabourRequirements = new HashSet<LabourRequirement>();
             ProductionPlans = new HashSet<ProductionPlan>();
-            Projects = new HashSet<Project>;
-            TeamEmployees = new HashSet<TeamEmployee>();
+            this.Projects = new HashSet<Project>();
+            this.TeamEmployees = new HashSet<TeamEmployee>();
         }
         public int ID { get; set; }
         public string Phase { get; set; }
@@ -26,7 +26,7 @@ namespace NBD.Models
 
         public ICollection<LabourRequirement> LabourRequirements { get; set; }
        
- public ICollection<ProductionPlan>ProductionPlans { get; set; }
+        public ICollection<ProductionPlan>ProductionPlans { get; set; }
         public ICollection<Project> Projects { get; set; }
         public ICollection<TeamEmployee> TeamEmployees { get; set; }
     }

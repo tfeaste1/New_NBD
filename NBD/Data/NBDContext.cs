@@ -72,9 +72,7 @@ namespace NBD.Data
             .HasIndex(pt => new { pt.ProjectID, pt.MaterialID, pt.EmployeeID })
             .IsUnique();
 
-            //Many to Many team employee
-            modelBuilder.Entity<TeamEmployee>()
-            .HasKey(t => new { t.TeamID, t.EmployeeID });
+           
 
 
             //Prevent Cascade Delete
@@ -114,6 +112,13 @@ namespace NBD.Data
                .HasForeignKey(l => l.TeamID)
                .OnDelete(DeleteBehavior.Restrict);
 
+            //modelBuilder.Entity<TeamEmployee>()
+            //    .HasOne(t => t.Team)
+            //    .WithMany(l => l.TeamEmployees)
+            //    .HasForeignKey(l => l.TeamID)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+
             modelBuilder.Entity<Project>()
               .HasMany<ProductionPlan>(pr => pr.ProductionPlans)
               .WithOne(p => p.Project)
@@ -147,8 +152,10 @@ namespace NBD.Data
 
             modelBuilder.Entity<ProjectMaterial>()
             .HasKey(pt => new { pt.ProjectID, pt.MaterialReqID });
-       
 
+            //Many to Many team employee
+            modelBuilder.Entity<TeamEmployee>()
+            .HasKey(t => new { t.TeamID, t.EmployeeID });
 
         }
 
