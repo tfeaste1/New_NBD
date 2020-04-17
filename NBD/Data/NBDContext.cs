@@ -59,6 +59,10 @@ namespace NBD.Data
 
         public DbSet<MaterialReport> MaterialReports { get; set; }
 
+        public DbSet<ProductionStageReport> ProductionStageReports { get; set; }
+
+        public DbSet<BidStageReport> BidStageReports { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("MO");
@@ -71,6 +75,14 @@ namespace NBD.Data
             modelBuilder.Entity<MaterialReport>()
             .HasIndex(pt => new { pt.ProjectID, pt.MaterialID, pt.EmployeeID })
             .IsUnique();
+
+            modelBuilder.Entity<ProductionStageReport>()
+           .HasIndex(pt => new { pt.ProjectID, pt.Id})
+           .IsUnique();
+
+            modelBuilder.Entity<BidStageReport>()
+           .HasIndex(pt => new { pt.ProjectID, pt.Id})
+           .IsUnique();
 
 
             //Prevent Cascade Delete

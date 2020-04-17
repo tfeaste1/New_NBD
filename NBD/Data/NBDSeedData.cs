@@ -1123,12 +1123,52 @@ namespace NBD.Data
                         );
                     context.SaveChanges();
                 }
-                    
 
-
-
+                if (!context.ProductionStageReports.Any())
+                {
+                    context.ProductionStageReports.AddRange(
+                           new ProductionStageReport
+                           {
+                               Bid = "$7,651.15",
+                               EstProdPlan = "$5,110",
+                               TotalCosttoDate = "$5,265",
+                               ActualMtl = "$3,225",
+                               EstimatedDesingCost = "$3,240",
+                               ActuLaborPro = "$1,008",
+                               EstLaborProdCost = "$990",
+                               ActuLaborDesingCost = "$880",
+                               EstLaborDesingCost = "$880",
+                               ProjectID = 1
+                           }
+                        );
+                    context.SaveChanges();
                 }
-                
+
+                if (!context.BidStageReports.Any())
+                {
+                    context.BidStageReports.AddRange(
+                           new BidStageReport
+                           {
+                               EstimatedBid = "$25,550",
+                               ActualDesingHours = "6",
+                               EstimatedDesingHours = "25",
+                               ActualDesingCost = "$240",
+                               EstimatedDesingCost = "$1000",
+                               Hours = "20",
+                               Remaining = "$990",
+                               ProjectID = 1
+                           }
+                        );
+                    context.SaveChanges();
+                }
+
+
+
+
+
+
+            }
+
         }
     }
 }

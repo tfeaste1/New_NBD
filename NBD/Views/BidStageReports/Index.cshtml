@@ -1,0 +1,90 @@
+﻿@model IEnumerable<NBD.Models.BidStageReport>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatedBid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualDesingHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatedDesingHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualDesingCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatedDesingCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remaining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstimatedBid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualDesingHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstimatedDesingHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualDesingCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstimatedDesingCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remaining)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Name)
+            </td>
+            <td>
+                @if (User.IsInRole("Admin"))
+                {
+                    @:|
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+
+                @if (User.IsInRole("Manager"))
+                {
+                    @:|
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -6,23 +6,53 @@
 
 <h1>Index</h1>
 
-<p>
-    <a class="btn btn-light" asp-action="Create">Create New</a>
-</p>
 
-<div class="card-columns">
-    @foreach (var item in Model)
-    {
-        <div class="card  align-content-center" style="width:400px">
-            <div class="card-body">
-                <h4 class="card-title">@Html.DisplayFor(modelItem => item.Project.Name)</h4>
-                <p class="card-text">@Html.DisplayFor(modelItem => item.Project.Client.CompanyName)</p>
-                <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-                <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
+@if (User.IsInRole("Admin"))
+{
+    @:|
+    <p>
+        <a class="btn btn-light" asp-action="Create">Create New</a>
+    </p>
+}
+
+@if (User.IsInRole("Manager"))
+{
+    @:|
+    <p>
+        <a class="btn btn-light" asp-action="Create">Create New</a>
+    </p>
+}
+
+
+    <div class="card-columns">
+        @foreach (var item in Model)
+        {
+            <div class="card  align-content-center" style="width:400px">
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.Project.Name)</h4>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Project.Client.CompanyName)</p>
+
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @:|
+                        <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+
+                    }
+
+                    @if (User.IsInRole("Manager"))
+                    {
+                        @:|
+                        <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+
+                    }
+
+
+                    <a class="btn btn-light card-link" asp-action="Details" asp-route-id="@item.ID">Details</a>
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 
-<a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-danger">Back to Home</a>
 

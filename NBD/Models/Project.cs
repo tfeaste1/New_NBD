@@ -100,6 +100,10 @@ namespace NBD.Models
 
         public ICollection<MaterialReport> MaterialReports { get; set; }
 
+        public ICollection<ProductionStageReport> ProductionStageReports { get; set; }
+
+        public ICollection<BidStageReport> BidStageReports { get; set; }
+
 
 
     }

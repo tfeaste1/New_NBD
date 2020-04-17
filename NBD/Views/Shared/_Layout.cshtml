@@ -46,7 +46,17 @@
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Create">Create Client</a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    @:|
+                                    <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Create">Create Client</a>
+                                }
+
+                                @if (User.IsInRole("Manager"))
+                                {
+                                    @:|
+                                    <a class="dropdown-item" asp-area="" asp-controller="Clients" asp-action="Create">Create Client</a>
+                                }
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -59,21 +69,42 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                Daily Reports
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="WorkerReports" asp-action="Index">Worker Report</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="MaterialReports" asp-action="Index">Material Reports</a>
-                            </div>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @:|
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                    Daily Reports
+                                </a>
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-controller="WorkerReports" asp-action="Index">Worker Report</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="MaterialReports" asp-action="Index">Material Reports</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="BidStageReports" asp-action="Index">BidStage Report</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="ProductionStageReports" asp-action="Index">ProductionStage Reports</a>
+                                </div>
+
+                            }
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
-                        </li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @:|
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserRoll" asp-action="Index">Security</a>
+                                </li>
+
+                            }
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
+                            </li>
 
 
 
-                    </ul>
+
+
+                        </ul>
                         }
                         </div>
                 </div>
