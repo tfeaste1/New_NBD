@@ -13,7 +13,7 @@ namespace NBD.Data
         {
             //Create Roles
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            string[] roleNames = { "Admin", "Manager", "Designer","AdministrativeAssistant","Botanist","SalesPerson" };
+            string[] roleNames = { "Admin", "Manager", "Designer","AdministrativeAssistant","SalesPerson","Worker"};
             IdentityResult roleResult;
             foreach (var roleName in roleNames)
             {
@@ -106,12 +106,60 @@ namespace NBD.Data
                 }
             }
 
-            if (userManager.FindByEmailAsync("user1@outlook.com").Result == null)
+            if (userManager.FindByEmailAsync("connie@nbd.ca").Result == null)
             {
                 IdentityUser user = new IdentityUser
                 {
-                    UserName = "user1@outlook.com",
-                    Email = "user1@outlook.com"
+                    UserName = "connie@nbd.ca",
+                    Email = "connie@nbd.ca"
+                };
+
+                IdentityResult result = userManager.CreateAsync(user, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "AdministrativeAssistant").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("worker@nbd.ca").Result == null)
+            {
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = "worker@nbd.ca",
+                    Email = "worker@nbd.ca"
+                };
+
+                IdentityResult result = userManager.CreateAsync(user, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "AdministrativeAssistant").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("salesperson@nbd.ca").Result == null)
+            {
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = "salesperson@nbd.ca",
+                    Email = "salesperson@nbd.ca"
+                };
+
+                IdentityResult result = userManager.CreateAsync(user, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "SalesPerson").Wait();
+                }
+            }
+
+            if (userManager.FindByEmailAsync("user1@nbd.ca").Result == null)
+            {
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = "user1@nbd.ca",
+                    Email = "user1@nbd.ca"
                 };
 
                 IdentityResult result = userManager.CreateAsync(user, "password").Result;
