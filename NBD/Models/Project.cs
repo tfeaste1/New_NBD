@@ -13,6 +13,7 @@ namespace NBD.Models
         {
             this.ProjectLabours = new HashSet<ProjectLabour>();
             this.ProjectMaterials = new HashSet<ProjectMaterial>();
+            this.Teams = new HashSet<Team>();
         }
 
         public int ID { get; set; }

@@ -460,73 +460,96 @@ namespace NBD.Data
 
 
                     }
-                    if (!context.Teams.Any())
+                if (!context.Teams.Any())
+                {
+                    context.Teams.AddRange(
+                         new Team
+                         {
+                             TeamName = "NBD project",
+
+
+                             Phase = "Done"
+                         },
+                        new Team
+                        {
+
+                            TeamName = "Power Ramger",
+
+
+                            Phase = "70%"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "RNG NO.1",
+
+
+                            Phase = "Fail"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "FPX No.1",
+                            Phase = "Pass"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "BESTTeam",
+                            Phase = "Pass"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "CodeNinja",
+
+
+                            Phase = "In processing"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "PokemonGo",
+
+
+                            Phase = "In processing"
+                        },
+                        new Team
+                        {
+
+                            TeamName = "DesktopCleaner",
+                            Phase = "In processing"
+                        }
+                        );
+                    context.SaveChanges();
+                }
+                int[] employeeIDs = context.Employees.Select(e => e.ID).ToArray();
+                int[] teamIDs = context.Teams.Select(t => t.ID).ToArray();
+                //Prepare Random
+                Random random = new Random();
+
+                //TeamEmployees - the Intersection
+                //Add a few Employees to each Team
+                if (!context.TeamEmployees.Any())
+                {
+                    int specialtyCount = employeeIDs.Count();
+                    foreach (int i in teamIDs)
                     {
-                        context.Teams.AddRange(
-                             new Team
-                             {
-                                 ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                 EmployeeID = 1,
-                                 Phase = "D"
-                             },
-                            new Team
+                        int howMany = random.Next(1, 4);
+                        howMany = (howMany > specialtyCount) ? specialtyCount : howMany;
+                        for (int j = 1; j <= howMany; j++)
+                        {
+                            TeamEmployee TE = new TeamEmployee()
                             {
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 2,
-                                Phase = "D"
-                            },
-                            new Team
-                            {
-                                
-                               
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 3,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 4,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 5,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 6,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 7,
-                                Phase = "P"
-                            },
-                            new Team
-                            {
-                                
-                                
-                                ProjectID = context.Projects.FirstOrDefault(p => p.Name == "Seaway Mall").ID,
-                                EmployeeID = 8,
-                                Phase = "P"
-                            }
-                            );
-                        context.SaveChanges();
+                                TeamID = i,
+                                EmployeeID = employeeIDs[random.Next(specialtyCount)]
+                            };
+                            context.TeamEmployees.Add(TE);
+                        }
                     }
-                    if (!context.Inventories.Any())
+                    context.SaveChanges();
+                }
+                if (!context.Inventories.Any())
                     {
                         context.Inventories.AddRange(
                             new Inventory

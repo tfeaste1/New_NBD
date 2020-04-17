@@ -41,6 +41,7 @@ namespace NBD.Data
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<TeamEmployee> TeamEmployees { get; set; }
         public DbSet<LabourSummary> LabourSummaries { get; set; }
         public DbSet<MaterialRequirement> MaterialRequirements { get; set; }
        
@@ -128,6 +129,25 @@ namespace NBD.Data
               .HasForeignKey(l => l.TaskID)
               .OnDelete(DeleteBehavior.Restrict);
 
+
+            modelBuilder.Entity<Team>()
+               .HasMany<TeamEmployee>(t => t.TeamEmployees)
+               .WithOne(l => l.Team)
+               .HasForeignKey(l => l.TeamID)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasMany<Team>(t => t.Teams)
+                .WithOne(p => p.Project)
+                .HasForeignKey(p => p.ProjectID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<TeamEmployee>()
+            //    .HasOne(t => t.Team)
+            //    .WithMany(l => l.TeamEmployees)
+            //    .HasForeignKey(l => l.TeamID)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
             //unique Email Vlaues
             modelBuilder.Entity<Employee>()
              .HasIndex(e => new { e.Email })
@@ -149,7 +169,9 @@ namespace NBD.Data
 
             modelBuilder.Entity<ProjectMaterial>()
             .HasKey(pt => new { pt.ProjectID, pt.MaterialReqID });
-       
+
+            modelBuilder.Entity<TeamEmployee>()
+            .HasKey(t => new { t.TeamID, t.EmployeeID });
 
 
         }

@@ -468,6 +468,8 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<DateTime?>("StartDate");
 
+                    b.Property<int?>("TeamID");
+
                     b.Property<int?>("ToolID");
 
                     b.Property<string>("UpdatedBy")
@@ -478,6 +480,8 @@ namespace NBD.Data.NBDMigrations
                     b.HasKey("ID");
 
                     b.HasIndex("ClientID");
+
+                    b.HasIndex("TeamID");
 
                     b.HasIndex("ToolID");
 
@@ -537,19 +541,31 @@ namespace NBD.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EmployeeID");
-
                     b.Property<string>("Phase");
 
                     b.Property<int>("ProjectID");
 
-                    b.HasKey("ID");
+                    b.Property<string>("TeamName")
+                        .IsRequired();
 
-                    b.HasIndex("EmployeeID");
+                    b.HasKey("ID");
 
                     b.HasIndex("ProjectID");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("NBD.Models.TeamEmployee", b =>
+                {
+                    b.Property<int>("TeamID");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.HasKey("TeamID", "EmployeeID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.ToTable("TeamEmployees");
                 });
 
             modelBuilder.Entity("NBD.Models.Tool", b =>
@@ -742,6 +758,10 @@ namespace NBD.Data.NBDMigrations
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("NBD.Models.Team")
+                        .WithMany("Projects")
+                        .HasForeignKey("TeamID");
+
                     b.HasOne("NBD.Models.Tool")
                         .WithMany("Projects")
                         .HasForeignKey("ToolID");
@@ -773,15 +793,23 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.Team", b =>
                 {
-                    b.HasOne("NBD.Models.Employee", "Employee")
-                        .WithMany("Teams")
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("NBD.Models.Project", "Project")
                         .WithMany("Teams")
                         .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("NBD.Models.TeamEmployee", b =>
+                {
+                    b.HasOne("NBD.Models.Employee", "Employee")
+                        .WithMany("TeamEmployees")
+                        .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Team", "Team")
+                        .WithMany("TeamEmployees")
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("NBD.Models.WorkerReport", b =>
