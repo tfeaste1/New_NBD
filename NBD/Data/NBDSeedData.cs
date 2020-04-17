@@ -465,7 +465,7 @@ namespace NBD.Data
                     context.Teams.AddRange(
                          new Team
                          {
-                             TeamName = "NBD project",
+                             TeamName = "Team 1",
 
 
                              Phase = "Done"
@@ -473,7 +473,7 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "Power Ramger",
+                            TeamName = "Team 2",
 
 
                             Phase = "70%"
@@ -481,7 +481,7 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "RNG NO.1",
+                            TeamName = "Team 3",
 
 
                             Phase = "Fail"
@@ -489,19 +489,19 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "FPX No.1",
+                            TeamName = "Team 4",
                             Phase = "Pass"
                         },
                         new Team
                         {
 
-                            TeamName = "BESTTeam",
+                            TeamName = "Team 5",
                             Phase = "Pass"
                         },
                         new Team
                         {
 
-                            TeamName = "CodeNinja",
+                            TeamName = "Team 6",
 
 
                             Phase = "In processing"
@@ -509,7 +509,7 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "PokemonGo",
+                            TeamName = "Team 7",
 
 
                             Phase = "In processing"
@@ -517,38 +517,39 @@ namespace NBD.Data
                         new Team
                         {
 
-                            TeamName = "DesktopCleaner",
+                            TeamName = "Team 8",
                             Phase = "In processing"
                         }
                         );
                     context.SaveChanges();
                 }
-                int[] employeeIDs = context.Employees.Select(e => e.ID).ToArray();
-                int[] teamIDs = context.Teams.Select(t => t.ID).ToArray();
-                //Prepare Random
-                Random random = new Random();
 
-                //TeamEmployees - the Intersection
-                //Add a few Employees to each Team
-                if (!context.TeamEmployees.Any())
-                {
-                    int specialtyCount = employeeIDs.Count();
-                    foreach (int i in teamIDs)
-                    {
-                        int howMany = random.Next(1, 4);
-                        howMany = (howMany > specialtyCount) ? specialtyCount : howMany;
-                        for (int j = 1; j <= howMany; j++)
-                        {
-                            TeamEmployee TE = new TeamEmployee()
-                            {
-                                TeamID = i,
-                                EmployeeID = employeeIDs[random.Next(specialtyCount)]
-                            };
-                            context.TeamEmployees.Add(TE);
-                        }
-                    }
-                    context.SaveChanges();
-                }
+                //int[] employeeIDs = context.Employees.Select(e => e.ID).ToArray();
+                //int[] teamIDs = context.Teams.Select(t => t.ID).ToArray();
+                ////Prepare Random
+                //Random random = new Random();
+
+                ////TeamEmployees - the Intersection
+                ////Add a few Employees to each Team
+                //if (!context.TeamEmployees.Any())
+                //{
+                //    int specialtyCount = employeeIDs.Count();
+                //    foreach (int i in teamIDs)
+                //    {
+                //        int howMany = random.Next(1, 4);
+                //        howMany = (howMany > specialtyCount) ? specialtyCount : howMany;
+                //        for (int j = 1; j <= howMany; j++)
+                //        {
+                //            TeamEmployee TE = new TeamEmployee()
+                //            {
+                //                TeamID = i,
+                //                EmployeeID = employeeIDs[random.Next(specialtyCount)]
+                //            };
+                //            context.TeamEmployees.Add(TE);
+                //        }
+                //    }
+                //    context.SaveChanges();
+                //}
                 if (!context.Inventories.Any())
                     {
                         context.Inventories.AddRange(
