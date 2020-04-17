@@ -13,6 +13,7 @@ namespace NBD.Models
         {
             this.ProjectLabours = new HashSet<ProjectLabour>();
             this.ProjectMaterials = new HashSet<ProjectMaterial>();
+            this.Teams = new HashSet<Team>();
         }
 
         public int ID { get; set; }
@@ -85,6 +86,9 @@ namespace NBD.Models
 
         public Client Client { get; set; }
 
+        public int? TeamID { get; set; }
+
+        public Team Team { get; set; }
 
         public ICollection<Team> Teams { get; set; }
 

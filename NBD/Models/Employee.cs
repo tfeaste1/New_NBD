@@ -18,6 +18,10 @@ namespace NBD.Models
 
             }
         }
+        public Employee()
+        {
+            this.TeamEmployees = new HashSet<TeamEmployee>();
+        }
         public int ID { get; set; }
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "First Name is required.")]
@@ -45,7 +49,7 @@ namespace NBD.Models
         public int DepartmentID { get; set; }
 
         public Department Department { get; set; }
-        public ICollection<Team> Teams { get; set; }
+        public ICollection<TeamEmployee> TeamEmployees { get; set; }
 
         public ICollection<WorkerReport> WorkerReports { get; set; }
 
