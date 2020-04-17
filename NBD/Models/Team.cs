@@ -12,6 +12,7 @@ namespace NBD.Models
         {
             this.LabourRequirements = new HashSet<LabourRequirement>();
             ProductionPlans = new HashSet<ProductionPlan>();
+            Projects = new HashSet<Project>;
             TeamEmployees = new HashSet<TeamEmployee>();
         }
         public int ID { get; set; }
@@ -21,17 +22,12 @@ namespace NBD.Models
         [Display(Name = "Team Name")]
         public string TeamName { get; set; }
 
-        [Display(Name = "Employee")]
-        public int EmployeeID { get; set; }
-        public virtual Employee Employee { get; set; }
-
-        [Display(Name = "Project")]
-        public int ProjectID { get; set; }
-        public Project Project { get; set;}
+     
 
         public ICollection<LabourRequirement> LabourRequirements { get; set; }
-        public ICollection<ProductionPlan>ProductionPlans { get; set; }
-
+       
+ public ICollection<ProductionPlan>ProductionPlans { get; set; }
+        public ICollection<Project> Projects { get; set; }
         public ICollection<TeamEmployee> TeamEmployees { get; set; }
     }
 }

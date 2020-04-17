@@ -264,7 +264,7 @@ namespace NBD.Controllers
                     selectedl.Add(new LabourReqVM
                     {
                         ID = r.ID,
-                        Description = r.Team.Employee.Department.Description,
+                        Description = r.Team.TeamEmployees.Employee.Department.Description,
                         Hours = r.Hours,
                         CostPerHour = r.Team.Employee.Department.Cost,
                         Cost = r.Hours * r.Team.Employee.Department.Cost,
