@@ -55,16 +55,13 @@ namespace NBD.Controllers
         }
 
         // GET: Teams/Create
-        //[Authorize(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             Team team = new Team();
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName");
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
-            if (team == null)
-            {
-                return NotFound();
-            }
+            //ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FullName");
+            //ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Name");
+           
             PopulateAssignedEmpData(team);
             return View(team);
         }
@@ -74,7 +71,7 @@ namespace NBD.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("ID,Phase,TeamName")] Team team, string[] selectedOptions)
         {
             try
@@ -94,10 +91,10 @@ namespace NBD.Controllers
             {
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
-            //catch (DbUpdateException)
-            //{
-            //    ModelState.AddModelError("", "Something went wrong in the database.");
-            //}
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Something went wrong in the database.");
+            }
             PopulateAssignedEmpData(team);
             return View(team);
         }
@@ -112,7 +109,7 @@ namespace NBD.Controllers
             }
 
             var team = await _context.Teams
-                .Include(t => t.TeamEmployees)//.ThenInclude(t => t.Employee)
+                .Include(t => t.TeamEmployees).ThenInclude(t => t.Employee)
                                               //.Include(t => t.Projects)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(t => t.ID == id);
@@ -152,7 +149,7 @@ namespace NBD.Controllers
                 {
                     _context.Update(teamToUpdate);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    
                 }
                 catch (RetryLimitExceededException /* dex */)
                 {
@@ -173,6 +170,7 @@ namespace NBD.Controllers
                 {
                     ModelState.AddModelError("", "Something went wrong in the database.");
                 }
+                return RedirectToAction(nameof(Index));
 
 
             }

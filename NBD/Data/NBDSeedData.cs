@@ -524,32 +524,7 @@ namespace NBD.Data
                     context.SaveChanges();
                 }
 
-                //int[] employeeIDs = context.Employees.Select(e => e.ID).ToArray();
-                //int[] teamIDs = context.Teams.Select(t => t.ID).ToArray();
-                ////Prepare Random
-                //Random random = new Random();
 
-                ////TeamEmployees - the Intersection
-                ////Add a few Employees to each Team
-                //if (!context.TeamEmployees.Any())
-                //{
-                //    int specialtyCount = employeeIDs.Count();
-                //    foreach (int i in teamIDs)
-                //    {
-                //        int howMany = random.Next(1, 4);
-                //        howMany = (howMany > specialtyCount) ? specialtyCount : howMany;
-                //        for (int j = 1; j <= howMany; j++)
-                //        {
-                //            TeamEmployee TE = new TeamEmployee()
-                //            {
-                //                TeamID = i,
-                //                EmployeeID = employeeIDs[random.Next(specialtyCount)]
-                //            };
-                //            context.TeamEmployees.Add(TE);
-                //        }
-                //    }
-                //    context.SaveChanges();
-                //}
                 if (!context.Inventories.Any())
                     {
                         context.Inventories.AddRange(
@@ -1184,6 +1159,32 @@ namespace NBD.Data
                                ProjectID = 1
                            }
                         );
+                    context.SaveChanges();
+                }
+                int[] employeeIDs = context.Employees.Select(e => e.ID).ToArray();
+                int[] teamIDs = context.Teams.Select(t => t.ID).ToArray();
+                //Prepare Random
+                Random random = new Random();
+
+                //TeamEmployees - the Intersection
+                //Add a few Employees to each Team
+                if (!context.TeamEmployees.Any())
+                {
+                    int specialtyCount = employeeIDs.Count();
+                    foreach (int i in teamIDs)
+                    {
+                        int howMany = random.Next(1, 4);
+                        howMany = (howMany > specialtyCount) ? specialtyCount : howMany;
+                        for (int j = 1; j <= howMany; j++)
+                        {
+                            TeamEmployee TE = new TeamEmployee()
+                            {
+                                TeamID = i,
+                                EmployeeID = employeeIDs[random.Next(specialtyCount)]
+                            };
+                            context.TeamEmployees.Add(TE);
+                        }
+                    }
                     context.SaveChanges();
                 }
 

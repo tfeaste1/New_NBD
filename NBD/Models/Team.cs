@@ -29,6 +29,7 @@ namespace NBD.Models
 
         public ICollection<ProductionPlan> ProductionPlans { get; set; }
         public ICollection<Project> Projects { get; set; }
+        [Display(Name = "Employee FullName")]
         public ICollection<TeamEmployee> TeamEmployees { get; set; }
     }
 }
