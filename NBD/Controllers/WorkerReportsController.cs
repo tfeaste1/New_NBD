@@ -11,7 +11,7 @@ using NBD.Models;
 
 namespace NBD.Controllers
 {
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,Manager,Designer")]
     public class WorkerReportsController : Controller
     {
         private readonly NBDContext _context;

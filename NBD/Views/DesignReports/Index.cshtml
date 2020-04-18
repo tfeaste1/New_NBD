@@ -60,7 +60,7 @@
 
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                @if (User.IsInRole("Admin, Manager"))
+                @if (User.IsInRole("Admin, Manager,Designer"))
                 {
                     @:|
                     <a class="btn btn-light card-link" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
