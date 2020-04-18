@@ -142,11 +142,11 @@ namespace NBD.Data
                 .HasForeignKey(p => p.TeamID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<TeamEmployee>()
-            //    .HasOne(t => t.Team)
-            //    .WithMany(l => l.TeamEmployees)
-            //    .HasForeignKey(l => l.TeamID)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Employee>()
+                .HasMany<TeamEmployee>(p => p.TeamEmployees)
+                .WithOne(l => l.Employee)
+                .HasForeignKey(l => l.EmployeeID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //unique Email Vlaues
             modelBuilder.Entity<Employee>()
