@@ -15,5 +15,7 @@ namespace NBD.Models
         public ICollection<LabourRequirement> LabourRequirements { get; set; }
 
         public ICollection<WorkerReport> WorkerReports { get; set; }
+
+        public ICollection<DesignReport> DesignReports { get; set; }
     }
 }

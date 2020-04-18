@@ -108,6 +108,8 @@ namespace NBD.Models
 
         public ICollection<BidStageReport> BidStageReports { get; set; }
 
+        public ICollection<DesignReport> DesignReports { get; set; }
+
 
 
     }

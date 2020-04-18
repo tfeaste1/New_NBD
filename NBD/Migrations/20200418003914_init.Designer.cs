@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NBD.Data;
 
-namespace NBD.Data.NBDMigrations
+namespace NBD.Migrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20200417224641_Check")]
-    partial class Check
+    [Migration("20200418003914_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NBD.Data;
 
-namespace NBD.Data.NBDMigrations
+namespace NBD.Migrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20200417171830_Initial")]
-    partial class Initial
+    partial class NBDContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +22,7 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.BidStageReport", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -44,9 +42,9 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("Remaining");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("ProjectID", "Id")
+                    b.HasIndex("ProjectID", "ID")
                         .IsUnique();
 
                     b.ToTable("BidStageReports");
@@ -128,6 +126,38 @@ namespace NBD.Data.NBDMigrations
                     b.HasKey("ID");
 
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("NBD.Models.DesignReport", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<int>("EmployeeID");
+
+                    b.Property<int>("Hour");
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int>("StageID");
+
+                    b.Property<int>("TaskID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("StageID");
+
+                    b.HasIndex("TaskID");
+
+                    b.HasIndex("ProjectID", "TaskID", "EmployeeID", "StageID")
+                        .IsUnique();
+
+                    b.ToTable("DesignReports");
                 });
 
             modelBuilder.Entity("NBD.Models.Employee", b =>
@@ -388,13 +418,17 @@ namespace NBD.Data.NBDMigrations
 
                     b.Property<string>("EstimatedDesingCost");
 
+                    b.Property<int>("ProductionPlanID");
+
                     b.Property<int>("ProjectID");
 
                     b.Property<string>("TotalCosttoDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectID", "Id")
+                    b.HasIndex("ProductionPlanID");
+
+                    b.HasIndex("ProjectID", "ProductionPlanID", "Id")
                         .IsUnique();
 
                     b.ToTable("ProductionStageReports");
@@ -520,6 +554,19 @@ namespace NBD.Data.NBDMigrations
                     b.ToTable("ProjectMaterials");
                 });
 
+            modelBuilder.Entity("NBD.Models.Stage", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Stages");
+                });
+
             modelBuilder.Entity("NBD.Models.Task", b =>
                 {
                     b.Property<int>("ID")
@@ -629,6 +676,29 @@ namespace NBD.Data.NBDMigrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("NBD.Models.DesignReport", b =>
+                {
+                    b.HasOne("NBD.Models.Employee", "Employee")
+                        .WithMany("DesignReports")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Project", "Project")
+                        .WithMany("DesignReports")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Stage", "Stage")
+                        .WithMany("DesignReports")
+                        .HasForeignKey("StageID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("NBD.Models.Task", "Task")
+                        .WithMany("DesignReports")
+                        .HasForeignKey("TaskID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("NBD.Models.Employee", b =>
                 {
                     b.HasOne("NBD.Models.Department", "Department")
@@ -734,6 +804,11 @@ namespace NBD.Data.NBDMigrations
 
             modelBuilder.Entity("NBD.Models.ProductionStageReport", b =>
                 {
+                    b.HasOne("NBD.Models.ProductionPlan", "ProductionPlan")
+                        .WithMany("ProductionStageReports")
+                        .HasForeignKey("ProductionPlanID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("NBD.Models.Project", "Project")
                         .WithMany("ProductionStageReports")
                         .HasForeignKey("ProjectID")
