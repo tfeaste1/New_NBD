@@ -64,6 +64,10 @@ namespace NBD.Data
 
         public DbSet<BidStageReport> BidStageReports { get; set; }
 
+        public DbSet<Stage> Stages { get; set; }
+
+        public DbSet<DesignReport> DesignReports { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("MO");
@@ -71,6 +75,10 @@ namespace NBD.Data
 
             modelBuilder.Entity<WorkerReport>()
             .HasIndex(pt => new { pt.ProjectID, pt.TaskID, pt.EmployeeID })
+            .IsUnique();
+
+            modelBuilder.Entity<DesignReport>()
+            .HasIndex(pt => new { pt.ProjectID, pt.TaskID, pt.EmployeeID, pt.StageID })
             .IsUnique();
 
             modelBuilder.Entity<MaterialReport>()

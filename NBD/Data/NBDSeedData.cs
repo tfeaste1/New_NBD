@@ -1187,6 +1187,75 @@ namespace NBD.Data
                     context.SaveChanges();
                 }
 
+                if (!context.Stages.Any())
+                {
+                    context.Stages.AddRange(
+                        new Stage
+                        {
+                            Name ="A"
+                        },
+                        new Stage
+                        {
+                            Name = "B"
+                        },
+                        new Stage
+                        {
+                            Name = "C"
+                        },
+                        new Stage
+                        {
+                            Name = "D"
+                        },
+                        new Stage
+                        {
+                            Name = "E"
+                        }
+
+                        );
+                    context.SaveChanges();
+                }
+
+                if (!context.DesignReports.Any())
+                {
+                    context.DesignReports.AddRange(
+                        new DesignReport
+                        {
+                            Date = DateTime.Parse("2020-06-16"),
+                            Hour = 8,
+                            
+                            EmployeeID = 6,
+                            TaskID = 7,
+                            ProjectID = 1,
+                            StageID = 1
+                        },
+                        new DesignReport
+                        {
+                            Date = DateTime.Parse("2020-06-16"),
+                            Hour = 8,
+
+                            EmployeeID = 6,
+                            TaskID = 3,
+                            ProjectID = 2,
+                            StageID = 2
+                        },
+                        new DesignReport
+                        {
+                            Date = DateTime.Parse("2020-06-16"),
+                            Hour = 8,
+
+                            EmployeeID = 6,
+                            TaskID = 4,
+                            ProjectID = 1,
+                            StageID = 3
+                        }
+
+
+
+
+                        );
+                    context.SaveChanges();
+                }
+
 
 
 

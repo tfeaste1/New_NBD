@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace NBD.Data.NBDMigrations
+namespace NBD.Migrations
 {
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -246,7 +246,7 @@ namespace NBD.Data.NBDMigrations
                 schema: "MO",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EstimatedBid = table.Column<string>(nullable: true),
                     ActualDesingHours = table.Column<string>(nullable: true),
@@ -259,7 +259,7 @@ namespace NBD.Data.NBDMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BidStageReports", x => x.Id);
+                    table.PrimaryKey("PK_BidStageReports", x => x.ID);
                     table.ForeignKey(
                         name: "FK_BidStageReports_Projects_ProjectID",
                         column: x => x.ProjectID,
@@ -332,36 +332,6 @@ namespace NBD.Data.NBDMigrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MaterialReports_Projects_ProjectID",
-                        column: x => x.ProjectID,
-                        principalSchema: "MO",
-                        principalTable: "Projects",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductionStageReports",
-                schema: "MO",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Bid = table.Column<string>(nullable: true),
-                    EstProdPlan = table.Column<string>(nullable: true),
-                    TotalCosttoDate = table.Column<string>(nullable: true),
-                    ActualMtl = table.Column<string>(nullable: true),
-                    EstimatedDesingCost = table.Column<string>(nullable: true),
-                    ActuLaborPro = table.Column<string>(nullable: true),
-                    EstLaborProdCost = table.Column<string>(nullable: true),
-                    ActuLaborDesingCost = table.Column<string>(nullable: true),
-                    EstLaborDesingCost = table.Column<string>(nullable: true),
-                    ProjectID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductionStageReports", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductionStageReports_Projects_ProjectID",
                         column: x => x.ProjectID,
                         principalSchema: "MO",
                         principalTable: "Projects",
@@ -668,11 +638,49 @@ namespace NBD.Data.NBDMigrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProductionStageReports",
+                schema: "MO",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Bid = table.Column<string>(nullable: true),
+                    EstProdPlan = table.Column<string>(nullable: true),
+                    TotalCosttoDate = table.Column<string>(nullable: true),
+                    ActualMtl = table.Column<string>(nullable: true),
+                    EstimatedDesingCost = table.Column<string>(nullable: true),
+                    ActuLaborPro = table.Column<string>(nullable: true),
+                    EstLaborProdCost = table.Column<string>(nullable: true),
+                    ActuLaborDesingCost = table.Column<string>(nullable: true),
+                    EstLaborDesingCost = table.Column<string>(nullable: true),
+                    ProductionPlanID = table.Column<int>(nullable: false),
+                    ProjectID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductionStageReports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductionStageReports_ProductionPlan_ProductionPlanID",
+                        column: x => x.ProductionPlanID,
+                        principalSchema: "MO",
+                        principalTable: "ProductionPlan",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductionStageReports_Projects_ProjectID",
+                        column: x => x.ProjectID,
+                        principalSchema: "MO",
+                        principalTable: "Projects",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_BidStageReports_ProjectID_Id",
+                name: "IX_BidStageReports_ProjectID_ID",
                 schema: "MO",
                 table: "BidStageReports",
-                columns: new[] { "ProjectID", "Id" },
+                columns: new[] { "ProjectID", "ID" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -793,10 +801,16 @@ namespace NBD.Data.NBDMigrations
                 column: "TeamID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductionStageReports_ProjectID_Id",
+                name: "IX_ProductionStageReports_ProductionPlanID",
                 schema: "MO",
                 table: "ProductionStageReports",
-                columns: new[] { "ProjectID", "Id" },
+                column: "ProductionPlanID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductionStageReports_ProjectID_ProductionPlanID_Id",
+                schema: "MO",
+                table: "ProductionStageReports",
+                columns: new[] { "ProjectID", "ProductionPlanID", "Id" },
                 unique: true);
 
             migrationBuilder.CreateIndex(

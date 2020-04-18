@@ -54,5 +54,7 @@ namespace NBD.Models
         public ICollection<WorkerReport> WorkerReports { get; set; }
 
         public ICollection<MaterialReport> MaterialReports { get; set; }
+
+        public ICollection<DesignReport> DesignReports { get; set; }
     }
 }
